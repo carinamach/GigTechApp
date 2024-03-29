@@ -19,4 +19,9 @@
     <ProjectReference Include="..\GigTech.Common.DataContext.SqlServer\GigTech.Common.DataContext.SqlServer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Pages\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>
