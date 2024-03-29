@@ -12,3 +12,4 @@ C:\Users\carin\OneDrive\Dokument\GitHub\GigTechApp\GigTech.Common.EntityModels.S
 C:\Users\carin\OneDrive\Dokument\GitHub\GigTechApp\GigTech.Common.EntityModels.SqlServer\bin\Debug\net8.0\GigTech.Common.EntityModels.SqlServer.runtimeconfig.json
 C:\Users\carin\OneDrive\Dokument\GitHub\GigTechApp\GigTech.Common.EntityModels.SqlServer\obj\Debug\net8.0\GigTech.Common.EntityModels.SqlServer.csproj.AssemblyReference.cache
 C:\Users\carin\OneDrive\Dokument\GitHub\GigTechApp\GigTech.Common.EntityModels.SqlServer\obj\Debug\net8.0\GigTech.Common.EntityModels.SqlServer.genruntimeconfig.cache
+C:\Users\carin\OneDrive\Dokument\GitHub\GigTechApp\GigTech.Common.EntityModels.SqlServer\obj\Debug\net8.0\GigTech.Common.EntityModels.SqlServer.sourcelink.json
