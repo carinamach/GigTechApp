@@ -23,4 +23,8 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\css\index.ts" />
+  </ItemGroup>
+
 </Project>
