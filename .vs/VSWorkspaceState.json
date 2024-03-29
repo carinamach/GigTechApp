@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\GigTech.Common.DataContext.SqlServer",
+    "\\GigTech.Common.EntityModels.SqlServer",
+    "\\GigTechMvc"
+  ],
+  "SelectedNode": "\\GigTech.Common.DataContext.SqlServer\\GigTechContext.cs",
+  "PreviewInSolutionExplorer": false
+}
