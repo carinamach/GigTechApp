@@ -1,31 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rasse\\Source\\Repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj": {}
+    "/Users/mustafaalnaser/Desktop/Webb/C#/GigTechApp/GigTech.Common.EntityModels.SqlServer/GigTech.Common.EntityModels.SqlServer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rasse\\Source\\Repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj": {
+    "/Users/mustafaalnaser/Desktop/Webb/C#/GigTechApp/GigTech.Common.EntityModels.SqlServer/GigTech.Common.EntityModels.SqlServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rasse\\Source\\Repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj",
+        "projectUniqueName": "/Users/mustafaalnaser/Desktop/Webb/C#/GigTechApp/GigTech.Common.EntityModels.SqlServer/GigTech.Common.EntityModels.SqlServer.csproj",
         "projectName": "GigTech.Common.EntityModels.SqlServer",
-        "projectPath": "C:\\Users\\rasse\\Source\\Repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj",
-        "packagesPath": "C:\\Users\\rasse\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rasse\\Source\\Repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\obj\\",
+        "projectPath": "/Users/mustafaalnaser/Desktop/Webb/C#/GigTechApp/GigTech.Common.EntityModels.SqlServer/GigTech.Common.EntityModels.SqlServer.csproj",
+        "packagesPath": "/Users/mustafaalnaser/.nuget/packages/",
+        "outputPath": "/Users/mustafaalnaser/Desktop/Webb/C#/GigTechApp/GigTech.Common.EntityModels.SqlServer/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\rasse\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/mustafaalnaser/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -77,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

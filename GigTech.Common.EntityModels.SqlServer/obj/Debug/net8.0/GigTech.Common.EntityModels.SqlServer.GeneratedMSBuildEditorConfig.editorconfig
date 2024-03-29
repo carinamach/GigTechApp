@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = GigTech.Common.EntityModels.SqlServer
-build_property.ProjectDir = C:\Users\rasse\Source\Repos\GigTechApp\GigTech.Common.EntityModels.SqlServer\
+build_property.ProjectDir = /Users/mustafaalnaser/Desktop/Webb/C#/GigTechApp/GigTech.Common.EntityModels.SqlServer/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
