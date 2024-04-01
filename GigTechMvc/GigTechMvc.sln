@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GigTechMvc", "GigTechMvc.csproj", "{B9D4F8F6-142E-4B5F-89DB-587C8F67C48F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GigTechMvc", "GigTechMvc.csproj", "{B9D4F8F6-142E-4B5F-89DB-587C8F67C48F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GigTech.Common.DataContext.SqlServer", "..\GigTech.Common.DataContext.SqlServer\GigTech.Common.DataContext.SqlServer.csproj", "{D8AF37A2-B8A4-41B2-8E54-A0E597842D2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GigTech.Common.DataContext.SqlServer", "..\GigTech.Common.DataContext.SqlServer\GigTech.Common.DataContext.SqlServer.csproj", "{D8AF37A2-B8A4-41B2-8E54-A0E597842D2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GigTech.Common.EntityModels.SqlServer", "..\GigTech.Common.EntityModels.SqlServer\GigTech.Common.EntityModels.SqlServer.csproj", "{1DA45551-67A0-40D9-AF87-5AAC01BF9589}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GigTech.Common.EntityModels.SqlServer", "..\GigTech.Common.EntityModels.SqlServer\GigTech.Common.EntityModels.SqlServer.csproj", "{1DA45551-67A0-40D9-AF87-5AAC01BF9589}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

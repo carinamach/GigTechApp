@@ -1,0 +1,88 @@
+﻿@page
+@using GigTech.Shared
+@{
+    var dbContext = new GigTechContext();
+    var products = dbContext.Products.ToList();
+    decimal total = 0;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>ShoppingCart</title>
+    <link rel="stylesheet" href="~/css/ShoppingCart.cshtml.cs.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+
+    <table class="table table-striped" id="cartTable">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr data-product-id="@product.ProductId">
+                    <td>@product.Title</td>
+                    <td>@product.Price</td>
+                    <td><a href="#" class="remove-link">Remove</a></td>
+                </tr>
+                total += product.Price;
+            }
+        </tbody>
+    </table>
+
+    <h6>Total: <span id="totalAmount">@total</span></h6>
+
+    <!-- Knappen för att genomföra köpet -->
+    <button type="button" class="btn btn-success" id="purchaseButton">PAY</button>
+
+    <script>
+        $('.remove-link').click(function (e) {
+            e.preventDefault();
+            var productId = $(this).closest('tr').data('product-id');
+            var priceToRemove = parseFloat($(this).closest('tr').find('td:eq(1)').text());
+            $(this).closest('tr').remove();
+            var currentTotal = parseFloat($('#totalAmount').text());
+            var newTotal = currentTotal - priceToRemove;
+            if ($('#cartTable tbody tr').length === 0) {
+                newTotal = 0;
+            }
+            newTotal = Math.round(newTotal * 100) / 100;
+            $('#totalAmount').text(newTotal.toFixed(2));
+        });
+
+        // Funktion för att genomföra köpet
+        $('#purchaseButton').click(function (e) {
+            e.preventDefault();
+
+            // Här kan du lägga till AJAX-anrop eller använda Razor Pages för att hantera köpet på servern
+
+            // Exempel på AJAX-anrop för att hantera köpet
+            $.ajax({
+                url: '/Purchase',
+                method: 'POST',
+                success: function (response) {
+                    if (response.success) {
+                        // Om köpet lyckades, kan du göra något här, t.ex. visa ett meddelande eller uppdatera sidan
+                        alert('Purchase successful! Game added to your library.');
+                    } else {
+                        // Om köpet misslyckades på grund av bristande pengar
+                        alert('Insufficient funds. Please add money to your account.');
+                    }
+                },
+                error: function () {
+                    // Om det uppstår något fel
+                    alert('An error occurred while processing your purchase.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
