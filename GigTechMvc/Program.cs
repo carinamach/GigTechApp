@@ -38,6 +38,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "forum",
+    pattern: "{controller=Forum}/{action=ForumIndex}/{id?}");
 app.MapRazorPages();
 
 app.Run();

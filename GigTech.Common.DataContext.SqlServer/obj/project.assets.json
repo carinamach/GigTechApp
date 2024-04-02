@@ -4125,33 +4125,40 @@
     ]
   },
   "packageFolders": {
-    "/Users/mustafaalnaser/.nuget/packages/": {}
+    "C:\\Users\\carin\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/mustafaalnaser/Desktop/Webb/C#/GigTechApp/GigTech.Common.DataContext.SqlServer/GigTech.Common.DataContext.SqlServer.csproj",
+      "projectUniqueName": "C:\\Users\\carin\\source\\repos\\GigTechApp\\GigTech.Common.DataContext.SqlServer\\GigTech.Common.DataContext.SqlServer.csproj",
       "projectName": "GigTech.Common.DataContext.SqlServer",
-      "projectPath": "/Users/mustafaalnaser/Desktop/Webb/C#/GigTechApp/GigTech.Common.DataContext.SqlServer/GigTech.Common.DataContext.SqlServer.csproj",
-      "packagesPath": "/Users/mustafaalnaser/.nuget/packages/",
-      "outputPath": "/Users/mustafaalnaser/Desktop/Webb/C#/GigTechApp/GigTech.Common.DataContext.SqlServer/obj/",
+      "projectPath": "C:\\Users\\carin\\source\\repos\\GigTechApp\\GigTech.Common.DataContext.SqlServer\\GigTech.Common.DataContext.SqlServer.csproj",
+      "packagesPath": "C:\\Users\\carin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\carin\\Source\\Repos\\GigTechApp\\GigTech.Common.DataContext.SqlServer\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/mustafaalnaser/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\carin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/Users/mustafaalnaser/Desktop/Webb/C#/GigTechApp/GigTech.Common.EntityModels.SqlServer/GigTech.Common.EntityModels.SqlServer.csproj": {
-              "projectPath": "/Users/mustafaalnaser/Desktop/Webb/C#/GigTechApp/GigTech.Common.EntityModels.SqlServer/GigTech.Common.EntityModels.SqlServer.csproj"
+            "C:\\Users\\carin\\source\\repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj": {
+              "projectPath": "C:\\Users\\carin\\source\\repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj"
             }
           }
         }
@@ -4160,6 +4167,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -4199,7 +4211,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.201/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

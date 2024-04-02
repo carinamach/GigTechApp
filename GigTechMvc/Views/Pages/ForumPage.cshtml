@@ -1,0 +1,104 @@
+﻿<h1>HEjsan</h1>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title"></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Posted by: John Doe</h6>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam commodo luctus purus at volutpat.</p>
+                </div>
+                <div class="card-footer text-muted">
+                    Replies: 3
+                    <button type="button" class="btn btn-primary" data-toggle="forum" data-target="#replyModal">Reply</button>
+                </div>
+            </div>
+
+
+            <!-- Reply Modal -->
+            <div class="modal fade" id="replyModal" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="replyModalLabel">Reply to Post</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="replyContent">Your Reply</label>
+                                    <textarea class="form-control" id="replyContent" rows="3" placeholder="Write your reply here"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit Reply</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post Replies -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Replies</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">Reply 1</li>
+                        <li class="list-group-item">Reply 2</li>
+                        <li class="list-group-item">Reply 3</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-md-4">
+            <div class="mb-4">
+                <!-- Create New Post Button --> <a asp-area="" asp-controller="Forum" asp-action="Detail">Create New Post</a>
+
+                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#newPostModal">
+                    hihi
+                </button>
+            </div>
+
+
+
+            <!-- New Post Modal -->
+            <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="newPostModalLabel">New Forum Post</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="postTitle">Title</label>
+                                    <input type="text" class="form-control" id="postTitle" placeholder="Enter title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="postContent">Content</label>
+                                    <textarea class="form-control" id="postContent" rows="5" placeholder="Enter your post content" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+}
