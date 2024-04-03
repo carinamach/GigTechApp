@@ -9,8 +9,7 @@
       "GigTech.Common.EntityModels.SqlServer/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Design": "8.0.3",
-          "Microsoft.EntityFrameworkCore.SqlServer": "8.0.3",
-          "Microsoft.EntityFrameworkCore.Tools": "8.0.3"
+          "Microsoft.EntityFrameworkCore.SqlServer": "8.0.3"
         },
         "runtime": {
           "GigTech.Common.EntityModels.SqlServer.dll": {}
@@ -409,11 +408,6 @@
             "assemblyVersion": "8.0.3.0",
             "fileVersion": "8.0.324.11510"
           }
-        }
-      },
-      "Microsoft.EntityFrameworkCore.Tools/8.0.3": {
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore.Design": "8.0.3"
         }
       },
       "Microsoft.Extensions.Caching.Abstractions/8.0.0": {
@@ -1053,13 +1047,6 @@
       "sha512": "sha512-Xpk6BWqSD7bGa/I/QJ5oLVD+RTIj1mhfUo92g4OrhfRb3/HKhURtsfNz3v+xLYADvWsugwYxaPzypMbM9ucWfg==",
       "path": "microsoft.entityframeworkcore.sqlserver/8.0.3",
       "hashPath": "microsoft.entityframeworkcore.sqlserver.8.0.3.nupkg.sha512"
-    },
-    "Microsoft.EntityFrameworkCore.Tools/8.0.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-jKczLbj13jY6TvYsXgAYqfhkIow6VdqumCv0m8EvNr3vU1+nJ6LKoG+6pPKnkVOHycXHGy5DEhH0GN0ldmx7Kw==",
-      "path": "microsoft.entityframeworkcore.tools/8.0.3",
-      "hashPath": "microsoft.entityframeworkcore.tools.8.0.3.nupkg.sha512"
     },
     "Microsoft.Extensions.Caching.Abstractions/8.0.0": {
       "type": "package",

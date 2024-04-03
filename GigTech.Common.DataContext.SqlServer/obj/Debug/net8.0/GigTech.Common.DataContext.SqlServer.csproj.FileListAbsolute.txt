@@ -35,7 +35,6 @@ C:/Users/carin/OneDrive/Dokument/GitHub/GigTechApp/GigTech.Common.DataContext.Sq
 /Users/mustafaalnaser/Desktop/Webb/C#/GigTechApp/GigTech.Common.DataContext.SqlServer/obj/Debug/net8.0/GigTech.Common.DataContext.SqlServer.genruntimeconfig.cache
 /Users/mustafaalnaser/Desktop/Webb/C#/GigTechApp/GigTech.Common.DataContext.SqlServer/obj/Debug/net8.0/ref/GigTech.Common.DataContext.SqlServer.dll
 C:\Users\carin\Source\Repos\GigTechApp\GigTech.Common.DataContext.SqlServer\bin\Debug\net8.0\GigTech.Common.DataContext.SqlServer.deps.json
-C:\Users\carin\Source\Repos\GigTechApp\GigTech.Common.DataContext.SqlServer\bin\Debug\net8.0\GigTech.Common.DataContext.SqlServer.runtimeconfig.json
 C:\Users\carin\Source\Repos\GigTechApp\GigTech.Common.DataContext.SqlServer\bin\Debug\net8.0\GigTech.Common.DataContext.SqlServer.dll
 C:\Users\carin\Source\Repos\GigTechApp\GigTech.Common.DataContext.SqlServer\bin\Debug\net8.0\GigTech.Common.DataContext.SqlServer.pdb
 C:\Users\carin\Source\Repos\GigTechApp\GigTech.Common.DataContext.SqlServer\bin\Debug\net8.0\GigTech.Common.EntityModels.SqlServer.dll
@@ -50,5 +49,4 @@ C:\Users\carin\Source\Repos\GigTechApp\GigTech.Common.DataContext.SqlServer\obj\
 C:\Users\carin\Source\Repos\GigTechApp\GigTech.Common.DataContext.SqlServer\obj\Debug\net8.0\GigTech.Common.DataContext.SqlServer.dll
 C:\Users\carin\Source\Repos\GigTechApp\GigTech.Common.DataContext.SqlServer\obj\Debug\net8.0\refint\GigTech.Common.DataContext.SqlServer.dll
 C:\Users\carin\Source\Repos\GigTechApp\GigTech.Common.DataContext.SqlServer\obj\Debug\net8.0\GigTech.Common.DataContext.SqlServer.pdb
-C:\Users\carin\Source\Repos\GigTechApp\GigTech.Common.DataContext.SqlServer\obj\Debug\net8.0\GigTech.Common.DataContext.SqlServer.genruntimeconfig.cache
 C:\Users\carin\Source\Repos\GigTechApp\GigTech.Common.DataContext.SqlServer\obj\Debug\net8.0\ref\GigTech.Common.DataContext.SqlServer.dll

@@ -1,14 +1,17 @@
-﻿@using static GigTech.Shared.ForumPost
+﻿
+@using static GigTech.Shared.ForumPost
 @using GigTech.Shared
 @model ForumIndexViewModel
-
+@{
+    var dbcontext = new GigTechContext();
+}
 <h1>HEjsan</h1>
 @if (Model is not null)
 {
     <h2>Products</h2>
     <div id="product-columns">
         <ul class="list-group">
-            @foreach (ForumPost f in @Model.ForumPosts)
+            @foreach (var f in dbcontext.ForumPosts)
             {
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <a asp-controller="Home" asp-action="ProductDetail"
