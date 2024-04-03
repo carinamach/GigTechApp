@@ -5,30 +5,38 @@
 @{
     var dbcontext = new GigTechContext();
 }
-<h1>HEjsan</h1>
-@if (Model is not null)
-{
-    <h2>Products</h2>
-    <div id="product-columns">
+    <h2>Forum Index Sida</h2>
+    <div >
         <ul class="list-group">
             @foreach (var f in dbcontext.ForumPosts)
             {
+
+
                 <li class="list-group-item d-flex justify-content-between align-items-start">
+                <p>Title: @f.Title</p>
+                <p>Content @f.Content</p>
+                <p>Customer Id: @f.CustomerId</p>
+                <p>Creation Date: @f.CreationDate</p>
+                <p>Replies Count: @f.RepliesCount</p>
+
+                <br />
                     <a asp-controller="Home" asp-action="ProductDetail"
                        asp-route-id="@f.Content" class="btn btn-outline-primary">
                         <div class="ms-2 me-auto">
-                            @f.CreationDate
+                            @f.Content
                         </div>
-                     @*    <span class="badge bg-primary rounded-pill">
+
+
+                    <span class="badge bg-primary rounded-pill">
                             @(f.Title is null ? "zero" : f.CustomerId.
                                 ToString("C"))
-                        </span> *@
+                        </span>
                     </a>
                 </li>
             }
         </ul>
     </div>
-}
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8">
