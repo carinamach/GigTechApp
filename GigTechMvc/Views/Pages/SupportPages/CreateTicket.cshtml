@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using ProjectGigTech.Controllers
+@model GigTech.Shared.Ticket
+<h4>Ticket</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateTicket">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" style="margin-bottom:0.5em!important;">
+                <form>
+                    <fieldset>Ticket Type <select id="TicketType" name="TicketType" /></fieldset>
+                    <option value="0"></option>
+                    <option value="1">Report a User</option>
+                    <option value="2">Request a Refund</option>
+                    <option value="3">Report a bug</option>
+                    <option value="4">Misc/General enquiry.</option>
+                </form>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketTitle" class="control-label">Title</label>
+                <input asp-for="TicketTitle" class="form-control" placeholder="Ticket Title"/>
+                <span asp-validation-for="TicketTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketContent" class="control-label">Content</label>
+                <input asp-for="TicketContent" class="form-control" placeholder="Content"/>
+                <span asp-validation-for="TicketContent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketDate" class="control-label">Date of Ticket Creation</label>
+                <input asp-for="TicketDate" class="form-control" readonly />
+                <span asp-validation-for="TicketDate" class="text-danger"></span>
+                <label asp-for="CustomerId" class="control-label">User ID</label>
+                <input asp-for="CustomerId" class="form-control" readonly placeholder="@Model.CustomerId" value="@Model.CustomerId" />
+                <span asp-validation-for="TicketContent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
