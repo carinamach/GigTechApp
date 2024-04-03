@@ -65,11 +65,8 @@ namespace ProjectGigTech.Controllers
 		[Authorize]
 		public IActionResult Tickets()
 		{
-			var viewModel = new Ticket
-			{
-
-			};
-			return View(_spPg + "ViewTickets.cshtml", viewModel);
+			var tickets = _context.Tickets.ToList();
+			return View(_spPg + "ViewTickets.cshtml", tickets);
 		}
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
