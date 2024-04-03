@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "L0jvcRl715YOsDRWKdfJwcKCZbPMUa80VN4wMQ8X2uUQ5axVtkgUDWNKZSAfaFWFWEd2XSru6uoMyezFY27uaA==",
+  "dgSpecHash": "WDperOTCLwofYhZbkK99x0+SIB/jU3SiVlPlGabS3VHDx+3EKHi4uyrjxFy1UgaVQNN5NbL1SzsebC2Nllh5oA==",
   "success": true,
   "projectFilePath": "C:\\Users\\carin\\source\\repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj",
   "expectedPackageFiles": [
@@ -22,7 +22,6 @@
     "C:\\Users\\carin\\.nuget\\packages\\microsoft.entityframeworkcore.design\\8.0.3\\microsoft.entityframeworkcore.design.8.0.3.nupkg.sha512",
     "C:\\Users\\carin\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.3\\microsoft.entityframeworkcore.relational.8.0.3.nupkg.sha512",
     "C:\\Users\\carin\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\8.0.3\\microsoft.entityframeworkcore.sqlserver.8.0.3.nupkg.sha512",
-    "C:\\Users\\carin\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\8.0.3\\microsoft.entityframeworkcore.tools.8.0.3.nupkg.sha512",
     "C:\\Users\\carin\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0\\microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\carin\\.nuget\\packages\\microsoft.extensions.caching.memory\\8.0.0\\microsoft.extensions.caching.memory.8.0.0.nupkg.sha512",
     "C:\\Users\\carin\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
