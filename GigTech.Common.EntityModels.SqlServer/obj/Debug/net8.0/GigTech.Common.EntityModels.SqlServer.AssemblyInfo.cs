@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GigTech.Common.EntityModels.SqlServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0604d06a33e79830179bc2cd35e36dace53edec5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a49f1efe2fcfb6fe7aba998fa8b4d5e26b5ed3fd")]
 [assembly: System.Reflection.AssemblyProductAttribute("GigTech.Common.EntityModels.SqlServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GigTech.Common.EntityModels.SqlServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

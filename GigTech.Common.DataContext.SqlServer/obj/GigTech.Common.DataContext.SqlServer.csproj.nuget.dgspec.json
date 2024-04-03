@@ -98,7 +98,7 @@
         "projectName": "GigTech.Common.EntityModels.SqlServer",
         "projectPath": "C:\\Users\\carin\\source\\repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj",
         "packagesPath": "C:\\Users\\carin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\carin\\Source\\Repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\obj\\",
+        "outputPath": "C:\\Users\\carin\\source\\repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

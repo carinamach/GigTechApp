@@ -2,10 +2,10 @@
 
 namespace GigTechMvc.Models 
 {
-    public class ForumIndexViewModel
-    {
-        public List<ForumThread> ForumThreads { get; set; }
-    }
+    public record ForumIndexViewModel
+    (   IList<ForumThread> ForumThreads,
+        IList<ForumPost> ForumPosts);
+    
 
     public class CreateThreadViewModel
     {
