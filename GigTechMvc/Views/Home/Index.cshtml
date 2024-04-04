@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="~/css/index.css" />
     <body>
     <main>
-        <h2 class="text-center" style="color: #ffffff; font-size: 2em;">Featured Games</h2>
+<div class="cool-header">
+    <h2>Featured Games</h2>
+</div>
   <div id="carouselWithCaptions" class="carousel slide" data-bs-ride="carousel">
       <ol class="carousel-indicators">
           @for (int i = 0; i < 5; i++)
@@ -18,7 +20,7 @@
       <div class="carousel-inner">
           @if (dbcontext.Products != null)
           {
-              var games = dbcontext.Products.Take(5).ToList();
+              var games = dbcontext.Products.Skip(2).Take(5).ToList();
               for (int i = 0; i < 5; i++)
               {
                   var game = games[i];
@@ -66,7 +68,6 @@
          </div>
      </div>
  </div>
-
         <!-- Top sellers list -->
    <div style="display: flex;">  
        @if (dbcontext.Products != null)
@@ -108,8 +109,8 @@
                  </div>
              </div>
          }
-         var gamess = dbcontext.Products.Skip(2).Take(1).ToList();
-         foreach (var game in gamess)
+         var games2 = dbcontext.Products.Skip(2).Take(1).ToList();
+         foreach (var game in games2)
          {
              <div class="col-6">
                  <div class="card">
