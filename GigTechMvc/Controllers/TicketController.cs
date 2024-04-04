@@ -51,7 +51,7 @@ namespace GigTechMvc.Controllers
                 return NotFound();
             }
 
-            return View(ticket);
+            return View(_spPg+"Details.cshtml", ticket);
         }
 
         // GET: Ticket/Create
@@ -71,7 +71,7 @@ namespace GigTechMvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Status,TicketContent,TicketTitle,TicketDate")] Ticket ticket)
+        public async Task<IActionResult> Create([Bind("CustomerId,Status,TicketContent,TicketTitle,TicketDate")] Ticket ticket)
         {
             // Retrieve the current user's ID
             string userId = RetrieveUserId().Result;
@@ -79,13 +79,10 @@ namespace GigTechMvc.Controllers
             // Set the CustomerId property of the ticket
 
 
-            // Check if the CustomerId is set correctly
-            Console.WriteLine($"CustomerId: {ticket.CustomerId}");
-            Console.WriteLine(ModelState.IsValid);
 
             ticket.CustomerId = userId;
             var ticketId = ticket.CustomerId;
-            if (ModelState.IsValid)
+            if (ticket.CustomerId == userId)
             {
                 try
                 {
@@ -124,7 +121,7 @@ namespace GigTechMvc.Controllers
             {
                 return NotFound();
             }
-            return View(ticket);
+            return View(_spPg+"Edit.cshtml",ticket);
         }
 
         // POST: Ticket/Edit/5
@@ -139,7 +136,7 @@ namespace GigTechMvc.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (id == ticket.CustomerId)
             {
                 try
                 {
@@ -159,7 +156,7 @@ namespace GigTechMvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(ticket);
+            return View(_spPg+ "Edit.cshtml",ticket);
         }
 
         // GET: Ticket/Delete/5
@@ -177,7 +174,7 @@ namespace GigTechMvc.Controllers
                 return NotFound();
             }
 
-            return View(ticket);
+            return View(_spPg+"Delete.cshtml", ticket);
         }
 
         // POST: Ticket/Delete/5
