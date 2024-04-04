@@ -41,8 +41,7 @@
           <span class="visually-hidden">Next</span>
       </button>
   </div>
-
-         <!-- Top sellers main card -->
+        <!-- Top sellers main card -->
  <h3><span class="badge bg-secondary">Top Sellers</span></h3>
  <div class="card">
      <div class="row g-0">
@@ -95,15 +94,16 @@
  <div class="row">
      @if (dbcontext.Products != null)
      {
-         var games = dbcontext.Products.Skip(3).Take(1).ToList();
+         var games = dbcontext.Products.Skip(7).Take(1).ToList();
          foreach (var game in games)
          {
              <div class="col-6">
                  <div class="card">
-                     <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+                     <iframe width="100%" height="315" src="https://www.youtube.com/embed/f28nKLp-eKg" frameborder="0" allowfullscreen></iframe>
                      <div class="card-body">
                          <h5 class="card-title">@game.Title</h5>
                          <p class="card-text">@game.Description</p>
+                         <p class="card-text"><small class="text-muted">Released: @game.ReleaseDate</small></p>
                      </div>
                  </div>
              </div>
@@ -113,10 +113,11 @@
          {
              <div class="col-6">
                  <div class="card">
-                     <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+                     <iframe width="100%" height="315" src="https://www.youtube.com/embed/c80dVYcL69E" frameborder="0" allowfullscreen></iframe>
                      <div class="card-body">
                          <h5 class="card-title">@game.Title</h5>
                          <p class="card-text">@game.Description</p>
+                         <p class="card-text"><small class="text-muted">Released: @game.ReleaseDate</small></p>
                      </div>
                  </div>
              </div>
