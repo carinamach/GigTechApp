@@ -11,7 +11,7 @@
         "projectName": "GigTech.Common.EntityModels.SqlServer",
         "projectPath": "C:\\Users\\omar\\source\\repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj",
         "packagesPath": "C:\\Users\\omar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\omar\\Source\\Repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\obj\\",
+        "outputPath": "C:\\Users\\omar\\source\\repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\omar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -52,12 +52,6 @@
               "version": "[8.0.3, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[8.0.3, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.3, )"
             }
