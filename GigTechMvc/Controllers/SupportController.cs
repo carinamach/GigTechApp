@@ -19,6 +19,17 @@ namespace GigTechMvc.Controllers
         }
 
 		[Authorize]
+		public IActionResult CreateTicket()
+		{
+			return View("~/Views/Pages/Ticket/Create.cshtml");
+		}
+
+		public IActionResult ViewTickets()
+		{
+			return View("~/Views/Pages/Ticket/Index.cshtml");
+		}
+
+		[Authorize]
 		public IActionResult AccountInfo() 
 		{
 			return View("~/Views/Pages/UserPage.cshtml");
