@@ -5,6 +5,38 @@
 @{
     var dbcontext = new GigTechContext();
 }
+<div class="col-md-4">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="ForumPosts" class="control-label"></label>
+            <input asp-for="ForumPosts" class="form-control" />
+            <span asp-validation-for="ForumPosts" class="text-danger"></span>
+        </div>
+       @*  <div class="form-group">
+            <label asp-for="CreationDate" class="control-label"></label>
+            <input asp-for="CreationDate" class="form-control" />
+            <span asp-validation-for="CreationDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CustomerId" class="control-label"></label>
+            <input asp-for="CustomerId" class="form-control" />
+            <span asp-validation-for="CustomerId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ThreadId" class="control-label"></label>
+            <select asp-for="ThreadId" class="form-control" asp-items="ViewBag.ThreadId"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="RepliesCount" class="control-label"></label>
+            <input asp-for="RepliesCount" class="form-control" />
+            <span asp-validation-for="RepliesCount" class="text-danger"></span>
+        </div> *@
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
     <h2>Forum Index Sida</h2>
     <div >
         <ul class="list-group">
@@ -36,20 +68,23 @@
             }
         </ul>
     </div>
-
+@foreach (var f in dbcontext.ForumPosts)
+{
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5 class="card-title"></h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Posted by: John Doe</h6>
+                    <h5 class="card-title">Title: @f.Title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Posted by customer id: @f.CustomerId</h6>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam commodo luctus purus at volutpat.</p>
+                    <p class="card-text">Creation Timestamp: @f.CreationDate</p>
+
+                    <p class="card-text">Content: @f.Content</p>
                 </div>
                 <div class="card-footer text-muted">
-                    Replies: 3
+                    @f.RepliesCount
                     <button type="button" class="btn btn-primary" data-toggle="forum" data-target="#replyModal">Reply</button>
                 </div>
             </div>
@@ -94,10 +129,10 @@
         <!-- Sidebar -->
         <div class="col-md-4">
             <div class="mb-4">
-                <!-- Create New Post Button --> <a asp-area="" asp-controller="Forum" asp-action="Detail">Create New Post</a>
+                <!-- Create New Post Button --> <a asp-area="" asp-controller="Forum" asp-action="Detail">Create  Post</a>
 
                 <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#newPostModal">
-                    hihi
+                    Create New Post
                 </button>
             </div>
 
@@ -114,19 +149,17 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="postTitle">Title</label>
-                                    <input type="text" class="form-control" id="postTitle" placeholder="Enter title" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="postContent">Content</label>
-                                    <textarea class="form-control" id="postContent" rows="5" placeholder="Enter your post content" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-
-
+                                <form action="@Url.Action("CreatePost", "Forum")" method="post">
+                                    <div class="form-group">
+                                        <label for="postTitle">Title</label>
+                                        <input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="Enter title" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="postContent">Content</label>
+                                        <textarea class="form-control" id="postContent" name="postContent" rows="5" placeholder="Enter your post content" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
                         </div>
                     </div>
                 </div>
@@ -134,7 +167,7 @@
         </div>
     </div>
 </div>
-
+}
 <!-- Bootstrap JS -->
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

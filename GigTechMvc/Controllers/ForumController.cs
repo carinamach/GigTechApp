@@ -1,17 +1,43 @@
 using GigTech.Shared;
 using GigTechMvc.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace GigTechMvc.Controllers
 {
     public class ForumController : Controller
     {
+        private readonly GigTechContext _context;
+
         public IActionResult ForumIndex()
         {
             return View("/Views/Pages/ForumPage.cshtml");
         }
-        //private readonly GigTechContext _context;
+
+        [HttpPost]
+        public IActionResult CreatePost(string postTitle, string postContent)
+        {
+            if (!string.IsNullOrEmpty(postTitle) && !string.IsNullOrEmpty(postContent))
+            {
+                var newPost = new ForumPost
+                {
+                    
+                    Title = postTitle,
+                    Content = postContent,
+                    CreationDate = DateTime.Now, // Assuming you want to set the creation date to the current date and time
+                                                 // You might need to set other properties like CustomerId, ThreadId, etc. based on your requirements
+                };
+
+                _context.ForumPosts.Add(newPost);
+                _context.SaveChanges();
+
+                return RedirectToAction("Detail");
+            }
+
+            // If the title or content is empty, return back to the view
+            return View();
+        }
         //public ForumController(GigTechContext context)
         //{
         //    _context = context;
