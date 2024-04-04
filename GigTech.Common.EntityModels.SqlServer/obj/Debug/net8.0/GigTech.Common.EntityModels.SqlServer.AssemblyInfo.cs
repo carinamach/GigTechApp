@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GigTech.Common.EntityModels.SqlServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ecb956d8e9bb6ba068615ffccdda4f18a0b77bbc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dc617a8eac4aa1ce1c74c2396bded60cff8171f1")]
 [assembly: System.Reflection.AssemblyProductAttribute("GigTech.Common.EntityModels.SqlServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GigTech.Common.EntityModels.SqlServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
