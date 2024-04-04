@@ -74,11 +74,6 @@ public partial class GigTechContext : DbContext
             entity.Property(e => e.ProductId).ValueGeneratedNever();
         });
 
-        modelBuilder.Entity<Ticket>(entity =>
-        {
-            entity.HasKey(e => e.CustomerId).HasName("PK__Tickets__A4AE64D855B16952");
-        });
-
         OnModelCreatingPartial(modelBuilder);
     }
 
