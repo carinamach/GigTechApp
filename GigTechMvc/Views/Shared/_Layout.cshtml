@@ -3,45 +3,92 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GigTechMvc</title>
+    <title>@ViewData["Title"] - GigTech</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GigTechMvc.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GigTechMvc</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
+ <!-- Navigation -->
+ <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+   <div class="container">
+     <a class="navbar-brand" href="#">GigTech</a>
+     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+     <div class="collapse navbar-collapse" id="navbarResponsive">
+       <ul class="navbar-nav ms-auto">
+         <li class="nav-item active">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link text-dark" href="#">About</a>
+         </li>
+         <li class="nav-item">
+             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link text-dark" href="#">Contact</a>
+         </li>
+       </ul>
+     </div>
+   </div>
+ </nav>
+ <!-- Image Header-->
+ <header class="masthead">
+   <div class="container h-100">
+     <div class="row h-100 align-items-center">
+       <div class="col-12 text-center">
+         <h1 class="fw-light">Welcome to GigTech</h1>
+         <p class="lead">Your gaming paradise! Explore, purchase, and download your favorite games hassle-free. Let the fun begin! 🎮✨</p>
+       </div>
+     </div>
+   </div>
+ </header>
+ 
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - GigTechMvc - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+ <div class="d-flex flex-column h-100">
+     <!-- FOOTER -->
+     <footer class="w-100 py-4 flex-shrink-0">
+         <div class="container py-4">
+             <div class="row gy-4 gx-5">
+                 <div class="col-lg-4 col-md-6">
+                     <h5 class="h1 text-white">GT.</h5>
+                     <p class="small text-muted">Dive into a realm of endless possibilities where you can effortlessly discover, buy, and enjoy your beloved games. Unleash the excitement and let the adventure unfold! 🎮✨</p>
+                     <p class="small text-muted mb-0">&copy; Copyrights. All rights reserved. <a class="text-primary" href="#">GigTech</a></p>
+                 </div>
+                 <div class="col-lg-2 col-md-6">
+                     <h5 class="text-white mb-3">Quick links</h5>
+                     <ul class="list-unstyled text-muted">
+                         <li><a href="#">Home</a></li>
+                         <li><a href="#">About</a></li>
+                         <li><a href="#">Get started</a></li>
+                         <li><a href="#">FAQ</a></li>
+                     </ul>
+                 </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="text-white mb-3">Connect with us</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li><a href="https://www.facebook.com"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                        <li><a href="https://www.twitter.com"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="https://www.instagram.com"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="https://www.linkedin.com"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                     </ul>
+                 </div>
+                 <div class="col-lg-4 col-md-6">
+                     <h5 class="text-white mb-3">GigTech</h5>
+                     <p class="small text-muted">Your gaming paradise! Explore, purchase, and download your favorite games hassle-free. Let the fun begin! 🎮✨</p>
+                 </div>
+             </div>
+         </div>
+     </footer>
+ </div>
+      <!-- scrip for carousel -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
