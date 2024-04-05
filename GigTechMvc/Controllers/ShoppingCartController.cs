@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace GigTechMvc.Controllers
 {
-    public class OrderDetailController : Controller
+    public class ShoppingCartController : Controller
     {
         private readonly GigTechContext _dbContext;
 
-        public OrderDetailController(GigTechContext dbContext)
+        public ShoppingCartController(GigTechContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -34,7 +34,7 @@ namespace GigTechMvc.Controllers
         // Åtgärd för att visa orderdetaljer
         public IActionResult OrderDetail()
         {
-            return View("/Views/Pages/OrderDetail.cshtml");
+            return View("/Views/Pages/ShoppingCart.cshtml");
         }
 
         // Åtgärd för att hantera köpet

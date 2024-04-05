@@ -2,7 +2,7 @@
 @using GigTech.Shared
 @{
     var dbContext = new GigTechContext();
-    var products = dbContext.Products.ToList();
+    var shoppingCart = dbContext.ShoppingCarts.ToList();
     decimal total = 0;
 }
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Shopping Cart</h1>
+    <h2>Shopping Cart</h2>
 
     <table class="table table-striped" id="cartTable">
         <thead>
@@ -26,15 +26,25 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var product in products)
+
+            @if (!shoppingCart.Any())
             {
-                <tr data-product-id="@product.ProductId">
-                    <td>@product.Title</td>
-                    <td>@product.Price</td>
-                    <td><a href="#" class="remove-link">Remove</a></td>
-                </tr>
-                total += product.Price;
+                <h5>Shopping cart is empty</h5>
             }
+            else
+            {
+                @foreach (var product in shoppingCart)
+                {
+                    <tr data-product-id="@product.CustomerId">
+                        <td>@product.ProductName</td>
+                        <td>@product.ProductPrice</td>
+                        <td><a href="#" class="remove-link">Remove</a></td>
+                    </tr>
+                    total += product.ProductPrice;
+                }
+            }
+
+            
         </tbody>
     </table>
 
