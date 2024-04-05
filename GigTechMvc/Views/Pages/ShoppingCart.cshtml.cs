@@ -2,7 +2,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GigTech.Shared;
-using System.Security.Cryptography;
 
 namespace GigTech.Pages
 {
@@ -50,7 +49,12 @@ namespace GigTech.Pages
 
         public IActionResult OnPostRemoveProduct(int productId)
         {
-            var productToRemove = _context.ShoppingCarts.FirstOrDefault(p => p.CustomerId == productId);
+            // Convert productId to string
+            string productIdString = productId.ToString();
+
+            // Find the product in the shopping cart with matching CustomerId
+            var productToRemove = _context.ShoppingCarts.FirstOrDefault(p => p.CustomerId == productIdString);
+
             if (productToRemove != null)
             {
                 _context.ShoppingCarts.Remove(productToRemove);
@@ -58,7 +62,8 @@ namespace GigTech.Pages
                 return new JsonResult(new { success = true });
             }
             return new JsonResult(new { success = false });
-            
         }
     }
 }
+
+//operator == cannot be applied to operands of type string int

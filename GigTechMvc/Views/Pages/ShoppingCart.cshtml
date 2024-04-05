@@ -57,7 +57,9 @@
                 e.preventDefault();
                 var productId = $(this).data('product-id');
                 // Ta bort raden från DOM
-                $(this).closest('tr').remove();
+                var rowToRemove = $(this).closest('tr');
+                var priceToRemove = parseFloat(rowToRemove.find('td:eq(1)').text());
+                rowToRemove.remove();
                 // Gör ett AJAX-anrop för att ta bort produkten från kundvagnen
                 $.ajax({
                     url: '/ShoppingCart/RemoveProduct',
@@ -65,8 +67,10 @@
                     data: { productId: productId },
                     success: function (response) {
                         if (response.success) {
-                            // Uppdatera totalen eller annan relevant information på sidan om det behövs
-                            // Exempel: $('#totalAmount').text(response.newTotal);
+                            // Uppdatera totalen
+                            var currentTotal = parseFloat($('#totalAmount').text());
+                            var newTotal = currentTotal - priceToRemove;
+                            $('#totalAmount').text(newTotal.toFixed(2));
                         } else {
                             alert('Failed to remove product from shopping cart.');
                         }
