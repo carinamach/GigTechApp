@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="~/css/index.css" />
     <body>
     <main>
-<div class="cool-header">
-    <h2>Featured Games</h2>
-</div>
+        <div class="cool-header">
+            <h2>Featured Games</h2>
+        </div>
+        
   <div id="carouselWithCaptions" class="carousel slide" data-bs-ride="carousel">
       <ol class="carousel-indicators">
           @for (int i = 0; i < 5; i++)
@@ -135,7 +136,7 @@
     <div class="row">
         @if (dbcontext.Products != null)
         {
-            var games = dbcontext.Products.Skip(2).Take(2).ToList(); 
+            var games = dbcontext.Products.Skip(8).Take(2).ToList(); 
             foreach (var game in games)
             {
                 <div class="col-6">
