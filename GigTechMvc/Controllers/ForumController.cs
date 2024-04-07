@@ -2,6 +2,7 @@ using GigTech.Shared;
 using GigTechMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 
 namespace GigTechMvc.Controllers
@@ -9,45 +10,59 @@ namespace GigTechMvc.Controllers
     public class ForumController : Controller
     {
         private readonly GigTechContext _context;
+        public ForumController(GigTechContext context)
+        {
+            _context = context;
+        }
 
         public IActionResult ForumIndex()
         {
             return View("/Views/Pages/ForumPage.cshtml");
         }
-
         [HttpPost]
-        public IActionResult CreatePost(string postTitle, string postContent)
+        public IActionResult SaveText(string title, string content)
         {
-            if (!string.IsNullOrEmpty(postTitle) && !string.IsNullOrEmpty(postContent))
+            if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(content))
             {
-                var newPost = new ForumPost
+                var data = new ForumPost
                 {
-                    
-                    Title = postTitle,
-                    Content = postContent,
-                    CreationDate = DateTime.Now, // Assuming you want to set the creation date to the current date and time
-                                                 // You might need to set other properties like CustomerId, ThreadId, etc. based on your requirements
+                    Title = title,
+                    Content = content,
+                    CreationDate = DateTime.Now,
+                    CustomerId = 1,
+                    ThreadId = 1,
+                    RepliesCount = 0
                 };
 
-                _context.ForumPosts.Add(newPost);
+                _context.ForumPosts.Add(data);
                 _context.SaveChanges();
-
-                return RedirectToAction("Detail");
             }
-
-            // If the title or content is empty, return back to the view
-            return View();
+            return RedirectToAction("/Views/Home/Privacy.cshtml");
         }
-        //public ForumController(GigTechContext context)
+
+        //[HttpPost]
+        //public IActionResult CreatePost(string postTitle, string postContent)
         //{
-        //    _context = context;
+        //    if (!string.IsNullOrEmpty(postTitle) && !string.IsNullOrEmpty(postContent))
+        //    {
+        //        var newPost = new ForumPost
+        //        {
+                    
+        //            Title = postTitle,
+        //            Content = postContent,
+        //            CreationDate = DateTime.Now, /
+        //        };
+
+        //        _context.ForumPosts.Add(newPost);
+        //        _context.SaveChanges();
+
+        //        return RedirectToAction("Detail");
+        //    }
+
+        //    // If the title or content is empty, return back to the view
+        //    return View();
         //}
-        //public IActionResult Index()
-        //{
-        //    // Retrieve and display all forum threads
-        //    var threads = _context.ForumThreads.ToList();
-        //    return View(threads);
-        //}
+
         public IActionResult CreateThread()
         {
             return View();
