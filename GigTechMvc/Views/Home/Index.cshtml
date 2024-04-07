@@ -136,7 +136,7 @@
     <div class="row">
         @if (dbcontext.Products != null)
         {
-            var games = dbcontext.Products.Skip(8).Take(2).ToList(); 
+            var games = dbcontext.Products.Skip(3).Take(4).ToList(); 
             foreach (var game in games)
             {
                 <div class="col-6">
