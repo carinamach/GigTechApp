@@ -20,10 +20,7 @@ namespace GigTechMvc.Controllers
         public IActionResult Index()
         {
             var model = new IndexModel();
-            model.Games = _context.Products.Skip(2).Take(5).ToList();
-
             ViewBag.Games = _context.Products.Skip(2).Take(5).ToList();
-
 
             return View(model);
         }
