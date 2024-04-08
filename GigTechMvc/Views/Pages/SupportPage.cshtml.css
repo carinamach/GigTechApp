@@ -1,0 +1,96 @@
+﻿* {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  margin-top: 3em;
+}
+
+main>h2{
+  margin: auto 0 1rem 0;
+}
+
+.gridWrapper {
+  display:flex;
+  flex-direction:row;
+  flex-wrap: wrap;
+  place-content: center center;
+
+  width: 100%;
+  height: 100%;
+
+  margin-top: 1em;
+
+  overflow: hidden;
+}
+
+.gridButtonContainer {
+  display: flex;
+  width: 49.5%;
+  height: 5em;
+  border: grey medium solid;
+  box-shadow: 5px 5px 5px black;
+  place-self: center center;
+  margin: .5% .5%;
+
+}
+
+.gridButtonContainer:last-child
+{
+    flex-grow: 2;
+    box-shadow: 3px 3px 5px black;
+}
+
+.gridButtonContainer:nth-child(odd)
+{
+  margin-left: 0;
+}
+.gridButtonContainer:nth-child(even)
+{
+  margin-right: 0;
+}
+
+.gridButton,
+.gridButton:visited,
+.gridButton:link {
+    display: flex;
+    width: 100%;
+    color: black;
+    text-decoration: none;
+    background: radial-gradient(circle, rgba(93,162,89,0) 0%, rgba(2,2,1,0) 52%, rgba(72, 145, 177, 0.873) 54%, rgba(2,2,1,0) 56%, rgba(2,2,1,0) 100%) !important;
+}
+.gridButton:hover,
+.gridButton:focus
+{
+  color: black;
+  text-decoration: none;
+  background: radial-gradient(circle, rgba(93,162,89,0) 0%, 
+  rgba(2,2,1,0) 52%, 
+  rgba(70, 68, 194, 0.873) 54%, 
+  rgba(2,2,1,0) 56%, 
+  rgba(2,2,1,0) 100%)!important;
+}
+
+.gridButton:active
+{
+  background: radial-gradient(circle, rgba(93,162,89,0) 0%, 
+  rgba(2,2,1,0) 52%, 
+  rgba(154, 68, 194, 0.873) 54%, 
+  rgba(2,2,1,0) 56%, 
+  rgba(2,2,1,0) 100%)!important;
+}
+
+.transitionBackground
+  {
+      transition: all 1s ease-in!important;
+  }
+
+.gridButtonText {
+  user-select: none;
+  margin: auto;
+  text-align: start;
+  pointer-events: none;
+  background-color: none;
+}
+

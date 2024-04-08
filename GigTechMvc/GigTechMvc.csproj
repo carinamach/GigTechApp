@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="wwwroot\css\index.ts" />
+    <None Include="wwwroot\css\CreateTicket.css" />
   </ItemGroup>
 
 </Project>
