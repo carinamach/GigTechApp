@@ -10,14 +10,10 @@ namespace GigTechMvc.Controllers
     public class ForumController : Controller
     {
         private readonly GigTechContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IConfiguration _configuration;
 
-        public ForumController(GigTechContext context, IConfiguration configuration, UserManager<IdentityUser> userManager)
+        public ForumController(GigTechContext context)
         {
             _context = context;
-            _configuration = configuration;
-            _userManager = userManager;
         }
 
         public IActionResult ForumIndex()
@@ -30,7 +26,7 @@ namespace GigTechMvc.Controllers
         {
             if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(content))
             {
-                var forumPost = new ForumPost
+                var forumPost = new ForumPost()
                 {
                     Title = title,
                     Content = content,
