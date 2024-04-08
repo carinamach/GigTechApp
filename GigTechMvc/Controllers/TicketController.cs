@@ -38,15 +38,11 @@ namespace GigTechMvc.Controllers
         }
 
         // GET: Ticket/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             var ticket = await _context.Tickets
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (ticket == null)
             {
                 return NotFound();
@@ -114,10 +110,6 @@ namespace GigTechMvc.Controllers
       
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             var ticket = await _context.Tickets.FindAsync(id);
             if (ticket == null)
