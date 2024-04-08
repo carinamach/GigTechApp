@@ -1,192 +1,167 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿    @using GigTech.Shared
+    @{
+        ViewData["Title"] = "Home Page";
+        var dbcontext = new GigTechContext();
+    }
 
-<link rel="stylesheet" href="~/css/index.css" />
+    <link rel="stylesheet" href="~/css/index.css" />
+    <body>
+    <main>
+        <div class="cool-header">
+            <h2>Featured Games</h2>
+        </div>
+        
+  <div id="carouselWithCaptions" class="carousel slide" data-bs-ride="carousel">
+      <ol class="carousel-indicators">
+          @for (int i = 0; i < 5; i++)
+          {
+              <li data-bs-target="#carouselWithCaptions" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
+          }
+      </ol>
+      <div class="carousel-inner">
+          @if (dbcontext.Products != null)
+          {
+              var games = dbcontext.Products.Skip(2).Take(5).ToList();
+              for (int i = 0; i < 5; i++)
+              {
+                  var game = games[i];
+                  <div class="carousel-item @(i == 0 ? "active" : "")">
+                      <img src="@game.ImageOne" class="d-block w-100" alt="Slide @(i + 1)">
+                      <div class="carousel-caption d-none d-sm-block">
+                          <h5>@game.Title</h5>
+                          <p>@game.Description</p>
+                      </div>
+                  </div>
+              }
+          }
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselWithCaptions" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselWithCaptions" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+      </button>
+  </div>
+        <!-- Top sellers main card -->
+ <h3><span class="badge bg-secondary">Top Sellers</span></h3>
+ <div class="card">
+     <div class="row g-0">
+         <div class="col-5 col-sm-4">
+             @if (dbcontext.Products != null && dbcontext.Products.Any())
+             {
+                 var game = dbcontext.Products.Skip(5).First(); 
+                 <img src="@game.ImageOne" class="img-fluid w-100" alt="card-horizontal-image">
+             }
+         </div>
+         <div class="col-7 col-sm-8">
+             <div class="card-body">
+                 @if (dbcontext.Products != null && dbcontext.Products.Any())
+                 {
+                     var game = dbcontext.Products.Skip(5).First(); 
+                     <h5 class="card-title">@game.Title</h5>
+                     <p class="card-text">@game.Description</p>
+                     <p class="card-text"><small class="text-muted">Released: @game.ReleaseDate</small></p>
+                     <a href="#" class="btn btn-primary">View Game</a>
+                 }
+             </div>
+         </div>
+     </div>
+ </div>
+        <!-- Top sellers list -->
+   <div style="display: flex;">  
+       @if (dbcontext.Products != null)
+       {
+           var games = dbcontext.Products.Skip(4).Take(5).ToList();
+           for (int i = 0; i < games.Count; i++)
+           {
+               <div class="card" style="width: 18rem; margin-right: 10px;">
+                   <img src="@Url.Content(games[i].ImageOne)" class="card-img-top" alt="Game Image">
+                   <div class="card-body">
+                       <h5 class="card-title">@games[i].Title</h5>
+                       <p class="card-text"><small class="text-muted">Released: @games[i].ReleaseDate</small></p>
+                       <a href="#" class="btn btn-primary">View Game</a>
+                   </div>
+               </div>
+           }
+       }
+   </div>
+         <!-- Link to product page -->
+        <div class="text-center mt-4">
+            <a href="/products" class="btn btn-lg btn-success">View All Games</a>
+        </div>
+        <!-- Upcoming Games -->
+    <h3>Upcoming Releases <span class="badge bg-secondary">New</span></h3>
+ <div class="row">
+     @if (dbcontext.Products != null)
+     {
+         var games = dbcontext.Products.Skip(7).Take(1).ToList();
+         foreach (var game in games)
+         {
+             <div class="col-6">
+                 <div class="card">
+                     <iframe width="100%" height="315" src="https://www.youtube.com/embed/f28nKLp-eKg" frameborder="0" allowfullscreen></iframe>
+                     <div class="card-body">
+                         <h5 class="card-title">@game.Title</h5>
+                         <p class="card-text">@game.Description</p>
+                         <p class="card-text"><small class="text-muted">Released: @game.ReleaseDate</small></p>
+                     </div>
+                 </div>
+             </div>
+         }
+         var games2 = dbcontext.Products.Skip(2).Take(1).ToList();
+         foreach (var game in games2)
+         {
+             <div class="col-6">
+                 <div class="card">
+                     <iframe width="100%" height="315" src="https://www.youtube.com/embed/c80dVYcL69E" frameborder="0" allowfullscreen></iframe>
+                     <div class="card-body">
+                         <h5 class="card-title">@game.Title</h5>
+                         <p class="card-text">@game.Description</p>
+                         <p class="card-text"><small class="text-muted">Released: @game.ReleaseDate</small></p>
+                     </div>
+                 </div>
+             </div>
+         }
+     }
+ </div>
 
-
-<body>
-<main>
-    <h2 class="text-center" style="color: #ffffff; font-size: 2em;">Featured Games</h2>
-
-<div id="carouselWithCaptions" class="carousel slide" data-bs-ride="carousel">
-    <ol class="carousel-indicators">
-        <li data-bs-target="#carouselWithCaptions" data-bs-slide-to="0" class="active"></li>
-        <li data-bs-target="#carouselWithCaptions" data-bs-slide-to="1"></li>
-        <li data-bs-target="#carouselWithCaptions" data-bs-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="https://business-portal-bucket.s3.amazonaws.com/media/images/41e172c318357d632f53b92d8cb38661_large_cover.original.jpg" class="d-block w-100"alt="Slide 1">
-            <div class="carousel-caption d-none d-sm-block">
-            </div>
-            
-        </div>
-        <div class="carousel-item">
-            <img src="https://wallpapers.com/images/featured/pubg-go20ghrcj4ybxhvq.jpg"
-                 class="d-block w-100" alt="Slide 2">
-            <div class="carousel-caption d-none d-sm-block">
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="https://wallpapers.com/images/hd/valheim-game-winter-poster-vn5bcejvntr4h0my.jpg"
-                 class="d-block w-100" alt="Slide 3">
-            <div class="carousel-caption d-none d-sm-block">
-            </div>
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselWithCaptions"
-            data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselWithCaptions"
-            data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
-
-<h3><span class="badge bg-secondary" >Top Sellers</span></h3>
-<div class="card">
-    <div class="row g-0">
-        <div class="col-5 col-sm-4">
-            <img src="https://wallpapers.com/images/hd/valheim-game-winter-poster-vn5bcejvntr4h0my.jpg" class="img-fluid w-100" alt="card-horizontal-image">
-        </div>
-        <div class="col-7 col-sm-8">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                <a href="#" class="btn btn-primary">View Game</a>
-            </div>
-        </div>
-    </div>
-</div>
-    <div style="display: flex;">
-        <div class="card" style="width: 18rem; margin-right: 10px;">
-            <img src="https://wallpapers.com/images/hd/valheim-game-winter-poster-vn5bcejvntr4h0my.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">View Game</a>
-            </div>
-        </div>
-    
-        <div class="card" style="width: 18rem; margin-right: 10px;">
-            <img src="https://wallpapers.com/images/hd/valheim-game-winter-poster-vn5bcejvntr4h0my.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">View Game</a>
-            </div>
-        </div>
-        <div class="card" style="width: 18rem; margin-right: 10px;">
-            <img src="https://wallpapers.com/images/hd/valheim-game-winter-poster-vn5bcejvntr4h0my.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">View Game</a>
-            </div>
-        </div>
-        <div class="card" style="width: 18rem; margin-right: 10px;">
-            <img src="https://wallpapers.com/images/hd/valheim-game-winter-poster-vn5bcejvntr4h0my.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">View Game</a>
-            </div>
-        </div>
-        <div class="card" style="width: 18rem; margin-right: 10px;">
-            <img src="https://wallpapers.com/images/hd/valheim-game-winter-poster-vn5bcejvntr4h0my.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">View Game</a>
-            </div>
-        </div>
-    </div>
      <!-- Link to product page -->
         <div class="text-center mt-4">
             <a href="/products" class="btn btn-lg btn-success">View All Games</a>
         </div>
-<h3>Upcoming Releases <span class="badge bg-secondary">New</span></h3>
-<div class="row">
-    <div class="col-6">
-        <div class="card">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-            <div class="card-body">
-                <h5 class="card-title">Upcoming Game 1</h5>
-                <p class="card-text">Exciting new title coming soon!</p>
-                <a href="#" class="btn btn-primary">View Game</a>
+        <!-- Deals Cards -->
+        <h2><span class="badge bg-secondary">DEALS 20% OFF</span></h2>
+    <div class="row">
+        @if (dbcontext.Products != null)
+        {
+            var games = dbcontext.Products.Skip(3).Take(4).ToList(); 
+            foreach (var game in games)
+            {
+                <div class="col-6">
+                    <div class="card">
+                        <img src="@Url.Content(game.ImageOne)" class="card-img-top" alt="@game.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@game.Title</h5>
+                            <p class="card-text">@game.Description</p>
+                            <a href="#" class="btn btn-primary">View Game</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+     <!-- Forum Card -->
+    <div class="card">
+        <div class="row g-0">
+            <div class="col-7 col-sm-8">
+                <div class="card-body">
+                <p>Join our vibrant gaming community! Participate in forums, share content, and connect with fellow gamers.</p>
+                <a href="#" class="btn btn-primary">Explore Forum</a>
+                </div>
             </div>
         </div>
     </div>
-   <div class="col-6">
-        <div class="card">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-            <div class="card-body">
-                <h5 class="card-title">Upcoming Game 1</h5>
-                <p class="card-text">Exciting new title coming soon!</p>
-                <a href="#" class="btn btn-primary">View Game</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-6">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Upcoming Game 2</h5>
-                <p class="card-text">Get ready for this thrilling adventure!</p>
-                <a href="#" class="btn btn-primary">View Game</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-6">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Upcoming Game 2</h5>
-                <p class="card-text">Get ready for this thrilling adventure!</p>
-                <a href="#" class="btn btn-primary">View Game</a>
-            </div>
-        </div>
-    </div>
-</div>
- <!-- Link to product page -->
-    <div class="text-center mt-4">
-        <a href="/products" class="btn btn-lg btn-success">View All Games</a>
-    </div>
-    <h2><span class="badge bg-secondary">DEALS 20% OFF</span></h2>
-<div class="row">
-    <div class="col-6">
-        <div class="card">
-            <img src="https://wallpapers.com/images/hd/valheim-game-winter-poster-vn5bcejvntr4h0my.jpg" class="card-img-top" alt="Upcoming Game 1">
-            <div class="card-body">
-                <h5 class="card-title">Game 1</h5>
-                <p class="card-text">Exciting new title coming soon!</p>
-                <a href="#" class="btn btn-primary">View Game</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-6">
-        <div class="card">
-            <img src="https://wallpapers.com/images/hd/valheim-game-winter-poster-vn5bcejvntr4h0my.jpg" class="card-img-top" alt="Upcoming Game 2">
-            <div class="card-body">
-                <h5 class="card-title">Game 2</h5>
-                <p class="card-text">Get ready for this thrilling adventure!</p>
-                <a href="#" class="btn btn-primary">View Game</a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="card">
-    <div class="row g-0">
-        <div class="col-7 col-sm-8">
-            <div class="card-body">
-            <p>Join our vibrant gaming community! Participate in forums, share content, and connect with fellow gamers.</p>
-            <a href="#" class="btn btn-primary">Explore Forum</a>
-            </div>
-        </div>
-    </div>
-</div>
-</main>
-</body>
+    </main>
+    </body>

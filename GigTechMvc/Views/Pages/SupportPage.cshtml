@@ -1,0 +1,33 @@
+﻿@page
+@model GigTech.Common.Views.Pages.SupportPageModel
+@{
+  ViewBag.Title = "GigTech Support";
+  ViewBag.SubTitle = "Navigate using the buttons below.";
+}
+
+
+<main>
+  <h1>@ViewBag.Title</h1>
+  <h2>@ViewBag.SubTitle</h2>
+
+  <hr />
+
+
+  <div class="gridWrapper">
+    <div class="gridButtonContainer">
+        <a href="/Ticket/Create" class="gridButton">
+        <p class="gridButtonText">Create Ticket</p>
+      </a>
+    </div>
+    <div class="gridButtonContainer ">
+        <a href="/Ticket/Index"class="gridButton" >
+        <p class="gridButtonText">View Support Tickets</p>
+      </a>
+    </div>
+    <div class="gridButtonContainer ">
+        <a href="/UserPage/UserPage"class="gridButton" >
+        <p class="gridButtonText">View Profile</p>
+      </a>
+    </div>
+    </div>
+</main>
