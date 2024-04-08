@@ -1,5 +1,5 @@
 using GigTech.Shared;
-using GigTechMvc.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -10,63 +10,49 @@ namespace GigTechMvc.Controllers
     public class ForumController : Controller
     {
         private readonly GigTechContext _context;
-        public ForumController(GigTechContext context)
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IConfiguration _configuration;
+
+        public ForumController(GigTechContext context, IConfiguration configuration, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _configuration = configuration;
+            _userManager = userManager;
         }
 
         public IActionResult ForumIndex()
         {
-            return View("/Views/Pages/ForumPage.cshtml");
+            return View("/Views/Pages/ForumPage1.cshtml");
         }
+
         [HttpPost]
         public IActionResult SaveText(string title, string content)
         {
             if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(content))
             {
-                var data = new ForumPost
+                var forumPost = new ForumPost
                 {
                     Title = title,
                     Content = content,
                     CreationDate = DateTime.Now,
-                    CustomerId = 1,
-                    ThreadId = 1,
+                    CustomerId = 1, // Assuming you have some authentication system to get the current user ID
+                    ThreadId = 1, // Assuming you have a way to specify the thread ID
                     RepliesCount = 0
                 };
 
-                _context.ForumPosts.Add(data);
+                _context.ForumPosts.Add(forumPost);
                 _context.SaveChanges();
             }
-            return RedirectToAction("/Views/Home/Privacy.cshtml");
+
+            return RedirectToAction("ForumIndex");
         }
-
-        //[HttpPost]
-        //public IActionResult CreatePost(string postTitle, string postContent)
-        //{
-        //    if (!string.IsNullOrEmpty(postTitle) && !string.IsNullOrEmpty(postContent))
-        //    {
-        //        var newPost = new ForumPost
-        //        {
-                    
-        //            Title = postTitle,
-        //            Content = postContent,
-        //            CreationDate = DateTime.Now, /
-        //        };
-
-        //        _context.ForumPosts.Add(newPost);
-        //        _context.SaveChanges();
-
-        //        return RedirectToAction("Detail");
-        //    }
-
-        //    // If the title or content is empty, return back to the view
-        //    return View();
-        //}
 
         public IActionResult CreateThread()
         {
             return View();
         }
+    }
+}
         //[HttpPost]
         //public async Task<IActionResult> CreateThread(ForumThread thread)
         //{
@@ -102,5 +88,5 @@ namespace GigTechMvc.Controllers
         //    }
         //    return RedirectToAction(nameof(ViewThread), new { id = threadId });
         //}
-    }
-}
+    
+

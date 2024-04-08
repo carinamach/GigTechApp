@@ -1,20 +1,19 @@
 ﻿
-@using static GigTech.Shared.ForumPost
 @using GigTech.Shared
-@model ForumIndexViewModel
-
-
+@model IEnumerable<ForumPost>
+@* @model ForumPostViewModel
+ *@
 <form asp-controller="Forum" asp-action="SaveText" method="post">
-
-        <div class="form-group">
-            <label>Title:</label>
-            <input name="title" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>Content:</label>
-            <textarea name="content" class="form-control" rows="5"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-group">
+        <label>Title:</label>
+        <input name="title" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Content:</label>
+        <textarea name="content" class="form-control" rows="5"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 
 @* 
     <input type="text" id="title" name="title" />
@@ -22,9 +21,9 @@
     <br />
     <button class="btn btn-primary" type="submit"> Submit</button> *@
 
-
-</form>
-<div class="col-md-4">
+@* 
+</form> *@
+@* <div class="col-md-4"> *@
 @*     <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
@@ -57,10 +56,10 @@
             <input type="submit" value="Create" class="btn btn-primary" />
         </div>
     </form> *@
-</div>
+@* </div> *@
     <h2>Forum Index Sida</h2>
 
-@foreach (var f in Model.ForumPosts)
+@* @foreach (var f in Model)
 {
 <div class="container mt-5">
     <div class="row">
@@ -160,7 +159,7 @@
     </div>
 </div>
 }
-<!-- Bootstrap JS -->
+<!-- Bootstrap JS --> *@
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
