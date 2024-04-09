@@ -64,7 +64,6 @@ namespace GigTechMvc.Controllers
             customer.Email = formData.Email;
             customer.PhoneNumber = formData.PhoneNumber;
             customer.Username = formData.Username;
-
             // Save changes to the database
             _dbContext.SaveChanges();
 
