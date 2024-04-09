@@ -1,5 +1,5 @@
 ﻿@page
-@model GigTechMvc.Views.Pages.UserPageModel
+@model GigTechMvc.Views.Pages.UserPageHistoryModel
 @using GigTech.Shared;
 @{
     var customer = ViewBag.Customer as Customer;
@@ -47,39 +47,9 @@
 
     <div class="profileGames">
         <div id="yourGames-text">
-            <h3>YOUR GAMES</h3>
+            <h3>ORDER HISTORY</h3>
         </div>
-
-        @if (customer != null && !string.IsNullOrEmpty(customer.Games))
-        {
-            var gameIds = customer.Games.Split(',').Select(int.Parse).ToList();
-
-            foreach (var gameId in gameIds)
-            {
-                var product = products.FirstOrDefault(c => c.ProductId == gameId);
-                if (product != null)
-                {
-                    <div class="game">
-                        <img src="@product.SmallImage" alt="@product.Title" class="game-image">
-                        <div class="gameName-container">@product.Title</div>
-                        <div class="gameDes-container">Lite text som spelet, behöver inte var amcyekt. Bara lite granna. kanske några meninge till sen är det lart. Men vis er,</div>
-                        <div class="gameDownload-container">
-                            <button>DOWNLOAD</button>
-                            <button>PLAY NOW</button>
-                        </div>
-                    </div>
-                }
-            }
-        }
-        else
-        {
-            <div id="noGames-container">
-                <p>You don't have any games.</p>
-                <button>GAME LIBRARY</button>
-            </div>
-        }
-
-    </div>
+            
 
     <div class="profile-shopcontainer">
         <div id="profile-shopcontainerGames">

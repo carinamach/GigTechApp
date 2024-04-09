@@ -24,21 +24,24 @@
             <p><strong style="color: orangered">@customer.VMoney</strong> vMoney</p>
         </div>
         <div id="topBorder-right">
-            <a asp-controller="UserPage" asp-action="UserPageEdit" class="icon-button">
+            <a asp-controller="UserPage" asp-action="UserPage" class="icon-button">
                 <div class="icon">
-                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="Icon 1">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="yourprofile">
                     <p>PROFILE</p>
                 </div>
             </a>
+            <a asp-controller="UserPage" asp-action="UserPageEdit" class="icon-button">
+                <div class="icon">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="editprofile">
+                    <p>EDIT</p>
+                </div>
             </a>
-            <div class="icon">
-                <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="Icon 1">
-                <p>ORDER HISTORY</p>
-            </div>
-            <div class="icon">
-                <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="Icon 1">
-                <p>ANOTHER</p>
-            </div>
+            <a asp-controller="UserPage" asp-action="UserPageHistory" class="icon-button">
+                <div class="icon">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="History">
+                    <p>ORDER HISTORY</p>
+                </div>
+            </a>
         </div>
     </div>
 

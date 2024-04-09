@@ -40,6 +40,19 @@ namespace GigTechMvc.Controllers
             return View("/Views/Pages/UserPageEdit.cshtml");
         }
 
+        public IActionResult UserPageHistory()
+        {
+            var customer = _dbContext.Customers.FirstOrDefault(p => p.CustomerId == 1);
+            var products = _dbContext.Products.ToList();
+            var orders = _dbContext.OrderDetails.ToList();
+
+            ViewBag.Customer = customer;
+            ViewBag.Products = products;
+            ViewBag.Orders = orders;
+
+            return View("/Views/Pages/UserPageHistory.cshtml");
+        }
+
         [HttpPost]
         public IActionResult OnPostSaveChanges(CustomerFormData formData)
         {
