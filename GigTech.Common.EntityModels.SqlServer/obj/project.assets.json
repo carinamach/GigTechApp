@@ -4112,11 +4112,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rasse\\Source\\Repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj",
+      "projectUniqueName": "C:\\Users\\rasse\\source\\repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj",
       "projectName": "GigTech.Common.EntityModels.SqlServer",
-      "projectPath": "C:\\Users\\rasse\\Source\\Repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj",
+      "projectPath": "C:\\Users\\rasse\\source\\repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj",
       "packagesPath": "C:\\Users\\rasse\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rasse\\Source\\Repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\obj\\",
+      "outputPath": "C:\\Users\\rasse\\source\\repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FlIDAEKvlpjNSYtn4CO6mb+bsubeAkCI7y67gceqRejhFmedPObeZcBA2z+2aREwQtn7j7l+IIAk2jD3osQ4GQ==",
+  "dgSpecHash": "PK8gyurXhJ8vChMxqqF9BtN7jjv8MpAFe/zN3l2B7HLqT+A3xlQydBs90b1bQlkGKynfd/xX5DMh5WiR1ekvCQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\rasse\\Source\\Repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj",
+  "projectFilePath": "C:\\Users\\rasse\\source\\repos\\GigTechApp\\GigTech.Common.EntityModels.SqlServer\\GigTech.Common.EntityModels.SqlServer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rasse\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\rasse\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

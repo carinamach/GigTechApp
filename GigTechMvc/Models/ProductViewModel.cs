@@ -2,9 +2,11 @@
 
 namespace GigTechMvc.Models 
 {
-    public class ProductViewModel
-        (
-        IList<Product> Products
-        );
+
+
+    public record ProductViewModel { }
+        
+
+        
     
 }
