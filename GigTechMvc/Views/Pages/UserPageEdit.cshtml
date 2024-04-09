@@ -11,9 +11,10 @@
     <meta name="viewport" />
     <title>User Profile</title>
     <link rel="stylesheet" href="/css/userpagestyle.css">
+    <script src="~/js/userpage.js"></script>
 </head>
 <body>
-    <script src="~/js/userpage.js"></script>
+
     <div id="topBorder">
         <div id="topBorder_img">
             <img id="" src="@customer.ProfileImage" />
@@ -98,23 +99,14 @@
             </div>
 
             <div id="profile-information-right">
-                <h3>DEPOSIT OPTIONS</h3>
-                <p>Select a deposit amount:</p>
-
-                <div id="deposit-options" style="padding: 10px;">
-                    <button class="deposit-amount" data-amount="100">100</button>
-                    <button class="deposit-amount" data-amount="200">200</button>
-                    <button class="deposit-amount" data-amount="500">500</button>
-                    <button class="deposit-amount" data-amount="1000">1000</button>
-                    <button class="deposit-amount" data-amount="2000">2000</button>
-                    <button class="deposit-amount" data-amount="5000">5000</button>
-
-                    <div id="custom-deposit-section" style="padding-top: 10px;">
-                        <input type="number" id="custom-amount" placeholder="Enter custom amount">
+                <form id="TEST" asp-controller="UserPage" asp-action="Deposit" method="post">
+                    <div class="TEST2">
+                        <label asp-for="VMoney">vMoney</label>
+                        <input asp-for="VMoney" class="TEST3" value="@customer.VMoney" />
+                        <span asp-validation-for="VMoney" class="TEST4"></span>
                     </div>
-                </div>
-
-                <button id="deposit-now-button">Deposit Now</button>
+                    <button type="submit" class="TEST5">Save Changes</button>
+                </form>
             </div>
 
         </div>

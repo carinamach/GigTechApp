@@ -69,5 +69,42 @@ namespace GigTechMvc.Controllers
 
             return Content("Changes saved successfully!");
         }
+
+        [HttpPost]
+        public IActionResult Deposit(DepositFormData depositData)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Handle validation errors
+                return BadRequest(ModelState);
+            }
+
+            // Retrieve the user from the database
+            var customer = _dbContext.Customers.FirstOrDefault(p => p.CustomerId == 1);
+
+            if (customer == null)
+            {
+                // Handle if user is not found
+                return NotFound();
+            }
+
+            // Convert the string vMoney value to an integer
+            if (int.TryParse(depositData.vMoney, out int depositValue))
+            {
+                // Add the deposit value to the current vMoney value
+                customer.VMoney += depositValue;
+                // Save changes to the database
+                _dbContext.SaveChanges();
+
+                return Content("Deposit successful!");
+            }
+            else
+            {
+                // Handle the case where the string cannot be parsed as an integer
+                // For example, return a BadRequest indicating invalid input
+                return BadRequest("Invalid vMoney value");
+            }
+        }
+
     }
 }
