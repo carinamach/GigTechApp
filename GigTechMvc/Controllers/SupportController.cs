@@ -9,9 +9,8 @@ namespace GigTechMvc.Controllers
 {
 	public class SupportController : Controller
 	{
-        string _spPg = "~/Views/Pages/SupportPages/";
-        public GigTechContext _context = new GigTechContext();
-		public SupportController(){}
+		string _spPg = "~/Views/Pages/SupportPages/";
+		public GigTechContext _context = new GigTechContext();
 		
         public IActionResult Index()
         {

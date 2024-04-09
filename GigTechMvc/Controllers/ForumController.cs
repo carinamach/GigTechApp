@@ -18,7 +18,11 @@ namespace GigTechMvc.Controllers
 
         public IActionResult ForumIndex()
         {
-            return View("/Views/Pages/ForumPage1.cshtml");
+            return View("/Views/Pages/ForumPage.cshtml");
+        }
+        public IActionResult ForumPrivacy()
+        {
+            return View("/Views/Home/Privacy.cshtml");
         }
 
         [HttpPost]
@@ -32,7 +36,7 @@ namespace GigTechMvc.Controllers
                     Content = content,
                     CreationDate = DateTime.Now,
                     CustomerId = 1, // Assuming you have some authentication system to get the current user ID
-                    ThreadId = 1, // Assuming you have a way to specify the thread ID
+                    ThreadId = 2, // Assuming you have a way to specify the thread ID
                     RepliesCount = 0
                 };
 
@@ -40,7 +44,7 @@ namespace GigTechMvc.Controllers
                 _context.SaveChanges();
             }
 
-            return RedirectToAction("ForumIndex");
+            return RedirectToAction("ForumPrivacy");
         }
 
         public IActionResult CreateThread()
