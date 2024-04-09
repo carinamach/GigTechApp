@@ -101,7 +101,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: start;
 }
 
 .game {
@@ -145,7 +145,7 @@
 
 .gameDes-container {
     margin-top: 8px;
-    text-align: left;
+    text-align: center;
     letter-spacing: 1px;
     font-size: 11px;
     width: 175px;

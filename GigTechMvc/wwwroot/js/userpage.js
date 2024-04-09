@@ -35,3 +35,16 @@
 
     });
 });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var description = document.querySelector('.description');
+    var readMoreBtn = document.querySelector('.readmore');
+
+    readMoreBtn.addEventListener('click', function() {
+        // Set description text to full length
+        description.textContent = @product.Description;
+
+    // Hide read more button after expanding the description
+    readMoreBtn.style.display = 'none';
+        });
+    });
