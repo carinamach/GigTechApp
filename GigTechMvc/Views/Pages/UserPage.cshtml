@@ -1,0 +1,90 @@
+﻿@page
+@model GigTechMvc.Views.Pages.UserPageModel
+@using GigTech.Shared;
+@{
+    var customer = ViewBag.Customer as Customer;
+    var products = ViewBag.Products as List<Product>;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" />
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/css/UserPageStyle.css">
+    <script src="~/js/userpage.js"></script>
+</head>
+<body>
+    <div id="topBorder">
+        <div id="topBorder_img">
+            <img id="" src="@customer.ProfileImage" />
+        </div>
+        <div id="topBorder-left">
+            <h2>@customer.Username</h2>
+            <p><strong style="color: orangered">@customer.VMoney</strong> vMoney</p>
+        </div>
+        <div id="topBorder-right">
+            <a asp-controller="UserPage" asp-action="UserPageEdit" class="icon-button">
+                <div class="icon">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="Icon 1">
+                    <p>PROFILE</p>
+                </div>
+            </a>
+            <!-- Other icons -->
+        </div>
+    </div>
+
+    <div class="profileGames">
+        <div id="yourGames-text">
+            <h3>YOUR GAMES</h3>
+        </div>
+
+        @if (customer != null && !string.IsNullOrEmpty(customer.Games))
+        {
+            var gameIds = customer.Games.Split(',').Select(int.Parse).ToList();
+
+            foreach (var gameId in gameIds)
+            {
+                var product = products.FirstOrDefault(c => c.ProductId == gameId);
+                if (product != null)
+                {
+                    <div class="game">
+                        <img src="@product.SmallImage" alt="@product.Title" class="game-image">
+                        <div class="gameName-container">@product.Title</div>
+                        <div class="gameDes-container">Lite text som spelet, behöver inte var amcyekt. Bara lite granna. kanske några meninge till sen är det lart. Men vis er,</div>
+                        <div class="gameDownload-container">
+                            <button>DOWNLOAD</button>
+                            <button>PLAY NOW</button>
+                        </div>
+                    </div>
+                }
+            }
+        }
+        else
+        {
+            <div id="noGames-container">
+                <p>You don't have any games.</p>
+                <button>GAME LIBRARY</button>
+            </div>
+        }
+
+    </div>
+
+    <div class="profile-shopcontainer">
+        <div id="profile-shopcontainerGames">
+            <h3>GAME LIBRARY</h3>
+
+            <div class="side-scroll">
+                @foreach (var game in products) // Iterate through all games
+                {
+                    <div class="gamelib">
+                        <img src="@game.ImageOne" alt="@game.Title" class="game-image">
+                        <p>@game.Title</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

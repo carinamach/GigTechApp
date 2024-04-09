@@ -1,0 +1,125 @@
+﻿@page
+@model GigTechMvc.Views.Pages.UserPageModel
+@using GigTech.Shared;
+@{
+    var customer = ViewBag.Customer as Customer;
+    var products = ViewBag.Products as List<Product>;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" />
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/css/UserPageStyle.css">
+    <script src="~/js/userpage.js"></script>
+</head>
+<body>
+
+    <div id="topBorder">
+        <div id="topBorder_img">
+            <img id="" src="@customer.ProfileImage" />
+        </div>
+        <div id="topBorder-left">
+            <h2>@customer.Username</h2>
+            <p><strong style="color: orangered">@customer.VMoney</strong> vMoney</p>
+        </div>
+        <div id="topBorder-right">
+            <a asp-controller="UserPage" asp-action="UserPageEdit" class="icon-button">
+                <div class="icon">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="Icon 1">
+                    <p>PROFILE</p>
+                </div>
+            </a>
+            </a>
+            <div class="icon">
+                <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="Icon 1">
+                <p>ORDER HISTORY</p>
+            </div>
+            <div class="icon">
+                <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="Icon 1">
+                <p>ANOTHER</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="profileGames">
+        <div id="profile-information">
+            <div id="profile-information-left">
+                <h3>YOUR PROFILE</h3>
+                <p><strong>First Name:</strong> @customer.FirstName</p>
+                <p><strong>Last Name:</strong> @customer.LastName</p>
+                <p><strong>Email:</strong> @customer.Email</p>
+                <p><strong>Phone Number:</strong> @customer.PhoneNumber</p>
+                <p><strong>Password:</strong> ********</p>
+                <p><strong>Username:</strong> @customer.Username</p>
+                <br />
+                <button id="editProfileBtn" class="edit-profile-button">EDIT PROFILE</button>
+
+                <div id="editProfileForm" style="display: block;">
+                    <form id="profileForm" asp-controller="UserPage" asp-action="OnPostSaveChanges" method="post">
+                        <label for="firstName">First Name:</label><br>
+                        <input type="text" id="firstName" name="firstName" value="@customer.FirstName"><br><br>
+
+                        <label for="lastName">Last Name:</label><br>
+                        <input type="text" id="lastName" name="lastName" value="@customer.LastName"><br><br>
+
+                        <label for="email">Email:</label><br>
+                        <input type="email" id="email" name="email" value="@customer.Email"><br><br>
+
+                        <label for="phoneNumber">Phone Number:</label><br>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" value="@customer.PhoneNumber"><br><br>
+
+                        <label for="password">Password:</label><br>
+                        <input type="password" id="password" name="password" value="********"><br><br>
+
+                        <label for="username">Username:</label><br>
+                        <input type="text" id="username" name="username" value="@customer.Username"><br><br>
+
+                        <button type="submit" id="saveChangesBtn">SAVE CHANGES</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="profile-information-right">
+                <h3>DEPOSIT OPTIONS</h3>
+                <p>Select a deposit amount:</p>
+
+                <div id="deposit-options" style="padding: 10px;">
+                    <button class="deposit-amount" data-amount="100">100</button>
+                    <button class="deposit-amount" data-amount="200">200</button>
+                    <button class="deposit-amount" data-amount="500">500</button>
+                    <button class="deposit-amount" data-amount="1000">1000</button>
+                    <button class="deposit-amount" data-amount="2000">2000</button>
+                    <button class="deposit-amount" data-amount="5000">5000</button>
+
+                    <div id="custom-deposit-section" style="padding-top: 10px;">
+                        <input type="number" id="custom-amount" placeholder="Enter custom amount">
+                    </div>
+                </div>
+
+                <button id="deposit-now-button">Deposit Now</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="profile-shopcontainer">
+        <div id="profile-shopcontainerGames">
+            <h2>GAME LIBRARY</h2>
+
+            <div class="side-scroll">
+                @foreach (var game in products) // Iterate through all games
+                {
+                    <div class="gamelib">
+                        <img src="@game.ImageOne" alt="@game.Title" class="game-image">
+                        <p>@game.Title</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
