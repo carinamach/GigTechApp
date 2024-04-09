@@ -41,9 +41,33 @@ namespace GigTechMvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult OnPostSaveChanges(string firstName, string lastName, string email, string phoneNumber, string password, string username)
+        public IActionResult OnPostSaveChanges(CustomerFormData formData)
         {
-            // Process form submission
+            if (!ModelState.IsValid)
+            {
+                // Handle validation errors
+                return BadRequest(ModelState);
+            }
+
+            // Retrieve the user from the database
+            var customer = _dbContext.Customers.FirstOrDefault(p => p.CustomerId == 1);
+
+            if (customer == null)
+            {
+                // Handle if user is not found
+                return NotFound();
+            }
+
+            // Update the user with the form data
+            customer.FirstName = formData.FirstName;
+            customer.LastName = formData.LastName;
+            customer.Email = formData.Email;
+            customer.PhoneNumber = formData.PhoneNumber;
+            customer.Username = formData.Username;
+
+            // Save changes to the database
+            _dbContext.SaveChanges();
+
             return Content("Changes saved successfully!");
         }
     }
