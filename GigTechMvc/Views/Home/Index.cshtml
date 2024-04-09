@@ -4,43 +4,157 @@
 
 <link rel="stylesheet" href="~/css/index.css" />
 <body>
-    <main>
-        <div class="cool-header">
-            <h2>Featured Games</h2>
-        </div>
+<main>
+    <div class="cool-header">
+        <h2>Featured Games</h2>
+    </div>
 
-        <div id="carouselWithCaptions" class="carousel slide" data-bs-ride="carousel">
-            <ol class="carousel-indicators">
-                @for (int i = 0; i < 5; i++)
+    <div id="carouselWithCaptions" class="carousel slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+            @for (int i = 0; i < ViewBag.Games.Count; i++)
+            {
+                <li data-bs-target="#carouselWithCaptions" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
+            }
+        </ol>
+        <div class="carousel-inner">
+            @if (ViewBag.Games != null)
+            {
+                for (int i = 0; i < ViewBag.Games.Count; i++)
                 {
-                    <li data-bs-target="#carouselWithCaptions" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")"></li>
-                }
-            </ol>
-            <div class="carousel-inner">
-                @if (ViewBag.Games != null)
-                {
-                    for (int i = 0; i < 5; i++)
-                    {
-                        var game = ViewBag.Games[i];
-                        <div class="carousel-item @(i == 0 ? "active" : "")">
-                            <img src="@game.ImageOne" class="d-block w-100" alt="Slide @(i + 1)">
-                            <div class="carousel-caption d-none d-sm-block">
-                                <h5>@game.Title</h5>
-                                <p>@game.Description</p>
-                            </div>
+                    var game = ViewBag.Games[i];
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <img src="@game.ImageOne" class="d-block w-100" alt="Slide @(i + 1)">
+                        <div class="carousel-caption d-none d-sm-block">
+                            <h5>@game.Title</h5>
+                            <p>@game.Description</p>
                         </div>
-                    }
+                    </div>
                 }
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselWithCaptions" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselWithCaptions" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+            }
         </div>
-        <!-- Rest of the page content -->
-    </main>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselWithCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselWithCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    
+  <!-- Top sellers main card -->
+  <h3><span class="badge bg-secondary">Top Sellers</span></h3>
+  <div class="card">
+      <div class="row g-0">
+          <div class="col-5 col-sm-4">
+              @if (ViewBag.TopSeller != null)
+              {
+                  var topSeller = ViewBag.TopSeller;
+                  <img src="@topSeller.ImageOne" class="img-fluid w-100" alt="card-horizontal-image">
+              }
+          </div>
+          <div class="col-7 col-sm-8">
+              <div class="card-body">
+                  @if (ViewBag.TopSeller != null)
+                  {
+                      var topSeller = ViewBag.TopSeller;
+                      <h5 class="card-title">@topSeller.Title</h5>
+                      <p class="card-text">@topSeller.Description</p>
+                      <p class="card-text"><small class="text-muted">Released: @topSeller.ReleaseDate</small></p>
+                      <a href="#" class="btn btn-primary">View Game</a>
+                  }
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  <!-- Top sellers list -->
+  <div style="display: flex;">
+      @if (ViewBag.TopSellerList != null)
+      {
+          var topSellerList = ViewBag.TopSellerList;
+          for (int i = 0; i < topSellerList.Count && i < 5; i++)
+          {
+              <div class="card" style="width: 18rem; margin-right: 10px;">
+                  <img src="@Url.Content(topSellerList[i].ImageOne)" class="card-img-top" alt="Game Image">
+                  <div class="card-body">
+                      <h5 class="card-title">@topSellerList[i].Title</h5>
+                      <p class="card-text"><small class="text-muted">Released: @topSellerList[i].ReleaseDate</small></p>
+                      <a href="#" class="btn btn-primary">View Game</a>
+                  </div>
+              </div>
+          }
+      }
+  </div>
+    <!-- Link to product page -->
+    <div class="text-center mt-4">
+        <a href="/products" class="btn btn-lg btn-success">View All Games</a>
+    </div>
+
+    <!-- Upcoming Games -->
+<h3>Upcoming Releases <span class="badge bg-secondary">New</span></h3>
+<div class="row">
+    @if (ViewBag.UpcomingGames != null && ViewBag.UpcomingGames.Count >= 2)
+       {
+           <div class="col-6">
+               <div class="card">
+                   <iframe width="100%" height="315" src="https://www.youtube.com/embed/f28nKLp-eKg" frameborder="0" allowfullscreen></iframe>
+                   <div class="card-body">
+                       <h5 class="card-title">@ViewBag.UpcomingGames[0].Title</h5>
+                       <p class="card-text">@ViewBag.UpcomingGames[0].Description</p>
+                       <p class="card-text"><small class="text-muted">Released: @ViewBag.UpcomingGames[0].ReleaseDate</small></p>
+                   </div>
+               </div>
+           </div>
+           <div class="col-6">
+               <div class="card">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/5uvwfskYwl0?si=0EH1OgSZBQle0k3g" frameborder="0" allowfullscreen></iframe>
+                   <div class="card-body">
+                       <h5 class="card-title">@ViewBag.UpcomingGames[1].Title</h5>
+                       <p class="card-text">@ViewBag.UpcomingGames[1].Description</p>
+                       <p class="card-text"><small class="text-muted">Released: @ViewBag.UpcomingGames[1].ReleaseDate</small></p>
+                   </div>
+               </div>
+           </div>
+       }
+</div>
+    
+    <!-- Link to product page -->
+    <div class="text-center mt-4">
+        <a href="/products" class="btn btn-lg btn-success">View All Games</a>
+    </div>
+
+    <!-- Deals Cards -->
+    <h2><span class="badge bg-secondary">DEALS 20% OFF</span></h2>
+    <div class="row">
+        @if (ViewBag.DealGames != null)
+        {
+            foreach (var game in ViewBag.DealGames)
+            {
+                <div class="col-6">
+                    <div class="card">
+                        <img src="@game.ImageOne" class="card-img-top" alt="@game.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@game.Title</h5>
+                            <p class="card-text">@game.Description</p>
+                            <a href="#" class="btn btn-primary">View Game</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <!-- Forum Card -->
+    <div class="card">
+        <div class="row g-0">
+            <div class="col-7 col-sm-8">
+                <div class="card-body">
+                    <p>Join our vibrant gaming community! Participate in forums, share content, and connect with fellow gamers.</p>
+                    <a href="#" class="btn btn-primary">Explore Forum</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 </body>
