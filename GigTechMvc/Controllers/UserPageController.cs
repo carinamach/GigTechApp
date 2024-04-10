@@ -23,7 +23,6 @@ namespace GigTechMvc.Controllers
         {
             var customer = _dbContext.Customers.FirstOrDefault(p => p.CustomerId == 1);
             var products = _dbContext.Products.ToList();
-            var orders = _dbContext.
 
             ViewBag.Customer = customer;
             ViewBag.Products = products;
