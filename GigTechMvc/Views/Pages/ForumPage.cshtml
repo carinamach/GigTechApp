@@ -4,24 +4,87 @@
 var dbcontext = new GigTechContext();
 }
 
-@if (dbcontext.ForumPosts is not null)
+
+<form asp-controller="Forum" asp-action="SaveText" method="post">
+    <div class="form-group">
+        <label>Title:</label>
+        <input name="title" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Content:</label>
+        <textarea name="content" class="form-control" rows="5"></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit"> Submit</button>
+
+</form> 
+
+<h2>Forum Index Sida</h2>
+
+@foreach (var f in dbcontext.ForumPosts)
 {
-    foreach (var posts in dbcontext.ForumPosts)
-    {
-        <div class="card">
-            <div class="card-header">
-                @posts.CustomerId
-                <p class="card-text">@posts.CreationDate</p>
+    <div class="container mt-1">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title">Title: @f.Title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Posted by customer id: @f.CustomerId</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Creation Timestamp: @f.CreationDate</p>
+                        <p class="card-text">Content: @f.Content</p>
+                    </div>
+                </div>            
+            </div>
 
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">@posts.Title</h5>
-                <p class="card-text">@posts.Content</p>
-            </div>
+            <!-- Sidebar -->
+            <div class="col-md-4">
+                <div class="mb-4">
+                    <!-- Create New Post Button --> <a asp-area="" asp-controller="Forum" asp-action="Detail">Create  Post</a>
+
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#newPostModal">
+                        Create New Post
+                    </button>
+                </div>
+
+
+
+                <!-- New Post Modal -->
+                <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="newPostModalLabel">New Forum Post</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="@Url.Action("CreatePost", "Forum")" method="post">
+                                    <div class="form-group">
+                                        <label for="postTitle">Title</label>
+                                        <input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="Enter title" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="postContent">Content</label>
+                                        <textarea class="form-control" id="postContent" name="postContent" rows="5" placeholder="Enter your post content" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
         </div>
-    }
+    </div>
 }
-
+<div> </div>
+<!-- Bootstrap JS -->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+}
 
 
 <h2>hejhej</h2>

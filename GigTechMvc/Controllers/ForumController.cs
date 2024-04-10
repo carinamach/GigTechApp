@@ -7,6 +7,11 @@ namespace GigTechMvc.Controllers
     public class ForumController : Controller
     {
         private readonly GigTechContext _context;
+
+        public ForumController(GigTechContext injectedContext)
+        {
+            _context = injectedContext;
+        }
         public IActionResult ForumIndex()
         {
             return View("/Views/Pages/ForumPage.cshtml");
@@ -25,15 +30,15 @@ namespace GigTechMvc.Controllers
                     Title = title,
                     Content = content,
                     CreationDate = DateTime.Now,
+                    ThreadId =1,
                     CustomerId = 1, // Assuming you have some authentication system to get the current user ID
-                    ThreadId = 2, // Assuming you have a way to specify the thread ID
                 };
 
                 _context.ForumPosts.Add(forumPost);
                 _context.SaveChanges();
             }
 
-            return RedirectToAction("ForumPrivacy");
+            return View("/Views/Pages/SupportPage.cshtml");
         }
     }
 }

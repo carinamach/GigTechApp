@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GigTech.Shared;
 
-[Index("ThreadId", Name = "IX_ForumPosts_ThreadId")]
 public partial class ForumPost
 {
     [Key]
