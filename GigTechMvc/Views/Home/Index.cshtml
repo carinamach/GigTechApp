@@ -61,7 +61,7 @@
                       <h5 class="card-title">@topSeller.Title</h5>
                       <p class="card-text">@topSeller.Description</p>
                       <p class="card-text"><small class="text-muted">Released: @topSeller.ReleaseDate</small></p>
-                      <a href="#" class="btn btn-primary">View Game</a>
+                      <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@topSeller.ProductId" type="button" class="btn btn-primary buttonpage">Product Page</a>
                   }
               </div>
           </div>
@@ -80,7 +80,7 @@
                   <div class="card-body">
                       <h5 class="card-title">@topSellerList[i].Title</h5>
                       <p class="card-text"><small class="text-muted">Released: @topSellerList[i].ReleaseDate</small></p>
-                      <a href="#" class="btn btn-primary">View Game</a>
+                      <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@topSellerList[i].ProductId" type="button" class="btn btn-primary buttonpage">Product Page</a>
                   </div>
               </div>
           }
