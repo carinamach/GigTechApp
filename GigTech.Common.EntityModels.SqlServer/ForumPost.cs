@@ -20,12 +20,7 @@ public partial class ForumPost
 
     public int ThreadId { get; set; }
 
-    public int? RepliesCount { get; set; }
-
     [StringLength(255)]
     public string? Title { get; set; }
 
-    [ForeignKey("ThreadId")]
-    [InverseProperty("ForumPosts")]
-    public virtual ForumThread Thread { get; set; } = null!;
 }
