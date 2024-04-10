@@ -1,8 +1,7 @@
 ﻿@using GigTech.Shared
-@model GigTechMvc.Views.Pages.ProductPageModel
 
 @{
-    var products = ViewBag.Products as List<Product>;
+    var dbcontext = new GigTechContext();
 }
 @* @model ProductViewModel
  *@@* @{
@@ -133,9 +132,9 @@
     </a>
 </div>
 <div><br /></div>
-@if (products is not null)
+@if (dbcontext.Products is not null)
 {
-    @foreach (var games in products)
+    @foreach (var games in dbcontext.Products)
     {
         <div class="card">
             <div class="card-body">
@@ -144,7 +143,7 @@
                 <h5 class="card-title">@games.Title</h5>
                 <p class="genregames">@games.Category</p>
                 <p class="realeasedate">Released: @games.ReleaseDate </p>
-                <button class="btn btn-primary btn-sm buttongame">Add to cart</button>
+                <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@games.ProductId" type="button" class="btn btn-primary btn-sm buttongame">Add to cart</a>
                 @if(games.Price == 0){
                     <p class="priceproduct">Free game</p>
                 }

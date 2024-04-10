@@ -18,11 +18,7 @@ namespace GigTechMvc.Controllers
 
         public IActionResult Product()
         {
-            ProductViewModel model = new
-                (
-                    
-                    Products: db.Products.ToList()
-                );
+            
             return View("/Views/Pages/ProductPage.cshtml");
         }
         public async Task<IActionResult> ProductDetailPage(int? id)
@@ -35,6 +31,14 @@ namespace GigTechMvc.Controllers
                 return NotFound($"ProductId {id} not found.");
             }
             return View("/Views/Pages/ProductDetailPage.cshtml", model);
+        }
+        public void AddToCart(int? id)
+        {
+            //Product? product = db.Products.FirstOrDefault(p => p.ProductId == id);
+
+            //db.ForumThreads.Add(product);
+
+            //db.SaveChanges();
         }
     }
 }
