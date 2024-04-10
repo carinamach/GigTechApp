@@ -1,9 +1,13 @@
 ﻿@page
 @model GigTechMvc.Views.Pages.UserPageModel
 @using GigTech.Shared;
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
 @{
     var customer = ViewBag.Customer as Customer;
     var products = ViewBag.Products as List<Product>;
+    //var user = await UserManager.GetUserAsync(User);
+
 }
 
 <!DOCTYPE html>
