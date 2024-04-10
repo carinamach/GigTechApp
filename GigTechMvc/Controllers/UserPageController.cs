@@ -1,6 +1,7 @@
 ﻿using GigTech.Shared;
 using Microsoft.AspNetCore.Mvc;
 using GigTechMvc.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace GigTechMvc.Controllers
 {
@@ -40,11 +41,85 @@ namespace GigTechMvc.Controllers
             return View("/Views/Pages/UserPageEdit.cshtml");
         }
 
-        [HttpPost]
-        public IActionResult OnPostSaveChanges(string firstName, string lastName, string email, string phoneNumber, string password, string username)
+        public IActionResult UserPageHistory()
         {
-            // Process form submission
+            var customer = _dbContext.Customers.FirstOrDefault(p => p.CustomerId == 1);
+            var products = _dbContext.Products.ToList();
+            var orders = _dbContext.OrderDetails.ToList();
+
+            ViewBag.Customer = customer;
+            ViewBag.Products = products;
+            ViewBag.Orders = orders;
+
+            return View("/Views/Pages/UserPageHistory.cshtml");
+        }
+
+
+        [HttpPost]
+        public IActionResult OnPostSaveChanges(CustomerFormData formData)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Handle validation errors
+                return BadRequest(ModelState);
+            }
+
+            // Retrieve the user from the database
+            var customer = _dbContext.Customers.FirstOrDefault(p => p.CustomerId == 1);
+
+            if (customer == null)
+            {
+                // Handle if user is not found
+                return NotFound();
+            }
+
+            // Update the user with the form data
+            customer.FirstName = formData.FirstName;
+            customer.LastName = formData.LastName;
+            customer.Email = formData.Email;
+            customer.PhoneNumber = formData.PhoneNumber;
+            customer.Username = formData.Username;
+            // Save changes to the database
+            _dbContext.SaveChanges();
+
             return Content("Changes saved successfully!");
         }
+
+        [HttpPost]
+        public IActionResult Deposit(DepositFormData depositData)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Handle validation errors
+                return BadRequest(ModelState);
+            }
+
+            // Retrieve the user from the database
+            var customer = _dbContext.Customers.FirstOrDefault(p => p.CustomerId == 1);
+
+            if (customer == null)
+            {
+                // Handle if user is not found
+                return NotFound();
+            }
+
+            // Convert the string vMoney value to an integer
+            if (int.TryParse(depositData.vMoney, out int depositValue))
+            {
+                // Add the deposit value to the current vMoney value
+                customer.VMoney += depositValue;
+                // Save changes to the database
+                _dbContext.SaveChanges();
+
+                return Content("Deposit successful!");
+            }
+            else
+            {
+                // Handle the case where the string cannot be parsed as an integer
+                // For example, return a BadRequest indicating invalid input
+                return BadRequest("Invalid vMoney value");
+            }
+        }
+
     }
 }

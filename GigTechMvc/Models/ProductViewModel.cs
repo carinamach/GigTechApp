@@ -1,10 +1,15 @@
 ﻿using GigTech.Shared;
 
 namespace GigTechMvc.Models 
-{
-    public class ProductViewModel
+{   
+
+
+    public record ProductViewModel
         (
         IList<Product> Products
-        );
-    
+    );
+
+
+
+
 }
