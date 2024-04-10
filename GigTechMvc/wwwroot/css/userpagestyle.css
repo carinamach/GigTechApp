@@ -1,0 +1,351 @@
+﻿body {
+    background-color: #f0f0f0;
+    background-image: url('https://i.ibb.co/Dbt0s2s/858827-1.jpg');
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+}
+
+#topBorder {
+    width: 100%;
+    height: 110px;
+    background-color: antiquewhite;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+#topBorder_img {
+    width: 250px;
+    justify-content: center;
+    align-items: center;
+    display: flex; /* Add this line */
+}
+
+    #topBorder_img img {
+        width: 95px;
+        heign: auto;
+        border-radius: 10px;
+        padding-left: 10px;
+        border: 2px solid black;
+    }
+
+#topBorder-left {
+    width: 100%;
+}
+
+    #topBorder-left h2 {
+        padding-top: 8px;
+        text-transform: uppercase;
+    }
+
+    #topBorder-left p {
+        padding: none;
+        margin-top: -13px;
+        font-size: 13px;
+        padding-bottom: 20px;
+    }
+
+#topBorder-right {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.icon {
+    padding: 0 20px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .icon img {
+        width: 30px;
+        height: 30px;
+    }
+
+.icon-button {
+    text-decoration: none;
+    color: black;
+}
+
+.icon p {
+    text-align: center;
+    font-size: 12px;
+    padding-top: 3px;
+}
+
+#profile-information {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 25px;
+    display: flex;
+    padding-bottom: 25px;
+}
+
+#profile-information-left {
+    width: 65%;
+    height: auto;
+}
+
+.profileGames {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.game {
+    margin: 10px;
+}
+
+.game-image {
+    margin-top: 20px;
+    width: 175px;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid black;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#yourGames-text {
+    width: 100%;
+    height: auto;
+    background-color: darkgrey;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+    #yourGames-text h3 {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+.gameName-container {
+    border-radius: 10px;
+    padding-top: 4px;
+    padding-bottom: 5px;
+    margin-top: 8px;
+    text-align: center;
+    letter-spacing: 1px;
+    font-size: 13px;
+    width: auto;
+    height: auto;
+    background-color: orange;
+}
+
+.gameDes-container {
+    margin-top: 8px;
+    text-align: left;
+    letter-spacing: 1px;
+    font-size: 11px;
+    width: 175px;
+    height: auto;
+    text-align: center;
+}
+
+
+.gameDownload-container {
+    border-radius: 10px;
+    padding-top: 4px;
+    padding-bottom: 20px;
+    margin-top: 8px;
+    text-align: center;
+    letter-spacing: 1px;
+    font-size: 13px;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+    .gameDownload-container button {
+        width: 100%;
+        margin: 5px;
+    }
+
+#noGames-container {
+    width: 100%;
+    height: auto;
+    text-align: left;
+    padding-left: 10px;
+    padding-bottom: 100px;
+}
+
+
+.profile-shopcontainer {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: orange;
+    overflow: hidden; /* Hide horizontal scrollbar */
+}
+
+#profile-shopcontainerGames {
+    width: 100%;
+    padding: 15px;
+    margin: 15px;
+    border-radius: 15px;
+    background-color: white;
+    overflow: auto; /* Enable scrolling */
+}
+
+.profile-shopcontainer h3 {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    background-color: lightgray;
+    border-radius: 10px;
+}
+
+.side-scroll {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    margin: 0 auto;
+    padding: 10px 0;
+    width: 100%;
+    scrollbar-width: thin; /* Add a scrollbar for browsers that support it */
+    scrollbar-color: darkgrey lightgrey; /* Define scrollbar color */
+}
+
+.gamelib {
+    width: auto;
+    max-height: 150px;
+    padding: 10px;
+    flex: 0 0 auto;
+}
+
+.game-image {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+/*EFFECTS*/
+.icon:hover img {
+    animation: spin 1s infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+
+/*USER PAGE EDIT*/
+
+#editProfileForm {
+    padding-top: 20px;
+}
+
+#profile-information-right {
+    text-align: center;
+    margin-right: 10px;
+    width: 35%;
+    display: wrap;
+    justify-content: center;
+    border-radius: 10px;
+    height: 350px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+    #profile-information-right h3 {
+        font-size: 1.5em;
+        color: #333;
+        text-align: center;
+        padding-top: 10px;
+    }
+
+#deposit-options {
+    margin: auto;
+    width: 100%;
+}
+
+.deposit-amount {
+    padding: 10px 15px;
+    margin: 2px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+    .deposit-amount:hover {
+        background-color: #45a049; /* Hover effect */
+    }
+
+#deposit-now-button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    background-color: #337ab7;
+    color: white;
+    border: none;
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+    #deposit-now-button:hover {
+        background-color: #2e6da4; /* Hover effect */
+    }
+
+#custom-deposit-section {
+    padding-top: 10px;
+}
+
+#deposit-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.deposit-amount {
+    padding: 5px 10px;
+    margin: 5px;
+    background-color: lightgray;
+    border: none;
+    cursor: pointer;
+}
+
+    .deposit-amount.active {
+        background-color: blue;
+        color: white;
+    }
+
+#custom-deposit-section {
+    padding-top: 10px;
+    grid-column: 1 / span 3;
+}
+
+.profile-img.green {
+    border-color: green;
+    width: 90px;
+    height: 90px;
+    border-radius: 50px;
+    border: 1px solid;
+}
