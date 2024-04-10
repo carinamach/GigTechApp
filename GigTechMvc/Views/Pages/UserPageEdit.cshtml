@@ -1,6 +1,5 @@
-﻿@page
-@model GigTechMvc.Views.Pages.UserPageModel
-@using GigTech.Shared;
+﻿@model GigTech.Shared.Customer
+@using GigTech.Shared
 @{
     var customer = ViewBag.Customer as Customer;
     var products = ViewBag.Products as List<Product>;
@@ -11,7 +10,7 @@
 <head>
     <meta name="viewport" />
     <title>User Profile</title>
-    <link rel="stylesheet" href="/css/UserPageStyle.css">
+    <link rel="stylesheet" href="/css/userpagestyle.css">
     <script src="~/js/userpage.js"></script>
 </head>
 <body>
@@ -25,21 +24,24 @@
             <p><strong style="color: orangered">@customer.VMoney</strong> vMoney</p>
         </div>
         <div id="topBorder-right">
-            <a asp-controller="UserPage" asp-action="UserPageEdit" class="icon-button">
+            <a asp-controller="UserPage" asp-action="UserPage" class="icon-button">
                 <div class="icon">
-                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="Icon 1">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="yourprofile">
                     <p>PROFILE</p>
                 </div>
             </a>
+            <a asp-controller="UserPage" asp-action="UserPageEdit" class="icon-button">
+                <div class="icon">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="editprofile">
+                    <p>EDIT</p>
+                </div>
             </a>
-            <div class="icon">
-                <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="Icon 1">
-                <p>ORDER HISTORY</p>
-            </div>
-            <div class="icon">
-                <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="Icon 1">
-                <p>ANOTHER</p>
-            </div>
+            <a asp-controller="UserPage" asp-action="UserPageHistory" class="icon-button">
+                <div class="icon">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="History">
+                    <p>ORDERS</p>
+                </div>
+            </a>
         </div>
     </div>
 
@@ -56,49 +58,58 @@
                 <br />
                 <button id="editProfileBtn" class="edit-profile-button">EDIT PROFILE</button>
 
-                <div id="editProfileForm" style="display: block;">
+                <div id="editProfileForm" style="display: none;">
                     <form id="profileForm" asp-controller="UserPage" asp-action="OnPostSaveChanges" method="post">
-                        <label for="firstName">First Name:</label><br>
-                        <input type="text" id="firstName" name="firstName" value="@customer.FirstName"><br><br>
+                        <div class="form-group">
+                            <label asp-for="FirstName">First Name:</label>
+                            <input asp-for="FirstName" class="form-control" value="@customer.FirstName" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
 
-                        <label for="lastName">Last Name:</label><br>
-                        <input type="text" id="lastName" name="lastName" value="@customer.LastName"><br><br>
+                        <div class="form-group">
+                            <label asp-for="LastName">Last Name:</label>
+                            <input asp-for="LastName" class="form-control" value="@customer.LastName" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
 
-                        <label for="email">Email:</label><br>
-                        <input type="email" id="email" name="email" value="@customer.Email"><br><br>
+                        <div class="form-group">
+                            <label asp-for="Email">Email:</label>
+                            <input asp-for="Email" class="form-control" value="@customer.Email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
 
-                        <label for="phoneNumber">Phone Number:</label><br>
-                        <input type="tel" id="phoneNumber" name="phoneNumber" value="@customer.PhoneNumber"><br><br>
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber">Phone Number:</label>
+                            <input asp-for="PhoneNumber" class="form-control" value="@customer.PhoneNumber" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
 
-                        <label for="password">Password:</label><br>
-                        <input type="password" id="password" name="password" value="********"><br><br>
+                        <div class="form-group">
+                            <label asp-for="Username">Username:</label>
+                            <input asp-for="Username" class="form-control" value="@customer.Username" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
 
-                        <label for="username">Username:</label><br>
-                        <input type="text" id="username" name="username" value="@customer.Username"><br><br>
-
-                        <button type="submit" id="saveChangesBtn">SAVE CHANGES</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
+
+                    @section Scripts {
+                        @{
+                            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                        }
+                    }
                 </div>
             </div>
 
             <div id="profile-information-right">
-                <h3>DEPOSIT OPTIONS</h3>
-                <p>Select a deposit amount:</p>
-
-                <div id="deposit-options" style="padding: 10px;">
-                    <button class="deposit-amount" data-amount="100">100</button>
-                    <button class="deposit-amount" data-amount="200">200</button>
-                    <button class="deposit-amount" data-amount="500">500</button>
-                    <button class="deposit-amount" data-amount="1000">1000</button>
-                    <button class="deposit-amount" data-amount="2000">2000</button>
-                    <button class="deposit-amount" data-amount="5000">5000</button>
-
-                    <div id="custom-deposit-section" style="padding-top: 10px;">
-                        <input type="number" id="custom-amount" placeholder="Enter custom amount">
+                <form id="TEST" asp-controller="UserPage" asp-action="Deposit" method="post">
+                    <div class="TEST2">
+                        <label asp-for="VMoney">vMoney</label>
+                        <input asp-for="VMoney" class="TEST3" value="@customer.VMoney" />
+                        <span asp-validation-for="VMoney" class="TEST4"></span>
                     </div>
-                </div>
-
-                <button id="deposit-now-button">Deposit Now</button>
+                    <button type="submit" class="TEST5">Save Changes</button>
+                </form>
             </div>
 
         </div>

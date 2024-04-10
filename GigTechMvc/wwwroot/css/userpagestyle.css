@@ -101,7 +101,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: start;
 }
 
 .game {
@@ -145,7 +145,7 @@
 
 .gameDes-container {
     margin-top: 8px;
-    text-align: left;
+    text-align: center;
     letter-spacing: 1px;
     font-size: 11px;
     width: 175px;
@@ -349,3 +349,45 @@
     border-radius: 50px;
     border: 1px solid;
 }
+
+
+/* user-page-form.css */
+
+#profileForm .form-group {
+    margin-bottom: 20px;
+}
+
+    #profileForm .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+#profileForm .form-control {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: white; /* Set text color to white */
+}
+
+#profileForm .text-danger {
+    color: red;
+    font-size: 14px;
+}
+
+#profileForm .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+}
+
+    #profileForm .btn:hover {
+        background-color: #0056b3;
+    }
