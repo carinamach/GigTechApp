@@ -21,24 +21,27 @@ namespace GigTechMvc.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SaveText(string title, string content)
+        public IActionResult SaveText(string title, string content, int threadId)
         {
             if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(content))
             {
+                content = content.Replace("\n", "<br />");
+
                 var forumPost = new ForumPost()
                 {
                     Title = title,
                     Content = content,
                     CreationDate = DateTime.Now,
-                    ThreadId =1,
+                    ThreadId = threadId,
                     CustomerId = 1, // Assuming you have some authentication system to get the current user ID
                 };
 
                 _context.ForumPosts.Add(forumPost);
                 _context.SaveChanges();
-            }
+                return View("/Views/Pages/ForumPage.cshtml");
 
-            return View("/Views/Pages/SupportPage.cshtml");
+            }
+            else return View("/Views/Home/Privacy.cshtml");
         }
     }
 }
