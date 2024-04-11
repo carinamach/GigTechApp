@@ -2,9 +2,22 @@
 @using GigTech.Shared;
 @model IndexModel
 
-<link rel="stylesheet" href="~/css/index.css" />
+<link rel="stylesheet" href="~/css/home.css" />
+
 <body>
+ <!-- Image Header-->
+    <header class="masthead">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12 text-center">
+                    <h1 class="fw-light">Welcome to GigTech</h1>
+                    <p class="lead">Your gaming paradise! Explore, purchase, and download your favorite games hassle-free. Let the fun begin! 🎮✨</p>
+                </div>
+            </div>
+        </div>
+    </header>
 <main>
+
     <div class="cool-header">
         <h2>Featured Games</h2>
     </div>
@@ -41,108 +54,109 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-    
-  <!-- Top sellers main card -->
-  <h3><span class="badge bg-secondary">Top Sellers</span></h3>
-  <div class="card">
-      <div class="row g-0">
-          <div class="col-5 col-sm-4">
-              @if (ViewBag.TopSeller != null)
-              {
-                  var topSeller = ViewBag.TopSeller;
-                  <img src="@topSeller.ImageOne" class="img-fluid w-100" alt="card-horizontal-image">
-              }
-          </div>
-          <div class="col-7 col-sm-8">
-              <div class="card-body">
-                  @if (ViewBag.TopSeller != null)
-                  {
-                      var topSeller = ViewBag.TopSeller;
-                      <h5 class="card-title">@topSeller.Title</h5>
-                      <p class="card-text">@topSeller.Description</p>
-                      <p class="card-text"><small class="text-muted">Released: @topSeller.ReleaseDate</small></p>
-                      <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@topSeller.ProductId" type="button" class="btn btn-primary buttonpage">Product Page</a>
-                  }
-              </div>
-          </div>
-      </div>
-  </div>
-  
-  <!-- Top sellers list -->
-  <div style="display: flex;">
-      @if (ViewBag.TopSellerList != null)
-      {
-          var topSellerList = ViewBag.TopSellerList;
-          for (int i = 0; i < topSellerList.Count && i < 5; i++)
-          {
-              <div class="card" style="width: 18rem; margin-right: 10px;">
-                  <img src="@Url.Content(topSellerList[i].ImageOne)" class="card-img-top" alt="Game Image">
-                  <div class="card-body">
-                      <h5 class="card-title">@topSellerList[i].Title</h5>
-                      <p class="card-text"><small class="text-muted">Released: @topSellerList[i].ReleaseDate</small></p>
-                      <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@topSellerList[i].ProductId" type="button" class="btn btn-primary buttonpage">Product Page</a>
-                  </div>
-              </div>
-          }
-      }
-  </div>
+
+    <!-- Top sellers main card -->
+    <h3><span class="badge bg-secondary">Top Sellers</span></h3>
+    <div class="card">
+        <div class="row g-0">
+            <div class="col-5 col-sm-4">
+                @if (ViewBag.TopSeller != null)
+                {
+                    var topSeller = ViewBag.TopSeller;
+                    <img src="@topSeller.ImageOne" class="img-fluid w-100" alt="card-horizontal-image">
+                }
+            </div>
+            <div class="col-7 col-sm-8">
+                <div class="card-body">
+                    @if (ViewBag.TopSeller != null)
+                    {
+                        var topSeller = ViewBag.TopSeller;
+                        <h5 class="card-title">@topSeller.Title</h5>
+                        <p class="card-text">@topSeller.Description</p>
+                        <p class="card-text"><small class="text-muted">Released: @topSeller.ReleaseDate</small></p>
+                        <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@topSeller.ProductId" type="button" class="btn btn-primary buttonpage">View Game</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top sellers list -->
+    <div style="display: flex;">
+        @if (ViewBag.TopSellerList != null)
+        {
+            var topSellerList = ViewBag.TopSellerList;
+            for (int i = 0; i < topSellerList.Count && i < 5; i++)
+            {
+                <div class="card" style="width: 18rem; margin-right: 10px;">
+                    <img src="@Url.Content(topSellerList[i].ImageOne)" class="card-img-top" alt="Game Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@topSellerList[i].Title</h5>
+                        <p class="card-text"><small class="text-muted">Released: @topSellerList[i].ReleaseDate</small></p>
+                        <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@topSellerList[i].ProductId" type="button" class="btn btn-primary buttonpage">View Game</a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
     <!-- Link to product page -->
     <div class="text-center mt-4">
-        <a href="/products" class="btn btn-lg btn-success">View All Games</a>
+        <a asp-controller="Product" asp-action="Product" class="btn btn-lg btn-success">View All Games</a>
     </div>
 
     <!-- Upcoming Games -->
-<h3>Upcoming Releases <span class="badge bg-secondary">New</span></h3>
-<div class="row">
-    @if (ViewBag.UpcomingGames != null && ViewBag.UpcomingGames.Count >= 2)
-       {
-           <div class="col-6">
-               <div class="card">
-                   <iframe width="100%" height="315" src="https://www.youtube.com/embed/f28nKLp-eKg" frameborder="0" allowfullscreen></iframe>
-                   <div class="card-body">
-                       <h5 class="card-title">@ViewBag.UpcomingGames[0].Title</h5>
-                       <p class="card-text">@ViewBag.UpcomingGames[0].Description</p>
-                       <p class="card-text"><small class="text-muted">Released: @ViewBag.UpcomingGames[0].ReleaseDate</small></p>
-                   </div>
-               </div>
-           </div>
-           <div class="col-6">
-               <div class="card">
-                <iframe width="100%" height="315" src="https://www.youtube.com/embed/5uvwfskYwl0?si=0EH1OgSZBQle0k3g" frameborder="0" allowfullscreen></iframe>
-                   <div class="card-body">
-                       <h5 class="card-title">@ViewBag.UpcomingGames[1].Title</h5>
-                       <p class="card-text">@ViewBag.UpcomingGames[1].Description</p>
-                       <p class="card-text"><small class="text-muted">Released: @ViewBag.UpcomingGames[1].ReleaseDate</small></p>
-                   </div>
-               </div>
-           </div>
-       }
-</div>
-    
+    <h3>Upcoming Releases <span class="badge bg-secondary">New</span></h3>
+    <div class="row">
+        @if (ViewBag.UpcomingGames != null && ViewBag.UpcomingGames.Count >= 2)
+        {
+            <div class="col-6">
+                <div class="card">
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/f28nKLp-eKg" frameborder="0" allowfullscreen></iframe>
+                    <div class="card-body">
+                        <h5 class="card-title">@ViewBag.UpcomingGames[0].Title</h5>
+                        <p class="card-text">@ViewBag.UpcomingGames[0].Description</p>
+                        <p class="card-text"><small class="text-muted">Released: @ViewBag.UpcomingGames[0].ReleaseDate</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/5uvwfskYwl0?si=0EH1OgSZBQle0k3g" frameborder="0" allowfullscreen></iframe>
+                    <div class="card-body">
+                        <h5 class="card-title">@ViewBag.UpcomingGames[1].Title</h5>
+                        <p class="card-text">@ViewBag.UpcomingGames[1].Description</p>
+                        <p class="card-text"><small class="text-muted">Released: @ViewBag.UpcomingGames[1].ReleaseDate</small></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
     <!-- Link to product page -->
     <div class="text-center mt-4">
-        <a href="/products" class="btn btn-lg btn-success">View All Games</a>
+        <a asp-controller="Product" asp-action="Product" class="btn btn-lg btn-success">View All Games</a>
     </div>
 
     <!-- Deals Cards -->
     <h2><span class="badge bg-secondary">DEALS 20% OFF</span></h2>
     <div class="row">
-        @if (ViewBag.DealGames != null)
-        {
-            foreach (var game in ViewBag.DealGames)
-            {
-                <div class="col-6">
-                    <div class="card">
-                        <img src="@game.ImageOne" class="card-img-top" alt="@game.Title">
-                        <div class="card-body">
-                            <h5 class="card-title">@game.Title</h5>
-                            <p class="card-text">@game.Description</p>
-                            <a href="#" class="btn btn-primary">View Game</a>
-                        </div>
-                    </div>
-                </div>
-            }
-        }
+  @if (ViewBag.DealGames != null)
+  {
+      foreach (var game in ViewBag.DealGames)
+      {
+          <div class="col-6">
+              <div class="card">
+                  <img src="@game.ImageOne" class="card-img-top" alt="@game.Title">
+                  <div class="card-body">
+                      <h5 class="card-title">@game.Title</h5>
+                      <p class="card-text">@game.Description</p>
+                      <!-- Länk till produktens detaljsida med rätt produkt-ID -->
+                      <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@game.ProductId" class="btn btn-primary">View Game</a>
+                  </div>
+              </div>
+          </div>
+      }
+  }
     </div>
 
     <!-- Forum Card -->
@@ -151,7 +165,7 @@
             <div class="col-7 col-sm-8">
                 <div class="card-body">
                     <p>Join our vibrant gaming community! Participate in forums, share content, and connect with fellow gamers.</p>
-                    <a href="#" class="btn btn-primary">Explore Forum</a>
+                    <a asp-controller="Forum" asp-action="ForumIndex" class="btn btn-primary">Explore Forum</a>
                 </div>
             </div>
         </div>
