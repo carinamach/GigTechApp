@@ -19,6 +19,5 @@ public partial class ForumThread
 
     public string? Category { get; set; }
 
-    [InverseProperty("Thread")]
     public virtual ICollection<ForumPost> ForumPosts { get; set; } = new List<ForumPost>();
 }
