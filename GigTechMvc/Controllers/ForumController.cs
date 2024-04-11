@@ -1,6 +1,7 @@
 ﻿using GigTech.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace GigTechMvc.Controllers
 {
@@ -20,6 +21,20 @@ namespace GigTechMvc.Controllers
         {
             return View();
         }
+        public IActionResult FilterByCategory(int? categoryNumber)
+        {
+            List<ForumPost> posts;
+            if (categoryNumber.HasValue)
+            {
+                posts = _context.ForumPosts.Where(post => post.ThreadId == categoryNumber).ToList();
+            }
+            else
+            {
+                posts = _context.ForumPosts.ToList();
+            }
+            return View("/Views/Pages/ForumPage.cshtml", posts);
+        }
+
         [HttpPost]
         public IActionResult SaveText(string title, string content, int threadId)
         {
