@@ -1,9 +1,19 @@
 ﻿@page
-@model GigTechMvc.Views.Pages.UserPageHistoryModel
-@using GigTech.Shared;
+@model GigTechMvc.Views.Pages.UserPageModel
+@inject GigTechContext _dbContext
+@using GigTech.Shared
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
 @{
-    var customer = ViewBag.Customer as Customer;
     var products = ViewBag.Products as List<Product>;
+    var orders = ViewBag.OrderDetails as List<OrderDetail>;
+    var userId = await UserManager.GetUserAsync(User);
+    var userEmail = userId.Email;
+
+    // Retrieve customer based on user's email
+    var dbCustomer = _dbContext.Customers.FirstOrDefault(c => c.Email == userEmail);
+
 }
 
 <!DOCTYPE html>
@@ -17,11 +27,11 @@
 <body>
     <div id="topBorder">
         <div id="topBorder_img">
-            <img id="" src="@customer.ProfileImage" />
+            <img id="" src="@dbCustomer.ProfileImage" />
         </div>
         <div id="topBorder-left">
-            <h2>@customer.Username</h2>
-            <p><strong style="color: orangered">@customer.VMoney</strong> vMoney</p>
+            <h2>@dbCustomer.Username</h2>
+            <p><strong style="color: orangered">@dbCustomer.VMoney</strong> vMoney</p>
         </div>
         <div id="topBorder-right">
             <a asp-controller="UserPage" asp-action="UserPage" class="icon-button">
@@ -48,6 +58,15 @@
     <div class="profileGames">
         <div id="yourGames-text">
             <h3>ORDER HISTORY</h3>
+            @foreach (var order in orders)
+            {
+                <p>Order ID: @order.Id</p>
+                <p>Product ID: @order.ProductId</p>
+                <p>Quantity: @order.OrderDate</p>
+                <p>Price: @order.TotalAmount</p>
+                <hr />
+            }
+
         </div>
 
 

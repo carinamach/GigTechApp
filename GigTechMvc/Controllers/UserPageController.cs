@@ -49,6 +49,11 @@ namespace GigTechMvc.Controllers
 
         public IActionResult UserPageHistory()
         {
+            var orders = _dbContext.OrderDetails.ToList();
+            var products = _dbContext.Products.ToList();
+            ViewBag.Products = products;
+            ViewBag.OrderDetails = orders;
+
             return View("/Views/Pages/UserPageHistory.cshtml");
         }
 
