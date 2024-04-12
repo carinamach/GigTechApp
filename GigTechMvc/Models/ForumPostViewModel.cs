@@ -4,9 +4,9 @@ namespace GigTechMvc.Models
 {   
 
 
-    public record ProductViewModel
+    public record ForumPostViewModel
         (
-        IList<Product> Products
+        IList<ForumPost> ForumPosts
     );
 
 

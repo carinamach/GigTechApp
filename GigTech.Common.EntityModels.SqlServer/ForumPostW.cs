@@ -4,9 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace GigTech.Shared;
+namespace GigTech.Common.EntityModels.SqlServer;
 
-public partial class ForumPost
+[Index("ThreadId", Name = "IX_ForumPosts_ThreadId")]
+public partial class ForumPostW
 {
     [Key]
     public int Id { get; set; }
@@ -19,7 +20,8 @@ public partial class ForumPost
 
     public int ThreadId { get; set; }
 
+    public int? RepliesCount { get; set; }
+
     [StringLength(255)]
     public string? Title { get; set; }
-
 }

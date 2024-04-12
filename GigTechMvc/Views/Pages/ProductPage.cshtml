@@ -1,5 +1,157 @@
-﻿@*
+﻿@using GigTech.Shared
+
+@{
+    var dbcontext = new GigTechContext();
+}
+@* @model ProductViewModel
+ *@@* @{
+    var dbcontext = new GigTechContext();
+} *@
+
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
+
+<link href="~/css/product.css" rel="stylesheet" type="text/css" />
+
+<!-- Your page content here -->
+
+
+<h1>Games</h1>
+
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Genres</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDark" aria-controls="navbarDark" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse show" id="navbarDark">
+            <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Action</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Shooter</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Adventure</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Horror</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Casual Games</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Racing</a>
+                </li>
+
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div id="carouselWithCaptions" class="carousel slide" data-bs-ride="carousel">
+    <ol class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselWithCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselWithCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselWithCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselWithCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#carouselWithCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="/images/FH5/Fh5.jpg" class="d-block w-100" alt="Slide 1">
+            <div class="carousel-caption d-none d-sm-block">
+                <h5>Forza Horizon 5</h5>
+                <p>
+                    Forza Horizon 5 is an action-packed racing game set in Mexico.
+                    Drive through stunning landscapes, compete in races, and
+                    customize your cars for the ultimate racing experience!
+                </p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/images/CS2/Cs2.jpg" class="d-block w-100" alt="Slide 2">
+            <div class="carousel-caption d-none d-sm-block">
+                <h5>Counter Strike 2</h5>
+                <p>
+                    CS2 is a popular competitive multiplayer shooter with intense
+                    gameplay and classic modes. Join the action and test your skills!
+                </p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/images/Valheim/Valheim.jpg" class="d-block w-100" alt="Slide 3">
+            <div class="carousel-caption d-none d-sm-block">
+                <h5>Valheim</h5>
+                <p>
+                    Valheim is a Viking-themed survival game where you explore,
+                    build, and battle in a captivating singleplayer or multiplayer
+                    world. Join the adventure!
+                </p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/images/GWYF/Golf.png" class="d-block w-100" alt="Slide 4">
+            <div class="carousel-caption d-none d-sm-block">
+                <h5>Golf With Your Friends</h5>
+                <p>
+                    Golf With Your Friends is a multiplayer mini-golf game
+                    filled with fun courses and challenges. Play with friends and
+                    enjoy the lighthearted competition!
+                </p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/images/Phasmophobia/Phasmophobia.png" class="d-block w-100" alt="Slide 5">
+            <div class="carousel-caption d-none d-sm-block">
+                <h5>Phasmophobia</h5>
+                <p>
+                    Phasmophobia is a multiplayer horror game where you and
+                    your friends investigate haunted locations to gather evidence
+                    of paranormal activity. Get ready for a spooky adventure filled
+                    with thrills and chills!
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <a class="carousel-control-prev" href="#carouselWithCaptions" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselWithCaptions" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </a>
+</div>
+<div><br /></div>
+@if (dbcontext.Products is not null)
+{
+    @foreach (var games in dbcontext.Products)
+    {
+        <div class="card">
+            <div class="card-body">
+                <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@games.ProductId" type="button" class="btn btn-primary buttonpage">Product Page</a>
+                <img src="@games.SmallImage" class="productimg" alt="Fh5">
+                <h5 class="card-title">@games.Title</h5>
+                <p class="genregames">@games.Category</p>
+                <p class="realeasedate">Released: @games.ReleaseDate </p>
+                <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@games.ProductId" type="button" class="btn btn-primary btn-sm buttongame">Add to cart</a>
+                @if(games.Price == 0){
+                    <p class="priceproduct">Free game</p>
+                }
+                else
+                {
+                    <p class="priceproduct">@games.Price sek</p>
+                }
+            </div>
+        </div>
+    }
 }
