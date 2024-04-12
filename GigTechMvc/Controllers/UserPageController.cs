@@ -29,7 +29,6 @@ namespace GigTechMvc.Controllers
         {
             return View();
         }
-
         [Authorize]
         public IActionResult UserPage()
         {
@@ -39,47 +38,18 @@ namespace GigTechMvc.Controllers
             return View("/Views/Pages/UserPage.cshtml");
         }
 
-        public IActionResult UserPageEdit()
+        public async Task<IActionResult> UserPageEdit()
         {
             var products = _dbContext.Products.ToList();
-
             ViewBag.Products = products;
 
             return View("/Views/Pages/UserPageEdit.cshtml");
         }
 
+
         public IActionResult UserPageHistory()
         {
             return View("/Views/Pages/UserPageHistory.cshtml");
-        }
-
-        public async Task<IActionResult> UserProfile()
-        {
-            // Get the currently logged-in user
-            var user = await _userManager.GetUserAsync(User);
-
-            if (user == null)
-            {
-                // Handle if user is not found or not logged in
-                return RedirectToAction("Login", "Account"); // Example redirect to login page
-            }
-
-            // Convert the user ID to an int (assuming it's stored as a string)
-            if (!int.TryParse(user.Id, out int userId))
-            {
-                // Handle if user ID cannot be parsed as an int
-                return BadRequest("Invalid user ID format");
-            }
-
-            // Get additional user data from your database
-            var customer = _dbContext.Customers.FirstOrDefault(p => p.CustomerId == userId);
-            var products = _dbContext.Products.ToList();
-
-            // Pass data to view
-            ViewBag.Customer = customer;
-            ViewBag.Products = products;
-
-            return View("/Views/Pages/UserProfile.cshtml");
         }
 
 
