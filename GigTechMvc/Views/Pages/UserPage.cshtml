@@ -6,7 +6,12 @@
 @{
     var customer = ViewBag.Customer as Customer;
     var products = ViewBag.Products as List<Product>;
-    //var user = await UserManager.GetUserAsync(User);
+    var user = await UserManager.GetUserAsync(User);
+
+    @*var user = await UserManager.GetUserAsync(User);
+    var dbContext = new GigTechContext(); // Instantiate your DbContext here
+    var customer = dbContext.Customers.FirstOrDefault(c => c.UserId == user.Id); *@
+    // Assuming UserId in Customers table corresponds to IdentityUser's Id
 
 }
 
