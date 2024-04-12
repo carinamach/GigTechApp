@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GigTechMvc.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GigTechMvc.Controllers
 {
@@ -9,6 +10,14 @@ namespace GigTechMvc.Controllers
     {
         private readonly GigTechContext _dbContext;
         private readonly UserManager<IdentityUser> _userManager;
+
+        [Authorize]
+        public async Task<string> RetrieveUserId()
+        {
+            var _currentUser = await _userManager.GetUserAsync(User);
+            if (_currentUser == null) { throw new Exception("User not found."); }
+            return _currentUser.Id.ToString();
+        }
 
         public UserPageController(GigTechContext dbContext, UserManager<IdentityUser> userManager)
         {
@@ -21,12 +30,10 @@ namespace GigTechMvc.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult UserPage()
         {
-            var customer = _dbContext.Customers.FirstOrDefault(p => p.CustomerId == 1);
             var products = _dbContext.Products.ToList();
-
-            ViewBag.Customer = customer;
             ViewBag.Products = products;
 
             return View("/Views/Pages/UserPage.cshtml");
@@ -34,10 +41,8 @@ namespace GigTechMvc.Controllers
 
         public IActionResult UserPageEdit()
         {
-            var customer = _dbContext.Customers.FirstOrDefault(p => p.CustomerId == 1);
             var products = _dbContext.Products.ToList();
 
-            ViewBag.Customer = customer;
             ViewBag.Products = products;
 
             return View("/Views/Pages/UserPageEdit.cshtml");
@@ -45,14 +50,6 @@ namespace GigTechMvc.Controllers
 
         public IActionResult UserPageHistory()
         {
-            var customer = _dbContext.Customers.FirstOrDefault(p => p.CustomerId == 1);
-            var products = _dbContext.Products.ToList();
-            var orders = _dbContext.OrderDetails.ToList();
-
-            ViewBag.Customer = customer;
-            ViewBag.Products = products;
-            ViewBag.Orders = orders;
-
             return View("/Views/Pages/UserPageHistory.cshtml");
         }
 
