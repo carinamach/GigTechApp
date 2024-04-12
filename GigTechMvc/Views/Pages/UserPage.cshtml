@@ -97,10 +97,12 @@
             <div class="side-scroll">
                 @foreach (var game in products) // Iterate through all games
                 {
-                    <div class="gamelib">
-                        <img src="@game.ImageOne" alt="@game.Title" class="game-image">
-                        <p>@game.Title</p>
-                    </div>
+                    <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@game.ProductId">
+                        <div class="gamelib">
+                            <img src="@game.ImageOne" alt="@game.Title" class="game-image">
+                            <p>@game.Title</p>
+                        </div>
+                    </a>
                 }
             </div>
         </div>
