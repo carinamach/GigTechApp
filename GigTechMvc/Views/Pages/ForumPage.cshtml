@@ -3,6 +3,8 @@
 @{
     var dbcontext = new GigTechContext();
 }
+
+<h1 style="padding-top:100px;">Forum</h1>
 <form asp-controller="Forum" asp-action="FilterByCategory" method="get" class="text-center">
     <div class="form-group bg-white">
         <div class="row">
@@ -19,64 +21,17 @@
 </form>
 
 
-<div class="container">
-    @if (Model != null && Model.Count > 0)
-    {
-        @foreach (var post in Model)
-        {
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card mb-4">
-                            <div class="container card-header">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <h3 class="card-title">@post.Title</h3>
-                                        <div>
-                                            @if (post.ThreadId == 1)
-                                            {
-                                                <h6>Category: Test Post</h6>
-                                            }
-                                            else if (post.ThreadId == 2)
-                                            {
-                                                <h6>Category: Game Posts</h6>
-                                            }
-                                            else
-                                            {
-                                                <h6>Category: News Post</h6>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 text-left">
-                                        <p class="card-text">Date & Time: @post.CreationDate</p>
-                                        <h6 class="card-subtitle mb-2 text-muted">Posted by customer id: @post.CustomerId</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">Content: @Html.Raw(post.Content)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    }
-    else
-    {
-        <h3>No Forum Post Created Yet</h3>
-    }
-</div>
 
 <br />
 <div class="container">
     <div class="row">
         <div class="col-md-10">
             <!-- Column for Forum Posts -->
-            @* <div class="container mt-1">
-                @if (dbcontext.ForumPosts is not null)
+
+            <div class="container">
+                @if (Model != null && Model.Count > 0)
                 {
-                    @foreach (var f in dbcontext.ForumPosts)
+                    @foreach (var post in Model)
                     {
                         <div class="container">
                             <div class="row">
@@ -85,13 +40,13 @@
                                         <div class="container card-header">
                                             <div class="row">
                                                 <div class="col-md-8">
-                                                    <h3 class="card-title">@f.Title</h3>
+                                                    <h3 class="card-title">@post.Title</h3>
                                                     <div>
-                                                        @if (f.ThreadId == 1)
+                                                        @if (post.ThreadId == 1)
                                                         {
                                                             <h6>Category: Test Post</h6>
                                                         }
-                                                        else if (f.ThreadId == 2)
+                                                        else if (post.ThreadId == 2)
                                                         {
                                                             <h6>Category: Game Posts</h6>
                                                         }
@@ -102,13 +57,13 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 text-left">
-                                                    <p class="card-text">Date & Time: @f.CreationDate</p>
-                                                    <h6 class="card-subtitle mb-2 text-muted">Posted by customer id: @f.CustomerId</h6>
+                                                    <p class="card-text">Date & Time: @post.CreationDate</p>
+                                                    <h6 class="card-subtitle mb-2 text-muted">Posted by customer id: @post.CustomerId</h6>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <p class="card-text">Content: @Html.Raw(f.Content)</p>
+                                            <p class="card-text">Content: @Html.Raw(post.Content)</p>
                                         </div>
                                     </div>
                                 </div>
@@ -118,9 +73,9 @@
                 }
                 else
                 {
-                    <h3>No Forum Post Created Yet</h3>
+                    <h3>No Post Created Yet</h3>
                 }
-            </div> *@
+            </div>
         </div>
         <div class="col-md-2">
             <!-- Column for Create New Post Button -->
