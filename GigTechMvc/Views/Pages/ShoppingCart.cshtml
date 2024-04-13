@@ -38,3 +38,23 @@
         }
     </tbody>
 </table>
+
+@{
+    var shoppingCart = ViewBag.ShoppingCart as List<ShoppingCart>;
+}
+
+@if (shoppingCart != null && shoppingCart.Count > 0)
+{
+    decimal totalPrice = 0;
+    foreach (var item in shoppingCart)
+    {
+        totalPrice += item.ProductPrice;
+    }
+    <p>Total: @totalPrice</p>
+}
+
+
+
+<form method="post" action="@Url.Action("Pay", "ShoppingCart")">
+    <button type="submit" class="btn btn-primary">Pay</button>
+</form>
