@@ -45,7 +45,6 @@ namespace GigTechMvc.Controllers
         }
 
 
-
         [Authorize]
         [HttpPost]
         public IActionResult RemoveFromCart(int productId)
