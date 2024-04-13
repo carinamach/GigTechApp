@@ -7,13 +7,16 @@
 
 @{
     var products = ViewBag.Products as List<Product>;
-    var orders = ViewBag.OrderDetails as List<OrderDetail>;
     var userId = await UserManager.GetUserAsync(User);
+
+    //hämtar eposten från usern
     var userEmail = userId.Email;
 
     // Retrieve customer based on user's email
     var dbCustomer = _dbContext.Customers.FirstOrDefault(c => c.Email == userEmail);
 
+    // Kontrollera om kunden finns och hämta kundens ID
+    var customerId = dbCustomer?.CustomerId;
 }
 
 <!DOCTYPE html>
@@ -58,36 +61,55 @@
     <div class="profileGames">
         <div id="yourGames-text">
             <h3>ORDER HISTORY</h3>
-            @foreach (var order in orders)
+
+            @if (customerId != null)
             {
-                <p>Order ID: @order.Id</p>
-                <p>Product ID: @order.ProductId</p>
-                <p>Quantity: @order.OrderDate</p>
-                <p>Price: @order.TotalAmount</p>
-                <hr />
+                var hasOrderHistory = false;
+                foreach (var order in ViewBag.OrderDetails as List<OrderDetail>)
+                {
+                    if (order.CustomerId == customerId)
+                    {
+                        hasOrderHistory = true;
+                        <p>Order ID: @order.Id</p>
+                        <p>Products: @order.Product</p>
+                        <p>Status: @order.Status</p>
+                        <p>Total Amount: @order.TotalAmount</p>
+                        <p>Order Date: @order.OrderDate</p>
+                        <hr />
+                    }
+                }
+
+                if (!hasOrderHistory)
+                {
+                    <p>You don't have any order history!</p>
+                }
+            }
+            else
+            {
+                <p>No customer ID found.</p>
             }
 
-        </div>
-
 
 
     </div>
 
-    <div class="profile-shopcontainer">
-        <div id="profile-shopcontainerGames">
-            <h3>GAME LIBRARY</h3>
+        <div class="profile-shopcontainer">
+            <div id="profile-shopcontainerGames">
+                <h2>GAME LIBRARY</h2>
 
-            <div class="side-scroll">
-                @foreach (var game in products) // Iterate through all games
-                {
-                    <div class="gamelib">
-                        <img src="@game.ImageOne" alt="@game.Title" class="game-image">
-                        <p>@game.Title</p>
-                    </div>
-                }
+                <div class="side-scroll">
+                    @foreach (var game in products) // Iterate through all games
+                    {
+
+                        <div class="gamelib">
+                            <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@game.ProductId"><img src="@game.ImageOne" alt="@game.Title" class="game-image"> </a>
+                            <p>@game.Title</p>
+                        </div>
+
+                    }
+                </div>
             </div>
         </div>
-    </div>
 
 </body>
 </html>

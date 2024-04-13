@@ -51,8 +51,10 @@ namespace GigTechMvc.Controllers
         {
             var orders = _dbContext.OrderDetails.ToList();
             var products = _dbContext.Products.ToList();
+            var customerIds = _dbContext.Customers.ToList();
             ViewBag.Products = products;
             ViewBag.OrderDetails = orders;
+            ViewBag.Customers = customerIds;
 
             return View("/Views/Pages/UserPageHistory.cshtml");
         }
