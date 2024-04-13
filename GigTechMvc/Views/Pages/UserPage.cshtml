@@ -1,36 +1,58 @@
 ﻿@page
 @model GigTechMvc.Views.Pages.UserPageModel
-@using GigTech.Shared;
+@inject GigTechContext _dbContext
+@using GigTech.Shared
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
 @{
-    var customer = ViewBag.Customer as Customer;
     var products = ViewBag.Products as List<Product>;
+    var userId = await UserManager.GetUserAsync(User);
+    var userEmail = userId.Email;
+
+    // Retrieve customer based on user's email
+    var dbCustomer = _dbContext.Customers.FirstOrDefault(c => c.Email == userEmail);
+
 }
+
+_context.ForumPosts.Where(post => post.ThreadId == categoryNumber).ToList();
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" />
     <title>User Profile</title>
-    <link rel="stylesheet" href="/css/UserPageStyle.css">
+    <link rel="stylesheet" href="/css/userpagestyle.css">
     <script src="~/js/userpage.js"></script>
 </head>
 <body>
     <div id="topBorder">
         <div id="topBorder_img">
-            <img id="" src="@customer.ProfileImage" />
+            <img id="" src="@dbCustomer.ProfileImage" />
         </div>
         <div id="topBorder-left">
-            <h2>@customer.Username</h2>
-            <p><strong style="color: orangered">@customer.VMoney</strong> vMoney</p>
+            <h2>@dbCustomer.Username</h2>
+            <p><strong style="color: orangered">@dbCustomer.VMoney</strong> vMoney</p>
         </div>
         <div id="topBorder-right">
-            <a asp-controller="UserPage" asp-action="UserPageEdit" class="icon-button">
+            <a asp-controller="UserPage" asp-action="UserPage" class="icon-button">
                 <div class="icon">
-                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="Icon 1">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="yourprofile">
                     <p>PROFILE</p>
                 </div>
             </a>
-            <!-- Other icons -->
+            <a asp-controller="UserPage" asp-action="UserPageEdit" class="icon-button">
+                <div class="icon">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="editprofile">
+                    <p>EDIT</p>
+                </div>
+            </a>
+            <a asp-controller="UserPage" asp-action="UserPageHistory" class="icon-button">
+                <div class="icon">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="History">
+                    <p>ORDERS</p>
+                </div>
+            </a>
         </div>
     </div>
 
@@ -39,9 +61,9 @@
             <h3>YOUR GAMES</h3>
         </div>
 
-        @if (customer != null && !string.IsNullOrEmpty(customer.Games))
+        @if (dbCustomer != null && !string.IsNullOrEmpty(dbCustomer.Games))
         {
-            var gameIds = customer.Games.Split(',').Select(int.Parse).ToList();
+            var gameIds = dbCustomer.Games.Split(',').Select(int.Parse).ToList();
 
             foreach (var gameId in gameIds)
             {
@@ -49,12 +71,17 @@
                 if (product != null)
                 {
                     <div class="game">
-                        <img src="@product.SmallImage" alt="@product.Title" class="game-image">
+                        <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@product.ProductId">
+                            <img src="@product.SmallImage" alt="@product.Title" class="game-image"></a>
                         <div class="gameName-container">@product.Title</div>
-                        <div class="gameDes-container">Lite text som spelet, behöver inte var amcyekt. Bara lite granna. kanske några meninge till sen är det lart. Men vis er,</div>
+                        <div class="gameDes-container">@product.Description.Substring(0, 100)</div>
                         <div class="gameDownload-container">
-                            <button>DOWNLOAD</button>
-                            <button>PLAY NOW</button>
+                            <a href="https://file.io/GWPAjzfKITlE" download>
+                                <button class="download-button">DOWNLOAD</button>
+                            </a>
+                            <a href="https://file.io/GWPAjzfKITlE" download>
+                                <button class="download-button">PLAY NOW</button>
+                            </a>
                         </div>
                     </div>
                 }
@@ -77,10 +104,20 @@
             <div class="side-scroll">
                 @foreach (var game in products) // Iterate through all games
                 {
-                    <div class="gamelib">
-                        <img src="@game.ImageOne" alt="@game.Title" class="game-image">
-                        <p>@game.Title</p>
-                    </div>
+
+                        <div class="gamelib">
+                        <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@game.ProductId"><img src="@game.ImageOne" alt="@game.Title" class="game-image"> </a>
+                            <p>@game.Title</p>
+                        </div>
+                   
+=======
+                    <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@game.ProductId">
+                        <div class="gamelib">
+                            <img src="@game.ImageOne" alt="@game.Title" class="game-image">
+                            <p>@game.Title</p>
+                        </div>
+                    </a>
+
                 }
             </div>
         </div>

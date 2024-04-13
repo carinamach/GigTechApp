@@ -1,0 +1,135 @@
+﻿@using GigTech.Shared
+
+@{
+    var dbcontext = new GigTechContext();
+}
+
+<h1 style="padding-top:100px;">Forum</h1>
+<form asp-controller="Forum" asp-action="FilterByCategory" method="get" class="text-center">
+    <div class="form-group bg-white">
+        <div class="row">
+            <div class=>
+                <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="1">Test</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="2">Games</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="3">News</button>
+                <button type="submit" class="btn btn-secondary btn-lg btn-block col-md-2" name="categoryNumber" value="">Show All</button>
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <!-- Column for Forum Posts -->
+
+            <div class="container">
+                @if (Model != null && Model.Count > 0)
+                {
+                    @foreach (var post in Model)
+                    {
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card mb-4">
+                                        <div class="container card-header">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h3 class="card-title">@post.Title</h3>
+                                                    <div>
+                                                        @if (post.ThreadId == 1)
+                                                        {
+                                                            <h6>Category: Test Post</h6>
+                                                        }
+                                                        else if (post.ThreadId == 2)
+                                                        {
+                                                            <h6>Category: Game Posts</h6>
+                                                        }
+                                                        else
+                                                        {
+                                                            <h6>Category: News Post</h6>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 text-left">
+                                                    <p class="card-text">Date & Time: @post.CreationDate</p>
+                                                    <h6 class="card-subtitle mb-2 text-muted">Posted by customer id: @post.CustomerId</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text">Content: @Html.Raw(post.Content)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <h3>No Post Created Yet</h3>
+                }
+            </div>
+        </div>
+        <div class="col-md-2">
+            <!-- Column for Create New Post Button -->
+            <div class="mb-4 text-right">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPostModal">
+                    Create New Post
+                </button>
+            </div>
+        </div>
+    </div>
+</div>  
+
+<div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newPostModalLabel">New Forum Post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="Forum" asp-action="SaveText" method="post">
+                    <div class="form-group bg-white col-md-6">
+                        <label for="threadId">Select Thread:</label>
+                        <select class="form-select form-select-m" style="margin-top: 5px;"  aria-label="Medium select" id="threadId" name="threadId" required>
+                            <option selected disabled value="">Choose a category...</option>
+                            <option value=1>Test</option>
+                            <option value=2>Games</option>
+                            <option value=3>News</option>
+                        </select>
+                        <br/>
+                    </div>
+                    <div class="form-group bg-white" >
+                        <label for="title" class="bg-white">Title:</label>
+                        <br />
+                        <input id="title" name="title" class="form-control bg-light" style="margin-top: 5px;"  required />
+                        <br/>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label for="content" class="bg-white">Content:</label>
+                        <br/>
+                        <textarea id="content" name="content" class="form-control bg-light" style="margin-top: 5px;" rows="5" required></textarea>
+                    </div>
+                    <br />
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+}
