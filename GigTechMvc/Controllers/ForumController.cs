@@ -58,5 +58,41 @@ namespace GigTechMvc.Controllers
             }
             else return View("/Views/Home/Privacy.cshtml");
         }
+        [HttpPost]
+        public IActionResult EditPost(int postId,string newTitle, string newContent)
+        {
+            var post = _context.ForumPosts.FirstOrDefault(p => p.Id == postId);
+
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            post.Title = newTitle;
+            post.Content = newContent;
+            _context.SaveChanges();
+            return View("/Views/Pages/ForumPage.cshtml");
+        }
+
+        [HttpPost]
+        public IActionResult DeletePost(int postId)
+        {
+            var post = _context.ForumPosts.FirstOrDefault(p => p.Id == postId);
+            if (post == null)
+            {
+                return NotFound();
+            }
+            _context.ForumPosts.Remove(post);
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log the exception or handle it as needed
+                return StatusCode(500, "An error occurred while deleting the post.");
+            }
+            return View("/Views/Pages/ForumPage.cshtml");
+        }
     }
 }
