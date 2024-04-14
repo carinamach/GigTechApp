@@ -15,22 +15,28 @@ namespace GigTechMvc.Controllers
         }
         public IActionResult ForumIndex()
         {
-            return View("/Views/Pages/ForumPage.cshtml");
+            var posts = _context.ForumPosts                             
+                                .OrderByDescending(post => post.CreationDate)
+                                .ToList();
+
+            return View("/Views/Pages/ForumPage.cshtml", posts);
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+    
         public IActionResult FilterByCategory(int? categoryNumber)
         {
             List<ForumPost> posts;
             if (categoryNumber.HasValue)
             {
-                posts = _context.ForumPosts.Where(post => post.ThreadId == categoryNumber).ToList();
+                posts = _context.ForumPosts
+                                .Where(post => post.ThreadId == categoryNumber)
+                                .OrderByDescending(post => post.CreationDate)                              
+                                .ToList();
             }
             else
             {
-                posts = _context.ForumPosts.ToList();
+                posts = _context.ForumPosts
+                                .OrderByDescending(post => post.CreationDate)                              
+                                .ToList();
             }
             return View("/Views/Pages/ForumPage.cshtml", posts);
         }
@@ -53,10 +59,10 @@ namespace GigTechMvc.Controllers
 
                 _context.ForumPosts.Add(forumPost);
                 _context.SaveChanges();
-                return View("/Views/Pages/ForumPage.cshtml");
+                return RedirectToAction("ForumIndex");
 
             }
-            else return View("/Views/Home/Privacy.cshtml");
+            return RedirectToAction("ForumIndex");
         }
         [HttpPost]
         public IActionResult EditPost(int postId,string newTitle, string newContent)
@@ -67,11 +73,17 @@ namespace GigTechMvc.Controllers
             {
                 return NotFound();
             }
+            else
+            {
+                if (post.Title != newTitle || post.Content!= newContent)
+                {
+                    post.Title = newTitle;
+                    post.Content = newContent;
+                    _context.SaveChanges();
+                }
+            }
 
-            post.Title = newTitle;
-            post.Content = newContent;
-            _context.SaveChanges();
-            return View("/Views/Pages/ForumPage.cshtml");
+            return RedirectToAction("ForumIndex");
         }
 
         [HttpPost]
@@ -92,7 +104,7 @@ namespace GigTechMvc.Controllers
                 // Log the exception or handle it as needed
                 return StatusCode(500, "An error occurred while deleting the post.");
             }
-            return View("/Views/Pages/ForumPage.cshtml");
+            return RedirectToAction("ForumIndex");
         }
     }
 }

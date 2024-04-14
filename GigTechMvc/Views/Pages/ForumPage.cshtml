@@ -11,7 +11,7 @@
                 <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="1">Test</button>
                 <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="2">Games</button>
                 <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="3">News</button>
-                <button type="submit" class="btn btn-secondary btn-lg btn-block col-md-2" name="categoryNumber" value="">Show All</button>
+                <button selected type="submit" class="btn btn-secondary btn-lg btn-block col-md-2" name="categoryNumber" value="">Show All</button>
                 <br />
                 <br />
             </div>
@@ -52,6 +52,24 @@
                                 <div class="card-body">
                                     <p class="card-text">@Html.Raw(post.Content)</p>
                                 </div>
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="replyModalLabel_@post.Id">Reply to Post</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <!-- Modal Body -->
+                                <div class="modal-body">
+                                    <!-- Reply Form -->
+                                    <form asp-controller="Forum" asp-action="AddReply" method="post">
+                                        <input type="hidden" name="postId" value="@post.Id" />
+                                        <div class="form-group">
+                                            <label for="replyContent_@post.Id">Your Reply:</label>
+                                            <textarea id="replyContent_@post.Id" name="replyContent" class="form-control bg-white" rows="3" required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit Reply</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
 
@@ -67,17 +85,6 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-
-                                    @* <form method="post" asp-controller="Forum" asp-action="EditPost">
-                                        <input type="hidden" name="postId" value="@post.Id" />
-                                        <div class="form-group">
-                                            <label for="newContent">New Content:</label>
-                                            <textarea class="form-control bg-white" id="newContent" name="newContent" rows="3">@post.Title</textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-sm btn-primary">Save Changes</button>
-                                    </form> *@
-
-
                                     <!-- Modal Body -->
                                     <div class="modal-body">
                                         <!-- Edit Post Form -->
@@ -121,17 +128,7 @@
     </div>
 </div>
 
-
-
-
-   
-
-
-
-
-
-
-
+@* Pop-up modals*@
 <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -171,8 +168,6 @@
         </div>
     </div>
 </div>
-
-
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
