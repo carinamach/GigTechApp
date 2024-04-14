@@ -61,7 +61,7 @@ namespace GigTechMvc.Controllers
 
 
         [HttpPost]
-        public IActionResult OnPostSaveChanges(CustomerFormData formData)
+        public async Task<IActionResult> OnPostSaveChanges(CustomerFormData formData)
         {
             if (!ModelState.IsValid)
             {
@@ -69,29 +69,40 @@ namespace GigTechMvc.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Retrieve the user from the database
-            var customer = _dbContext.Customers.FirstOrDefault(p => p.CustomerId == 1);
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser == null)
+            {
+                // Handle if current user is not found
+                return NotFound("Current user not found.");
+            }
+
+            // Retrieve the customer associated with the current user's email
+            var customer = _dbContext.Customers.FirstOrDefault(c => c.Email == currentUser.Email);
 
             if (customer == null)
             {
-                // Handle if user is not found
-                return NotFound();
+                // Handle if customer is not found
+                return NotFound("Customer details not found for the current user.");
             }
 
-            // Update the user with the form data
+            // Update the customer's details with the form data
             customer.FirstName = formData.FirstName;
             customer.LastName = formData.LastName;
-            customer.Email = formData.Email;
             customer.PhoneNumber = formData.PhoneNumber;
-            customer.Username = formData.Username;
+            // Assuming the Email and Username should not be changed based on the form data
+            // If they should be updated, you can include them here too
+
             // Save changes to the database
             _dbContext.SaveChanges();
 
             return Content("Changes saved successfully!");
         }
 
+
         [HttpPost]
-        public IActionResult Deposit(DepositFormData depositData)
+        public async Task<IActionResult> Deposit(DepositFormData depositData)
         {
             if (!ModelState.IsValid)
             {
@@ -99,13 +110,22 @@ namespace GigTechMvc.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Retrieve the user from the database
-            var customer = _dbContext.Customers.FirstOrDefault(p => p.CustomerId == 1);
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser == null)
+            {
+                // Handle if current user is not found
+                return NotFound("Current user not found.");
+            }
+
+            // Retrieve the customer associated with the current user's email
+            var customer = _dbContext.Customers.FirstOrDefault(c => c.Email == currentUser.Email);
 
             if (customer == null)
             {
-                // Handle if user is not found
-                return NotFound();
+                // Handle if customer is not found
+                return NotFound("Customer details not found for the current user.");
             }
 
             // Convert the string vMoney value to an integer
@@ -125,6 +145,7 @@ namespace GigTechMvc.Controllers
                 return BadRequest("Invalid vMoney value");
             }
         }
+
 
     }
 }

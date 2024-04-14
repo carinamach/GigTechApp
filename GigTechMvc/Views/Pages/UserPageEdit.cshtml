@@ -20,7 +20,6 @@
     <meta name="viewport" />
     <title>User Profile</title>
     <link rel="stylesheet" href="/css/userpagestyle.css">
-    <script src="~/js/userpage.js"></script>
 </head>
 <body>
 
@@ -67,7 +66,7 @@
                 <br />
                 <button id="editProfileBtn" class="edit-profile-button">EDIT PROFILE</button>
 
-                <div id="editProfileForm" style="display: none;">
+                <div id="editProfileForm">
                     <form id="profileForm" asp-controller="UserPage" asp-action="OnPostSaveChanges" method="post">
                         <div class="form-group">
                             <label asp-for="FirstName">First Name:</label>
@@ -111,13 +110,34 @@
             </div>
 
             <div id="profile-information-right">
-                <form id="TEST" asp-controller="UserPage" asp-action="Deposit" method="post">
-                    <div class="TEST2">
-                        <label asp-for="VMoney">vMoney</label>
-                        <input asp-for="VMoney" class="TEST3" value="@dbCustomer.VMoney" />
-                        <span asp-validation-for="VMoney" class="TEST4"></span>
+
+                <div class="amount-buttons">
+                    <button type="button" class="depositAmount" data-amount="100">100</button>
+                    <button type="button" class="depositAmount" data-amount="200">200</button>
+                    <button type="button" class="depositAmount" data-amount="300">300</button>
+                    <button type="button" class="depositAmount" data-amount="500">500</button>
+                    <button type="button" class="depositAmount" data-amount="1000">1000</button>
+                    <button type="button" class="depositAmount" data-amount="2000">2000</button>
+                </div>
+
+                <form id="depositForm" asp-controller="UserPage" asp-action="Deposit" method="post">
+                    <div class="form-group">
+                        <label for="VMoney">Your vMoney<br /><strong>@dbCustomer.VMoney</strong></label>
+                        <input type="text" id="VMoney" name="VMoney" class="form-control" value="Enter Your Amount" />
+                        <span class="text-danger" id="VMoneyValidation"></span>
                     </div>
-                    <button type="submit" class="TEST5">Save Changes</button>
+
+                    <!-- Payment Method Selection -->
+                    <div class="form-group2">
+                        <label for="paymentMethod">Payment Method</label>
+                        <select id="paymentMethod" name="paymentMethod" class="form-control">
+                            <option value="card">Card</option>
+                            <option value="swish">Swish</option>
+                            <option value="direct">Direct Bank Deposit</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" id="depositbutton" class="btn btn-primary">Save Changes</button>
                 </form>
             </div>
 
@@ -143,5 +163,7 @@
         </div>
     </div>
 
+
+    <script src="~/js/userpage.js"></script>
 </body>
 </html>
