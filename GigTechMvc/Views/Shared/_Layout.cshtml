@@ -37,23 +37,28 @@
           <li class="nav-item">
              <a class="nav-link text-dark" asp-area="" asp-controller="Support" asp-action="Index">Support</a>
          </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Product">Products</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="UserPage" asp-action="UserPage">User Page</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Forum" asp-action="ForumIndex">Forum</a>
-        </li>
-        <li class="nav-item">
-            <partial name="_LoginPartial" />
+         <li class="nav-item">
+             <a class="nav-link text-dark" asp-area="" asp-controller="UserPage" asp-action="UserPage">User Page</a>
+         </li>
+         <li class="nav-item">
+         <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="ShoppingCart">ShoppingCart</a>
+         </li>
 
-        </li>
        </ul>
      </div>
    </div>
  </nav>
+ <!-- Image Header-->
+ <header class="masthead">
+   <div class="container h-100">
+     <div class="row h-100 align-items-center">
+       <div class="col-12 text-center">
+         <h1 class="fw-light">Welcome to GigTech</h1>
+         <p class="lead">Your gaming paradise! Explore, purchase, and download your favorite games hassle-free. Let the fun begin! 🎮✨</p>
+       </div>
+     </div>
+   </div>
+ </header>
  
     <div class="container">
         <main role="main" class="pb-3">
@@ -78,10 +83,10 @@
                  <div class="col-lg-2 col-md-6">
                      <h5 class="text-white mb-3">Quick links</h5>
                      <ul class="list-unstyled text-muted">
-                         <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                         <li><a asp-controller="Product" asp-action="Product">Products</a></li>
-                         <li><a asp-controller="Forum" asp-action="ForumIndex">Forum</a></li>
-                         <li><a asp-controller="Support" asp-action="Index">Support</a></li>
+                         <li><a href="#">Home</a></li>
+                         <li><a href="#">About</a></li>
+                         <li><a href="#">Get started</a></li>
+                         <li><a href="#">FAQ</a></li>
                      </ul>
                  </div>
                 <div class="col-lg-2 col-md-6">
@@ -109,7 +114,6 @@
                      <h5 class="text-white mb-3">GigTech</h5>
                      <p class="small text-muted">Your gaming paradise! Explore, purchase, and download your favorite games hassle-free. Let the fun begin! 🎮✨</p>
                  </div>
-
              </div>
          </div>
      </footer>

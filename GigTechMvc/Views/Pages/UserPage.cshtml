@@ -104,8 +104,20 @@
 
                     <div class="gamelib">
                         <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@game.ProductId"><img src="@game.ImageOne" alt="@game.Title" class="game-image"> </a>
+
                         <p>@game.Title</p>
                     </div>
+
+                            <p>@game.Title</p>
+                        </div>
+                   
+                    <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@game.ProductId">
+                        <div class="gamelib">
+                            <img src="@game.ImageOne" alt="@game.Title" class="game-image">
+                            <p>@game.Title</p>
+                        </div>
+                    </a>
+
 
                 }
             </div>

@@ -1,0 +1,40 @@
+﻿@page
+@inject UserManager<IdentityUser> UserManager
+@inject GigTechContext _dbContext
+@model GigTechMvc.Views.Pages.ShoppingCartModel
+@using GigTech.Shared
+@using Microsoft.AspNetCore.Identity
+@{
+    var ShoppingCart = ViewBag.shoppingcart as ShoppingCart;
+    var userId = await UserManager.GetUserAsync(User);
+    var userEmail = userId.Email;
+    var dbCustomer = _dbContext.Customers.FirstOrDefault(c => c.Email == userEmail);
+    //var user = ShoppingCart.CustomerId;
+    //var userOrder = _dbContext.ShoppingCart.FirstOrDefault(o => o.CustomerId.ToString() == user);
+}
+
+<table class="table table-striped" id="cartTable">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Remove</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in ViewBag.ShoppingCart)// foreach statement cannot operate on variables of type ShoppingCart because ShoppingCart does not contain a public instance or extension deifinition for 'Getenumerator'
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.ProductPrice</td>
+                <td>
+                    <form method="post" action="@Url.Action("RemoveFromCart", "ShoppingCart")">
+                        <input type="hidden" name="productId" value="@item.ProductId" />
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
