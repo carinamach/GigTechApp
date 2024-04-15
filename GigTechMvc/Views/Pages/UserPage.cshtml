@@ -1,17 +1,17 @@
 ﻿@page
 @model GigTechMvc.Views.Pages.UserPageModel
-@using GigTech.Shared;
+@inject GigTechContext _dbContext
+@using GigTech.Shared
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<IdentityUser> UserManager
-@{
-    var customer = ViewBag.Customer as Customer;
-    var products = ViewBag.Products as List<Product>;
-    var user = await UserManager.GetUserAsync(User);
 
-    @*var user = await UserManager.GetUserAsync(User);
-    var dbContext = new GigTechContext(); // Instantiate your DbContext here
-    var customer = dbContext.Customers.FirstOrDefault(c => c.UserId == user.Id); *@
-    // Assuming UserId in Customers table corresponds to IdentityUser's Id
+@{
+    var products = ViewBag.Products as List<Product>;
+    var userId = await UserManager.GetUserAsync(User);
+    var userEmail = userId.Email;
+
+    // Retrieve customer based on user's email
+    var dbCustomer = _dbContext.Customers.FirstOrDefault(c => c.Email == userEmail);
 
 }
 
@@ -21,16 +21,15 @@
     <meta name="viewport" />
     <title>User Profile</title>
     <link rel="stylesheet" href="/css/userpagestyle.css">
-    <script src="~/js/userpage.js"></script>
 </head>
 <body>
     <div id="topBorder">
         <div id="topBorder_img">
-            <img id="" src="@customer.ProfileImage" />
+            <img id="" src="@dbCustomer.ProfileImage" />
         </div>
         <div id="topBorder-left">
-            <h2>@customer.Username</h2>
-            <p><strong style="color: orangered">@customer.VMoney</strong> vMoney</p>
+            <h2>@dbCustomer.Username</h2>
+            <p><strong style="color: orangered">@dbCustomer.VMoney</strong> vMoney</p>
         </div>
         <div id="topBorder-right">
             <a asp-controller="UserPage" asp-action="UserPage" class="icon-button">
@@ -59,9 +58,9 @@
             <h3>YOUR GAMES</h3>
         </div>
 
-        @if (customer != null && !string.IsNullOrEmpty(customer.Games))
+        @if (dbCustomer != null && !string.IsNullOrEmpty(dbCustomer.Games))
         {
-            var gameIds = customer.Games.Split(',').Select(int.Parse).ToList();
+            var gameIds = dbCustomer.Games.Split(',').Select(int.Parse).ToList();
 
             foreach (var gameId in gameIds)
             {
@@ -69,12 +68,17 @@
                 if (product != null)
                 {
                     <div class="game">
-                        <img src="@product.SmallImage" alt="@product.Title" class="game-image">
+                        <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@product.ProductId">
+                            <img src="@product.SmallImage" alt="@product.Title" class="game-image"></a>
                         <div class="gameName-container">@product.Title</div>
                         <div class="gameDes-container">@product.Description.Substring(0, 100)</div>
                         <div class="gameDownload-container">
-                            <button>DOWNLOAD</button>
-                            <button>PLAY NOW</button>
+                            <a href="https://file.io/GWPAjzfKITlE" download>
+                                <button class="download-button">DOWNLOAD</button>
+                            </a>
+                            <a href="https://file.io/GWPAjzfKITlE" download>
+                                <button class="download-button">PLAY NOW</button>
+                            </a>
                         </div>
                     </div>
                 }
@@ -92,15 +96,18 @@
 
     <div class="profile-shopcontainer">
         <div id="profile-shopcontainerGames">
-            <h3>GAME LIBRARY</h3>
+            <h2>GAME LIBRARY</h2>
 
             <div class="side-scroll">
                 @foreach (var game in products) // Iterate through all games
                 {
+
                     <div class="gamelib">
-                        <img src="@game.ImageOne" alt="@game.Title" class="game-image">
+                        <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@game.ProductId"><img src="@game.ImageOne" alt="@game.Title" class="game-image"> </a>
                         <p>@game.Title</p>
                     </div>
+
+
                 }
             </div>
         </div>

@@ -25,6 +25,9 @@ public partial class GigTechContext : DbContext
 
     public virtual DbSet<Ticket> Tickets { get; set; }
 
+    public virtual DbSet<ShoppingCart> ShoppingCart { get; set; }
+
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Server=mssql1.ilait.se;Initial Catalog=dln126504;User ID=udmsln460304;Password=giganajs;Trust Server Certificate=True;");
 

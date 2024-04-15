@@ -1,0 +1,56 @@
+﻿@page
+@inject UserManager<IdentityUser> UserManager
+@inject GigTechContext _dbContext
+@model GigTechMvc.Views.Pages.ShoppingCartModel
+@using GigTech.Shared
+@using Microsoft.AspNetCore.Identity
+@{
+    var ShoppingCart = ViewBag.shoppingcart as ShoppingCart;
+    var userId = await UserManager.GetUserAsync(User);
+    var userEmail = userId.Email;
+    var dbCustomer = _dbContext.Customers.FirstOrDefault(c => c.Email == userEmail);
+}
+
+<table class="table table-striped" id="cartTable">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Remove</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in ViewBag.ShoppingCart)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.ProductPrice</td>
+                <td>
+                    <form method="post" action="@Url.Action("RemoveFromCart", "ShoppingCart")">
+                        <input type="hidden" name="productId" value="@item.ProductId" />
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var shoppingCart = ViewBag.ShoppingCart as List<ShoppingCart>;
+}
+
+@if (shoppingCart != null && shoppingCart.Count > 0)
+{
+    decimal totalPrice = 0;
+    foreach (var item in shoppingCart)
+    {
+        totalPrice += item.ProductPrice;
+    }
+    <p>Total: @totalPrice</p>
+}
+
+<form method="post" action="@Url.Action("Pay", "ShoppingCart")">
+    <button type="submit" class="btn btn-primary">Pay</button>
+</form>

@@ -75,3 +75,45 @@
     float: right;
     height: 45px;
 }
+.formdiv{
+    display:flex;
+    flex-direction:column;
+}
+.addreview {
+    margin-top: 20px;
+    background-color: lightgrey;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom:10px;
+    border-radius: 2px;
+}
+#reviewh2{
+    margin-left:78px
+}
+.insideform {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:ghostwhite;
+}
+.labelform{
+   margin-left:79px;
+}
+.reviewheader{
+    margin-left:78px;
+}
+.reviewform{
+    display:flex;
+    flex-direction:column;
+}
+.textarea{
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+}
+.buttonform{
+    margin-left:625px;
+    margin-top:5px;
+}
+

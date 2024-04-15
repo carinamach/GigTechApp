@@ -1,9 +1,22 @@
 ﻿@page
-@model GigTechMvc.Views.Pages.UserPageHistoryModel
-@using GigTech.Shared;
+@model GigTechMvc.Views.Pages.UserPageModel
+@inject GigTechContext _dbContext
+@using GigTech.Shared
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
 @{
-    var customer = ViewBag.Customer as Customer;
     var products = ViewBag.Products as List<Product>;
+    var userId = await UserManager.GetUserAsync(User);
+
+    //hämtar eposten från usern
+    var userEmail = userId.Email;
+
+    // Retrieve customer based on user's email
+    var dbCustomer = _dbContext.Customers.FirstOrDefault(c => c.Email == userEmail);
+
+    // Kontrollera om kunden finns och hämta kundens ID
+    var customerId = dbCustomer?.CustomerId;
 }
 
 <!DOCTYPE html>
@@ -12,16 +25,15 @@
     <meta name="viewport" />
     <title>User Profile</title>
     <link rel="stylesheet" href="/css/userpagestyle.css">
-    <script src="~/js/userpage.js"></script>
 </head>
 <body>
     <div id="topBorder">
         <div id="topBorder_img">
-            <img id="" src="@customer.ProfileImage" />
+            <img id="" src="@dbCustomer.ProfileImage" />
         </div>
         <div id="topBorder-left">
-            <h2>@customer.Username</h2>
-            <p><strong style="color: orangered">@customer.VMoney</strong> vMoney</p>
+            <h2>@dbCustomer.Username</h2>
+            <p><strong style="color: orangered">@dbCustomer.VMoney</strong> vMoney</p>
         </div>
         <div id="topBorder-right">
             <a asp-controller="UserPage" asp-action="UserPage" class="icon-button">
@@ -46,29 +58,100 @@
     </div>
 
     <div class="profileGames">
-        <div id="yourGames-text">
-            <h3>ORDER HISTORY</h3>
-        </div>
+
+       <div id="order-history">
+    @if (customerId != null)
+    {
+        var hasOrderHistory = false;
+        foreach (var order in ViewBag.OrderDetails as List<OrderDetail>)
+        {
+            if (order.CustomerId == customerId)
+            {
+                hasOrderHistory = true;
+                <div class="order-item">
+                    <p><strong>Order ID:</strong> @order.Id</p>
+                            <p>
+                                <strong>Products:</strong>
+                                @{
+                                    // Find the product ID from the order
+                                    var productId = order.ProductId;
+
+                                    // Retrieve the product from the products list
+                                    var product = products.FirstOrDefault(p => p.ProductId == productId);
+
+                                    // Check if product exists and display its title
+                                    if (product != null)
+                                    {
+                                        @product.Title
+                                    }
+                                    else
+                                    {
+                                        <span>Product Not Found</span>
+                                    }
+                                }
+                            </p>
+                    <p><strong>Status:</strong> @order.Status</p>
+                            <p>
+                                <strong>Amount:</strong>
+                                @{
+                                    // Find the product ID from the order
+                                    var productPrice = order.ProductId;
+
+                                    // Retrieve the product from the products list
+                                    var productP = products.FirstOrDefault(p => p.ProductId == productId);
+
+                                    // Check if product exists and display its price
+                                    if (product != null)
+                                    {
+                                        if (product.Price == 0)
+                                        {
+                                            <span>FREE</span>
+                                        }
+                                        else
+                                        {
+                                            @product.Price
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>Price Not Available</span>
+                                    }
+                                }
+
+                    <p><strong>Order Date:</strong> @order.OrderDate</p>
+                </div>
+            }
+        }
+
+        if (!hasOrderHistory)
+        {
+            <p class="no-history">You don't have any order history!</p>
+        }
+    }
+    else
+    {
+        <p class="no-history">No customer ID found.</p>
+    }
+</div>
 
 
+        <div class="profile-shopcontainer">
+            <div id="profile-shopcontainerGames">
+                <h2>GAME LIBRARY</h2>
 
-    </div>
+                <div class="side-scroll">
+                    @foreach (var game in products) // Iterate through all games
+                    {
 
-    <div class="profile-shopcontainer">
-        <div id="profile-shopcontainerGames">
-            <h3>GAME LIBRARY</h3>
+                        <div class="gamelib">
+                            <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@game.ProductId"><img src="@game.ImageOne" alt="@game.Title" class="game-image"> </a>
+                            <p>@game.Title</p>
+                        </div>
 
-            <div class="side-scroll">
-                @foreach (var game in products) // Iterate through all games
-                {
-                    <div class="gamelib">
-                        <img src="@game.ImageOne" alt="@game.Title" class="game-image">
-                        <p>@game.Title</p>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
-    </div>
 
 </body>
 </html>

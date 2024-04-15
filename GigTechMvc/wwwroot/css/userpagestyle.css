@@ -9,6 +9,7 @@
 #topBorder {
     width: 100%;
     height: 110px;
+    margin-top: 80px;
     background-color: antiquewhite;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -100,18 +101,20 @@
     background-color: white;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: left;
     align-items: start;
 }
 
 .game {
     margin: 10px;
+
 }
 
 .game-image {
     margin-top: 20px;
     width: 175px;
     height: auto;
+    margin-left: 17px;
     border-radius: 10px;
     border: 1px solid black;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -133,6 +136,7 @@
 .gameName-container {
     border-radius: 10px;
     padding-top: 4px;
+    margin-left: 15px;
     padding-bottom: 5px;
     margin-top: 8px;
     text-align: center;
@@ -145,6 +149,7 @@
 
 .gameDes-container {
     margin-top: 8px;
+    margin-left: 15px;
     text-align: center;
     letter-spacing: 1px;
     font-size: 11px;
@@ -265,36 +270,85 @@
     display: wrap;
     justify-content: center;
     border-radius: 10px;
-    height: 350px;
+    height: auto;
+    max-height: 370px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-    #profile-information-right h3 {
-        font-size: 1.5em;
-        color: #333;
-        text-align: center;
-        padding-top: 10px;
-    }
+.download-button {
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #d5e2df;
+    box-shadow: none;
+    border: 1px solid black;
+    font-size: 12px;
+    margin-right: 10px; /* Add right margin for spacing */
+}
+
+.download-button:hover{
+    background-color: aliceblue;
+}
+
+#profile-information-right h3 {
+    font-size: 1.5em;
+    color: #333;
+    text-align: center;
+    padding-top: 10px;
+}
 
 #deposit-options {
     margin: auto;
-    width: 100%;
+    width: 90%;
 }
 
-.deposit-amount {
-    padding: 10px 15px;
-    margin: 2px;
+.amount-buttons{
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.depositAmount {
+    padding: 10px 15px; /* Adjust padding as needed */
+    margin-top: 20px;
     background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 10px; /* Rounded corners */
     transition: background-color 0.3s; /* Smooth transition */
+    width: auto; /* Set a fixed width for all buttons */
+    text-align: center; /* Center align text */
 }
 
-    .deposit-amount:hover {
+    .depositAmount:hover {
         background-color: #45a049; /* Hover effect */
     }
+
+.form-group input{
+    background-color: white;
+    width: 90%;
+    margin: auto;
+    color: black;
+}
+
+.form-group2 select {
+    background-color: white;
+    width: 90%;
+    margin: auto;
+    color: black;
+}
+
+.form-group2 option {
+    background-color: white;
+}
+
+.form-group2 input {
+    background-color: white;
+}
+
+#depositbutton{
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
 
 #deposit-now-button {
     padding: 10px 20px;
@@ -391,3 +445,21 @@
     #profileForm .btn:hover {
         background-color: #0056b3;
     }
+    #editProfileForm {
+    display: none;
+}
+
+#order-history {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Create 4 equal-width columns */
+    gap: 15px; /* Add some gap between grid items */
+}
+
+.order-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
