@@ -58,39 +58,82 @@
     </div>
 
     <div class="profileGames">
-        <div id="yourGames-text">
-            <h3>ORDER HISTORY</h3>
 
-            @if (customerId != null)
+       <div id="order-history">
+    @if (customerId != null)
+    {
+        var hasOrderHistory = false;
+        foreach (var order in ViewBag.OrderDetails as List<OrderDetail>)
+        {
+            if (order.CustomerId == customerId)
             {
-                var hasOrderHistory = false;
-                foreach (var order in ViewBag.OrderDetails as List<OrderDetail>)
-                {
-                    if (order.CustomerId == customerId)
-                    {
-                        hasOrderHistory = true;
-                        <p>Order ID: @order.Id</p>
-                        <p>Products: @order.Product</p>
-                        <p>Status: @order.Status</p>
-                        <p>Total Amount: @order.TotalAmount</p>
-                        <p>Order Date: @order.OrderDate</p>
-                        <hr />
-                    }
-                }
+                hasOrderHistory = true;
+                <div class="order-item">
+                    <p><strong>Order ID:</strong> @order.Id</p>
+                            <p>
+                                <strong>Products:</strong>
+                                @{
+                                    // Find the product ID from the order
+                                    var productId = order.ProductId;
 
-                if (!hasOrderHistory)
-                {
-                    <p>You don't have any order history!</p>
-                }
+                                    // Retrieve the product from the products list
+                                    var product = products.FirstOrDefault(p => p.ProductId == productId);
+
+                                    // Check if product exists and display its title
+                                    if (product != null)
+                                    {
+                                        @product.Title
+                                    }
+                                    else
+                                    {
+                                        <span>Product Not Found</span>
+                                    }
+                                }
+                            </p>
+                    <p><strong>Status:</strong> @order.Status</p>
+                            <p>
+                                <strong>Amount:</strong>
+                                @{
+                                    // Find the product ID from the order
+                                    var productPrice = order.ProductId;
+
+                                    // Retrieve the product from the products list
+                                    var productP = products.FirstOrDefault(p => p.ProductId == productId);
+
+                                    // Check if product exists and display its price
+                                    if (product != null)
+                                    {
+                                        if (product.Price == 0)
+                                        {
+                                            <span>FREE</span>
+                                        }
+                                        else
+                                        {
+                                            @product.Price
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span>Price Not Available</span>
+                                    }
+                                }
+
+                    <p><strong>Order Date:</strong> @order.OrderDate</p>
+                </div>
             }
-            else
-            {
-                <p>No customer ID found.</p>
-            }
+        }
 
+        if (!hasOrderHistory)
+        {
+            <p class="no-history">You don't have any order history!</p>
+        }
+    }
+    else
+    {
+        <p class="no-history">No customer ID found.</p>
+    }
+</div>
 
-
-    </div>
 
         <div class="profile-shopcontainer">
             <div id="profile-shopcontainerGames">

@@ -17,3 +17,4 @@ document.querySelectorAll('.depositAmount').forEach(button => {
         document.getElementById('VMoney').value = clickedAmount;
     });
 });
+

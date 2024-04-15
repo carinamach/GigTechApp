@@ -448,3 +448,18 @@
     #editProfileForm {
     display: none;
 }
+
+#order-history {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Create 4 equal-width columns */
+    gap: 15px; /* Add some gap between grid items */
+}
+
+.order-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
