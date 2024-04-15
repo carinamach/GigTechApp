@@ -52,23 +52,25 @@
                                 <div class="card-body">
                                     <p class="card-text">@Html.Raw(post.Content)</p>
                                 </div>
-                                <div asp-controller="Forum" asp-action=""></div>
-                                @foreach (var reply in dbcontext.ForumThreads)
-                                {
-                                    <div class="container">
-                                        <div class="card mb-4">
-                                            <!-- Display reply information -->
-                                            <div class="card-body">
-                                                <p class="card-text">@reply.Content</p>
-                                                <p class="card-text">Date & Time: @reply.CreationDate</p>
-                                                <p class="card-text">Posted by customer id: @reply.UserId</p>
+                                @{
+                                    int parentPostId = post.Id;
+                                    List<ForumThread> replyList;
+                                    replyList = dbcontext.ForumThreads.Where(item => item.ForumPostId == parentPostId).ToList();
+
+                                    foreach (var reply in replyList)
+                                    {
+                                        <div class="container">
+                                            <div class="card mb-4">
+                                                <!-- Display reply information -->
+                                                <div class="card-body">
+                                                    <p class="card-text">@reply.Content</p>
+                                                    <p class="card-text">Date & Time: @reply.CreationDate</p>
+                                                    <p class="card-text">Posted by customer id: @reply.UserId</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    }
                                 }
-
-
-
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="replyModalLabel_@post.Id">Reply to Post</h5>
 

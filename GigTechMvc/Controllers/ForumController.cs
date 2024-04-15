@@ -27,6 +27,7 @@ namespace GigTechMvc.Controllers
             //{
             //    replyList = ReplyList(post.Id);
             //}
+
             return View("/Views/Pages/ForumPage.cshtml", posts);
         }
     
