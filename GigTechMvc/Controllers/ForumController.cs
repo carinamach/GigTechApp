@@ -19,15 +19,6 @@ namespace GigTechMvc.Controllers
             var posts = _context.ForumPosts                             
                                 .OrderByDescending(post => post.CreationDate)
                                 .ToList();
-
-            //int idPost;
-            //List<ForumThread> replyList;
-
-            //foreach (var post in posts)
-            //{
-            //    replyList = ReplyList(post.Id);
-            //}
-
             return View("/Views/Pages/ForumPage.cshtml", posts);
         }
     
@@ -51,7 +42,7 @@ namespace GigTechMvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveText(string title, string content, int threadId)
+        public IActionResult CreatePost(string title, string content, int threadId)
         {
             if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(content))
             {
@@ -97,16 +88,6 @@ namespace GigTechMvc.Controllers
 
             return RedirectToAction("ForumIndex");
         }
-
-        //private List<ForumThread> ReplyList (int parentId)
-        //{
-        //    List<ForumThread> replyList;
-        //    replyList = _context.ForumThreads.Where(item => item.ForumPostId == parentId).ToList();
-
-        //    return replyList;
-        //}
-
-
         [HttpPost]
         public IActionResult EditPost(int postId,string newTitle, string newContent)
         {
@@ -144,10 +125,21 @@ namespace GigTechMvc.Controllers
             }
             catch (DbUpdateException ex)
             {
-                // Log the exception or handle it as needed
                 return StatusCode(500, "An error occurred while deleting the post.");
             }
             return RedirectToAction("ForumIndex");
         }
     }
 }
+
+
+
+//private List<ForumThread> ReplyList (int parentId)
+//{
+//    List<ForumThread> replyList;
+//    replyList = _context.ForumThreads.Where(item => item.ForumPostId == parentId).ToList();
+
+//    return replyList;
+//}
+
+

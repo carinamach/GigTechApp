@@ -52,26 +52,8 @@
                                 <div class="card-body">
                                     <p class="card-text">@Html.Raw(post.Content)</p>
                                 </div>
-                                @{
-                                    int parentPostId = post.Id;
-                                    List<ForumThread> replyList;
-                                    replyList = dbcontext.ForumThreads.Where(item => item.ForumPostId == parentPostId).ToList();
-
-                                    foreach (var reply in replyList)
-                                    {
-                                        <div class="container">
-                                            <div class="card mb-4">
-                                                <!-- Display reply information -->
-                                                <div class="card-body">
-                                                    <p class="card-text">@reply.Content</p>
-                                                    <p class="card-text">Date & Time: @reply.CreationDate</p>
-                                                    <p class="card-text">Posted by customer id: @reply.UserId</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                                <div class="modal-header">
+                               
+                                @* <div class="modal-header">
                                     <h5 class="modal-title" id="replyModalLabel_@post.Id">Reply to Post</h5>
 
                                 </div>
@@ -86,14 +68,35 @@
                                             <button type="submit" class="btn btn-primary">Submit Reply</button>
                                         </div>
                                     </form>
-                                </div>
+                                </div> *@
                                 <div class="card-footer text-muted">
                                     <button type="submit" class="btn btn-primary">Reply</button>
                                 </div>
                             </div>
+                            @{
+                                int parentPostId = post.Id;
+                                List<ForumThread> replyList;
+                                replyList = dbcontext.ForumThreads.Where(item => item.ForumPostId == parentPostId).ToList();
+
+                                foreach (var reply in replyList)
+                                {
+                                    <div class="container" style="margin-left:3rem;  padding-right:0; width:auto;">
+                                        <div class="card mb-4">
+                                            <!-- Display reply information -->
+                                           
+                                            <div class="card-body">
+                                                
+
+                                                <p class="card-text">User @reply.UserId replied: @reply.Content</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            }
                         </div>
 
-                        <!-- Edit Post Modal -->
+                        <!-- POP-up: Edit Post Modal -->
                         <div class="modal fade" id="editPostModal_@post.Id" tabindex="-1" role="dialog" aria-labelledby="editPostModalLabel_@post.Id" aria-hidden="true">
                             <!-- Modal Content -->
                             <div class="modal-dialog modal-lg" role="document">
@@ -159,7 +162,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form asp-controller="Forum" asp-action="SaveText" method="post">
+                <form asp-controller="Forum" asp-action="CreatPost" method="post">
                     <div class="form-group bg-white col-md-6">
                         <label for="threadId">Select Thread:</label>
                         <select class="form-select form-select-m" style="margin-top: 5px;"  aria-label="Medium select" id="threadId" name="threadId" required>
