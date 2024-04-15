@@ -9,8 +9,6 @@
     var userId = await UserManager.GetUserAsync(User);
     var userEmail = userId.Email;
     var dbCustomer = _dbContext.Customers.FirstOrDefault(c => c.Email == userEmail);
-    //var user = ShoppingCart.CustomerId;
-    //var userOrder = _dbContext.ShoppingCart.FirstOrDefault(o => o.CustomerId.ToString() == user);
 }
 
 <table class="table table-striped" id="cartTable">
@@ -23,7 +21,7 @@
     </thead>
 
     <tbody>
-        @foreach (var item in ViewBag.ShoppingCart)// foreach statement cannot operate on variables of type ShoppingCart because ShoppingCart does not contain a public instance or extension deifinition for 'Getenumerator'
+        @foreach (var item in ViewBag.ShoppingCart)
         {
             <tr>
                 <td>@item.ProductName</td>
@@ -52,8 +50,6 @@
     }
     <p>Total: @totalPrice</p>
 }
-
-
 
 <form method="post" action="@Url.Action("Pay", "ShoppingCart")">
     <button type="submit" class="btn btn-primary">Pay</button>

@@ -63,8 +63,6 @@ namespace GigTechMvc.Controllers
             return RedirectToAction("ShoppingCart");
         }
 
-
-
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Pay()
@@ -76,8 +74,13 @@ namespace GigTechMvc.Controllers
             // Retrieve shopping cart items for the current user
             var shoppingCartItems = _dbContext.ShoppingCart.Where(item => item.CustomerId == currentUserId).ToList();
 
-            var currentUserIdInt = Convert.ToInt32(currentUserId);
-            var user = await _dbContext.Customers.Include(u => u.Games).FirstOrDefaultAsync(u => u.CustomerId == currentUserIdInt);
+
+
+            // customer not found ??
+            var user = await _dbContext.Customers
+            .FirstOrDefaultAsync(u => u.CustomerId.ToString() == currentUserId);
+
+
 
 
             // Add games from the shopping cart to the user's games
@@ -92,7 +95,6 @@ namespace GigTechMvc.Controllers
                     // Skapa ett nytt Game-objekt och lägg till det i den nya listan
                     newGames.Add(new Game { ProductId = item.ProductId, ProductName = item.ProductName, ProductPrice = item.ProductPrice });
                 }
-
                 // Konvertera den nya listan av spel till en sträng
                 var gamesAsString = string.Join(",", newGames.Select(g => $"ProductId: {g.ProductId}, ProductName: {g.ProductName}, ProductPrice: {g.ProductPrice}"));
 
@@ -101,9 +103,5 @@ namespace GigTechMvc.Controllers
             }
             return NotFound("User not found.");
         }
-
-
-
-
     }
 }
