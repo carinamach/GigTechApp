@@ -11,6 +11,7 @@ namespace GigTechMvc.Controllers
         private readonly GigTechContext _dbContext;
         private readonly UserManager<IdentityUser> _userManager;
 
+
         [Authorize]
         public async Task<string> RetrieveUserId()
         {
@@ -175,6 +176,47 @@ namespace GigTechMvc.Controllers
                 return BadRequest("Invalid vMoney value");
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveDetails(CustomerFormData formData)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Handle validation errors
+                return BadRequest(ModelState);
+            }
+
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser == null)
+            {
+                // Handle if current user is not found
+                return NotFound("Current user not found.");
+            }
+
+            // Retrieve the customer associated with the current user's email
+            var customer = _dbContext.Customers.FirstOrDefault(c => c.Email == currentUser.Email);
+
+            if (customer == null)
+            {
+                // Create a new customer if not found
+                customer = new Customer { Email = currentUser.Email };
+                _dbContext.Customers.Add(customer);
+            }
+
+            // Update customer details with the form data
+            customer.FirstName = formData.FirstName;
+            customer.LastName = formData.LastName;
+            customer.PhoneNumber = formData.PhoneNumber;
+            customer.Username = formData.Username;
+                                                           // Save changes to the database
+            _dbContext.SaveChanges();
+
+            // Redirect to the UserPage after registration
+            return RedirectToAction("UserPage");
+        }
+
 
 
 
