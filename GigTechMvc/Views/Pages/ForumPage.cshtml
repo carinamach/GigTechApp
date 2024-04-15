@@ -46,7 +46,7 @@
                                                     <input type="hidden" name="postId" value="@post.Id" />
                                                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                                 </form>                                            
-                                                <button style ="margin-right:5px;" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPostModal_@post.Id">Edit</button>
+                                            <button style ="margin-right:5px;" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPostModal_@post.Id">Edit</button>
                                         </div>
                                         </div>
                                     </div>
@@ -78,17 +78,17 @@
                         </div>                         
                         <!-- POP-up: Reply Modal -->
                         <div class="modal fade" id="replyModal_@post.Id" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel_@post.Id" aria-hidden="true">
-                            <!-- Modal Content -->
+                            <!--  Content -->
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
-                                    <!-- Modal Header -->
+                                    <!-- Header -->
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="replyModalLabel_@post.Id">Reply to @post.Title</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <!-- Modal Body -->
+                                    <!-- Body -->
                                     <div class="modal-body">
                                         <h6>Title: @post.Title</h6>
                                         <p>@Html.Raw(post.Content)</p>
