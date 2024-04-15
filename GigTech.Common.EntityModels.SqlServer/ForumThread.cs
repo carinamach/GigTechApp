@@ -14,7 +14,7 @@ public partial class ForumThread
 
     public DateTime CreationDate { get; set; }
 
-    public int? ForumPostId { get; set; }
+    public int ForumPostId { get; set; }
 
-    public int? UserId { get; set; }
+    public int UserId { get; set; }
 }
