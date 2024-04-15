@@ -1,50 +1,20 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('editProfileBtn').addEventListener('click', function () {
-        var editProfileForm = document.getElementById('editProfileForm');
-        if (editProfileForm.style.display === 'block') {
-            editProfileForm.style.display = 'none';
-        } else {
-            editProfileForm.style.display = 'block';
-        }
-    });
+﻿const editProfileBtn = document.getElementById('editProfileBtn');
+const editProfileForm = document.getElementById('editProfileForm');
 
-    const depositButtons = document.querySelectorAll(".deposit-amount");
-    const customAmountInput = document.getElementById("custom-amount");
+// Add event listener to the button
+editProfileBtn.addEventListener('click', function () {
+    // Toggle the display style of the form
+    if (editProfileForm.style.display === 'none') {
+        editProfileForm.style.display = 'block';
+    } else {
+        editProfileForm.style.display = 'none';
+    }
+});
 
-    depositButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            customAmountInput.value = button.getAttribute("data-amount");
-        });
-    });
-
-    customAmountInput.addEventListener("input", function () {
-        if (this.value !== '') {
-            customAmountInput.placeholder = "Enter custom amount";
-        }
-    });
-
-    document.getElementById('deposit-now-button').addEventListener('click', function () {
-        var selectedAmount = customAmountInput.value;
-        if (selectedAmount === '') {
-            var placeholderText = customAmountInput.placeholder;
-            var amountMatch = placeholderText.match(/\d+/);
-            if (amountMatch !== null) {
-                selectedAmount = amountMatch[0];
-            }
-        }
-
+document.querySelectorAll('.depositAmount').forEach(button => {
+    button.addEventListener('click', function () {
+        const clickedAmount = parseInt(this.getAttribute('data-amount'));
+        document.getElementById('VMoney').value = clickedAmount;
     });
 });
 
-    document.addEventListener("DOMContentLoaded", function() {
-        var description = document.querySelector('.description');
-    var readMoreBtn = document.querySelector('.readmore');
-
-    readMoreBtn.addEventListener('click', function() {
-        // Set description text to full length
-        description.textContent = @product.Description;
-
-    // Hide read more button after expanding the description
-    readMoreBtn.style.display = 'none';
-        });
-    });

@@ -15,15 +15,12 @@
 
 }
 
-_context.ForumPosts.Where(post => post.ThreadId == categoryNumber).ToList();
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" />
     <title>User Profile</title>
     <link rel="stylesheet" href="/css/userpagestyle.css">
-    <script src="~/js/userpage.js"></script>
 </head>
 <body>
     <div id="topBorder">
@@ -99,14 +96,18 @@ _context.ForumPosts.Where(post => post.ThreadId == categoryNumber).ToList();
 
     <div class="profile-shopcontainer">
         <div id="profile-shopcontainerGames">
-            <h3>GAME LIBRARY</h3>
+            <h2>GAME LIBRARY</h2>
 
             <div class="side-scroll">
                 @foreach (var game in products) // Iterate through all games
                 {
 
-                        <div class="gamelib">
+                    <div class="gamelib">
                         <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@game.ProductId"><img src="@game.ImageOne" alt="@game.Title" class="game-image"> </a>
+
+                        <p>@game.Title</p>
+                    </div>
+
                             <p>@game.Title</p>
                         </div>
                    
@@ -116,6 +117,7 @@ _context.ForumPosts.Where(post => post.ThreadId == categoryNumber).ToList();
                             <p>@game.Title</p>
                         </div>
                     </a>
+
 
                 }
             </div>
