@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 
 namespace GigTechMvc.Controllers
 {
@@ -19,6 +20,13 @@ namespace GigTechMvc.Controllers
                                 .OrderByDescending(post => post.CreationDate)
                                 .ToList();
 
+            //int idPost;
+            //List<ForumThread> replyList;
+
+            //foreach (var post in posts)
+            //{
+            //    replyList = ReplyList(post.Id);
+            //}
             return View("/Views/Pages/ForumPage.cshtml", posts);
         }
     
@@ -64,6 +72,40 @@ namespace GigTechMvc.Controllers
             }
             return RedirectToAction("ForumIndex");
         }
+
+        [HttpPost]
+        public IActionResult AddReply(int postId, string replyContent)
+        {
+            var parentPost = _context.ForumPosts.FirstOrDefault(p => p.Id == postId);
+
+            if (parentPost == null)
+            {
+                return NotFound();
+            }
+
+            var replyPost =new ForumThread()
+            {
+                Content = replyContent,
+                CreationDate = DateTime.Now,
+                UserId = 1, // Assuming you have some authentication system to get the current user ID
+                ForumPostId = parentPost.Id // Associate reply with parent post
+            };
+
+            _context.ForumThreads.Add(replyPost);
+            _context.SaveChanges();
+
+            return RedirectToAction("ForumIndex");
+        }
+
+        //private List<ForumThread> ReplyList (int parentId)
+        //{
+        //    List<ForumThread> replyList;
+        //    replyList = _context.ForumThreads.Where(item => item.ForumPostId == parentId).ToList();
+
+        //    return replyList;
+        //}
+
+
         [HttpPost]
         public IActionResult EditPost(int postId,string newTitle, string newContent)
         {

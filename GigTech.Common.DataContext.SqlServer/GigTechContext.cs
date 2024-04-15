@@ -15,7 +15,7 @@ public partial class GigTechContext : DbContext
 
     public virtual DbSet<ForumPost> ForumPosts { get; set; }
 
-    //public virtual DbSet<ForumThread> ForumThreads { get; set; }
+    public virtual DbSet<ForumThread> ForumThreads { get; set; }
 
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
 

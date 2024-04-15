@@ -2,14 +2,10 @@
 
 namespace GigTechMvc.Models 
 {   
-
-
-    public record ForumPostViewModel
-        (
-        IList<ForumPost> ForumPosts
-    );
-
-
-
+    public class ForumPostViewModel
+    {
+        public List<ForumPost> Posts { get; set; }
+        public Dictionary<int, List<ForumThread>> PostReplies { get; set; }
+    }
 
 }
