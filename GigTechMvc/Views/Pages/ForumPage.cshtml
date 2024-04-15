@@ -3,7 +3,6 @@
 @{
     var dbcontext = new GigTechContext();
 }
-
 <h1 style="padding-top:100px;">Forum</h1>
 <form asp-controller="Forum" asp-action="FilterByCategory" method="get" class="text-center">
     <div class="form-group bg-white">
@@ -12,7 +11,7 @@
                 <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="1">Test</button>
                 <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="2">Games</button>
                 <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="3">News</button>
-                <button type="submit" class="btn btn-secondary btn-lg btn-block col-md-2" name="categoryNumber" value="">Show All</button>
+                <button selected type="submit" class="btn btn-secondary btn-lg btn-block col-md-2" name="categoryNumber" value="">Show All</button>
                 <br />
                 <br />
             </div>
@@ -20,62 +19,121 @@
     </div>
 </form>
 
-
-
 <br />
 <div class="container">
     <div class="row">
         <div class="col-md-10">
-            <!-- Column for Forum Posts -->
-
             <div class="container">
                 @if (Model != null && Model.Count > 0)
                 {
                     @foreach (var post in Model)
                     {
                         <div class="container">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="card mb-4">
-                                        <div class="container card-header">
-                                            <div class="row">
-                                                <div class="col-md-8">
-                                                    <h3 class="card-title">@post.Title</h3>
-                                                    <div>
-                                                        @if (post.ThreadId == 1)
-                                                        {
-                                                            <h6>Category: Test Post</h6>
-                                                        }
-                                                        else if (post.ThreadId == 2)
-                                                        {
-                                                            <h6>Category: Game Posts</h6>
-                                                        }
-                                                        else
-                                                        {
-                                                            <h6>Category: News Post</h6>
-                                                        }
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4 text-left">
-                                                    <p class="card-text">Date & Time: @post.CreationDate</p>
-                                                    <h6 class="card-subtitle mb-2 text-muted">Posted by customer id: @post.CustomerId</h6>
-                                                </div>
+                            <div class="card mb-4">
+                                <div class="container card-header">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h3 class="card-title">@post.Title</h3>
+                                            <h6>Category: @(post.ThreadId == 1 ? "Test Posts" : post.ThreadId == 2 ? "Game" : "News")</h6>
+                                        </div>
+                                        <div class="col-md-4 text-right flex-row-reverse">
+                                            <p class="card-text text-right">Date & Time: @post.CreationDate</p>
+                                            <h6 class="card-subtitle mb-2 text-muted text-right">Posted by customer id: @post.CustomerId</h6>
+                                            <div class="align-item d-flex flex-row-reverse">
+                                                <form asp-controller="Forum" asp-action="DeletePost" method="post">
+                                                    <input type="hidden" name="postId" value="@post.Id" />
+                                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                </form>                                            
+                                                <button style ="margin-right:5px;" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPostModal_@post.Id">Edit</button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">@Html.Raw(post.Content)</p>
+                                </div>
+                                <div asp-controller="Forum" asp-action=""></div>
+                                @foreach (var reply in dbcontext.ForumThreads)
+                                {
+                                    <div class="container">
+                                        <div class="card mb-4">
+                                            <!-- Display reply information -->
+                                            <div class="card-body">
+                                                <p class="card-text">@reply.Content</p>
+                                                <p class="card-text">Date & Time: @reply.CreationDate</p>
+                                                <p class="card-text">Posted by customer id: @reply.UserId</p>
                                             </div>
                                         </div>
-                                        <div class="card-body">
-                                            <p class="card-text">Content: @Html.Raw(post.Content)</p>
+                                    </div>
+                                }
+
+
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="replyModalLabel_@post.Id">Reply to Post</h5>
+
+                                </div>
+                                <!-- Modal Body -->
+                                <div class="modal-body">
+                                    <!-- Reply Form -->
+                                    <form asp-controller="Forum" asp-action="AddReply" method="post">
+                                        <input type="hidden" name="postId" value="@post.Id" />
+                                        <div class="form-group">
+                                            <label for="replyContent_@post.Id">Your Reply:</label>
+                                            <textarea id="replyContent_@post.Id" name="replyContent" class="form-control bg-white" rows="3" required></textarea>
+                                            <button type="submit" class="btn btn-primary">Submit Reply</button>
                                         </div>
+                                    </form>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <button type="submit" class="btn btn-primary">Reply</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Edit Post Modal -->
+                        <div class="modal fade" id="editPostModal_@post.Id" tabindex="-1" role="dialog" aria-labelledby="editPostModalLabel_@post.Id" aria-hidden="true">
+                            <!-- Modal Content -->
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editPostModalLabel_@post.Id">Edit Forum Post</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <!-- Modal Body -->
+                                    <div class="modal-body">
+                                        <!-- Edit Post Form -->
+                                        <form asp-controller="Forum" asp-action="EditPost" method="post">
+                                            <input type="hidden" name="postId" value="@post.Id" />
+                                            <!-- Title -->
+                                            <div class="form-group">
+                                                <label for="editTitle_@post.Id">Title:</label>
+                                                <textarea id="editTitle_@post.Id" name="newTitle" class="form-control bg-white">@post.Title</textarea>
+                                            </div>
+                                            <!-- Content -->
+                                            <div class="form-group">
+                                                <label for="editContent_@post.Id">Content:</label>
+                                                <textarea id="editContent_@post.Id" name="newContent" class="form-control bg-white" rows="5">@post.Content</textarea>
+                                            </div>
+                                            <!-- Submit Button -->
+                                            <button class="btn btn-primary" type="submit" style="margin-top:5px">Save Edits</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     }
+
                 }
                 else
                 {
                     <h3>No Post Created Yet</h3>
                 }
             </div>
+
         </div>
         <div class="col-md-2">
             <!-- Column for Create New Post Button -->
@@ -86,8 +144,9 @@
             </div>
         </div>
     </div>
-</div>  
+</div>
 
+@* Pop-up modals*@
 <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -127,8 +186,6 @@
         </div>
     </div>
 </div>
-
-
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
