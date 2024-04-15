@@ -29,14 +29,44 @@ namespace GigTechMvc.Controllers
         {
             return View();
         }
+
+        //----------------------------------------------
         [Authorize]
-        public IActionResult UserPage()
+        public async Task<IActionResult> UserPage()
         {
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser == null)
+            {
+                // Handle if current user is not found
+                return NotFound("Current user not found.");
+            }
+
+            // Retrieve the customer associated with the current user's email
+            var customer = _dbContext.Customers.FirstOrDefault(c => c.Email == currentUser.Email);
+
+            if (customer == null)
+            {
+                // Handle if customer is not found
+                return NotFound("Customer details not found for the current user.");
+            }
+
+            // Check if any of the customer details are missing
+            if (string.IsNullOrEmpty(customer.FirstName) || string.IsNullOrEmpty(customer.LastName) || string.IsNullOrEmpty(customer.PhoneNumber) || string.IsNullOrEmpty(customer.Username) || string.IsNullOrEmpty(customer.ProfileImage))
+            {
+                // Redirect to detailed registration page
+                return RedirectToAction("DetailedRegistration");
+            }
+
+            // If all customer details are present, proceed to render the UserPage view
             var products = _dbContext.Products.ToList();
             ViewBag.Products = products;
 
             return View("/Views/Pages/UserPage.cshtml");
         }
+
+        //-----------------------------------------------------
 
         public async Task<IActionResult> UserPageEdit()
         {
@@ -145,6 +175,7 @@ namespace GigTechMvc.Controllers
                 return BadRequest("Invalid vMoney value");
             }
         }
+
 
 
     }
