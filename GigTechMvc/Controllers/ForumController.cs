@@ -118,7 +118,11 @@ namespace GigTechMvc.Controllers
             {
                 return NotFound();
             }
+
+            var replyPosts = _context.ForumThreads.Where(p => p.ForumPostId == postId);
+            _context.ForumThreads.RemoveRange(replyPosts);
             _context.ForumPosts.Remove(post);
+
             try
             {
                 _context.SaveChanges();
@@ -127,8 +131,10 @@ namespace GigTechMvc.Controllers
             {
                 return StatusCode(500, "An error occurred while deleting the post.");
             }
+
             return RedirectToAction("ForumIndex");
         }
+
     }
 }
 
