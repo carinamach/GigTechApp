@@ -16,5 +16,5 @@ public partial class ForumThread
 
     public int ForumPostId { get; set; }
 
-    public int UserId { get; set; }
+    public string UserEmail { get; set; } = null!;
 }
