@@ -42,7 +42,7 @@ namespace GigTechMvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreatePost(string title, string content, int threadId)
+        public IActionResult CreatePost(string title, string content, int threadId, string userEmail)
         {
             if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(content))
             {
@@ -54,7 +54,7 @@ namespace GigTechMvc.Controllers
                     Content = content,
                     CreationDate = DateTime.Now,
                     ThreadId = threadId,
-                    CustomerId = 1, // Assuming you have some authentication system to get the current user ID
+                    UserEmail = userEmail, // Assuming you have some authentication system to get the current user ID
                 };
 
                 _context.ForumPosts.Add(forumPost);
@@ -66,7 +66,7 @@ namespace GigTechMvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddReply(int postId, string replyContent)
+        public IActionResult AddReply(int postId, string replyContent , string userEmail)
         {
             var parentPost = _context.ForumPosts.FirstOrDefault(p => p.Id == postId);
 
@@ -74,12 +74,13 @@ namespace GigTechMvc.Controllers
             {
                 return NotFound();
             }
+            replyContent = replyContent.Replace("\n", "<br />");
 
             var replyPost =new ForumThread()
             {
                 Content = replyContent,
                 CreationDate = DateTime.Now,
-                UserId = 1, // Assuming you have some authentication system to get the current user ID
+                UserEmail = userEmail,
                 ForumPostId = parentPost.Id // Associate reply with parent post
             };
 
@@ -99,6 +100,8 @@ namespace GigTechMvc.Controllers
             }
             else
             {
+                newContent = newContent.Replace("\n", "<br />");
+
                 if (post.Title != newTitle || post.Content!= newContent)
                 {
                     post.Title = newTitle;
@@ -118,28 +121,67 @@ namespace GigTechMvc.Controllers
             {
                 return NotFound();
             }
+
+            var replyPosts = _context.ForumThreads.Where(p => p.ForumPostId == postId);
+            _context.ForumThreads.RemoveRange(replyPosts);
             _context.ForumPosts.Remove(post);
+
             try
             {
                 _context.SaveChanges();
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
                 return StatusCode(500, "An error occurred while deleting the post.");
             }
+
+            return RedirectToAction("ForumIndex");
+        }
+        [HttpPost]
+        public IActionResult DeleteReply(int replyId)
+        {
+            var replyPost = _context.ForumThreads.FirstOrDefault(p => p.Id == replyId);
+            if (replyPost == null)
+            {
+                return NotFound();
+            }
+            _context.ForumThreads.Remove(replyPost);
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(500, "An error occurred while deleting the post.");
+            }
+
+            return RedirectToAction("ForumIndex");
+        }
+
+        [HttpPost]
+        public IActionResult EditReply(int replyId, string newContent)
+        {
+            var reply = _context.ForumThreads.FirstOrDefault(p => p.Id == replyId);
+
+            if (reply == null)
+            {
+                return NotFound();
+
+            }
+
+            else
+            {
+                newContent = newContent.Replace("\n", "<br />");
+
+                if (reply.Content != newContent)
+                {
+                    reply.Content = newContent;
+                    _context.SaveChanges();
+                }
+            }
+
             return RedirectToAction("ForumIndex");
         }
     }
 }
-
-
-
-//private List<ForumThread> ReplyList (int parentId)
-//{
-//    List<ForumThread> replyList;
-//    replyList = _context.ForumThreads.Where(item => item.ForumPostId == parentId).ToList();
-
-//    return replyList;
-//}
-
-
