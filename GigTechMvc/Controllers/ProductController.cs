@@ -34,11 +34,17 @@ namespace GigTechMvc.Controllers
         }
         public void AddToCart(int? id)
         {
-            //Product? product = db.Products.FirstOrDefault(p => p.ProductId == id);
+            ShoppingCart shoppingcart = new ShoppingCart();
+              
+            Product? product = db.Products.FirstOrDefault(p => p.ProductId == id);
 
-            //db.ForumThreads.Add(product);
+            shoppingcart.ProductId = product.ProductId.ToString();
+            shoppingcart.ProductName = product.Title;
+            shoppingcart.ProductPrice = product.Price;
 
-            //db.SaveChanges();
+            db.ShoppingCart.Add(shoppingcart);
+
+            db.SaveChanges();
         }
     }
 }

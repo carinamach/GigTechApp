@@ -30,7 +30,7 @@
     </div>
 </div>
 <div class="buttondiv">
-    <button class="btn btn-primary btn-sm buttongamepage">Add to cart</button>
+        <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@Model.ProductId" type="button" class="btn btn-primary btn-sm buttongamepage">Add to cart</a>
     @if (Model.Price == 0)
     {
         <p class="priceproduct">Free game</p>
