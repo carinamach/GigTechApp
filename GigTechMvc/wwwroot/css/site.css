@@ -39,7 +39,7 @@ a:hover, a:focus {
 }
 
 .form-control:focus {
-  background: white;
+  background: grey;
 }
 
 footer {

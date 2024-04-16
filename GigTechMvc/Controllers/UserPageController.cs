@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GigTechMvc.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.CodeAnalysis;
 
 namespace GigTechMvc.Controllers
 {
@@ -40,8 +41,8 @@ namespace GigTechMvc.Controllers
 
             if (currentUser == null)
             {
-                // Handle if current user is not found
-                return NotFound("Current user not found.");
+                // Handle if user is not found
+                return RedirectToAction("DetailedRegistration", "UserPage");
             }
 
             // Retrieve the customer associated with the current user's email
@@ -49,15 +50,8 @@ namespace GigTechMvc.Controllers
 
             if (customer == null)
             {
-                // Handle if customer is not found
-                return NotFound("Customer details not found for the current user.");
-            }
-
-            // Check if any of the customer details are missing
-            if (string.IsNullOrEmpty(customer.FirstName) || string.IsNullOrEmpty(customer.LastName) || string.IsNullOrEmpty(customer.PhoneNumber) || string.IsNullOrEmpty(customer.Username) || string.IsNullOrEmpty(customer.ProfileImage))
-            {
-                // Redirect to detailed registration page
-                return RedirectToAction("DetailedRegistration");
+                // Redirect to detailed registration page if customer not found
+                return RedirectToAction("DetailedRegistration", "UserPage");
             }
 
             // If all customer details are present, proceed to render the UserPage view
@@ -66,6 +60,7 @@ namespace GigTechMvc.Controllers
 
             return View("/Views/Pages/UserPage.cshtml");
         }
+
 
         //-----------------------------------------------------
 
@@ -89,6 +84,44 @@ namespace GigTechMvc.Controllers
 
             return View("/Views/Pages/UserPageHistory.cshtml");
         }
+
+
+        [Authorize]
+        public async Task<IActionResult> DetailedRegistration()
+        {
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser == null)
+            {
+                // If the current user is null, redirect to the registration page
+                return RedirectToAction("Registration", "Account"); // Adjust the redirection URL as needed
+            }
+
+            // Retrieve the customer associated with the current user's email
+            var customer = _dbContext.Customers.FirstOrDefault(c => c.Email == currentUser.Email);
+
+            if (customer == null)
+            {
+                // If the customer is not found, it means detailed registration has not been completed
+                return View("/Views/Pages/DetailedRegistration.cshtml"); // Redirect to registration page
+            }
+            else
+            {
+                // If the customer is found, check if it has a first name
+                if (string.IsNullOrEmpty(customer.FirstName))
+                {
+                    // If the customer does not have a first name, redirect to the detailed registration page
+                    return View("/Views/Pages/DetailedRegistration.cshtml"); // Redirect to detailed registration page
+                }
+                else
+                {
+                    // If the customer has a first name, it means detailed registration has already been completed
+                    return Content("You have already registered this information.");
+                }
+            }
+        }
+
 
 
         [HttpPost]
@@ -122,14 +155,75 @@ namespace GigTechMvc.Controllers
             customer.FirstName = formData.FirstName;
             customer.LastName = formData.LastName;
             customer.PhoneNumber = formData.PhoneNumber;
-            // Assuming the Email and Username should not be changed based on the form data
-            // If they should be updated, you can include them here too
+            customer.Username = formData.Username;
+            customer.ProfileImage = formData.ProfileImage;
 
             // Save changes to the database
             _dbContext.SaveChanges();
 
             return Content("Changes saved successfully!");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> OnRegistrationSaveChanges(RegisterFormData formData)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Handle validation errors
+                return BadRequest(ModelState);
+            }
+
+            // Get the current user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser == null)
+            {
+                // Handle if current user is not found
+                return NotFound("Current user not found.");
+            }
+
+            // Check if the current user's email exists in the Customers table
+            var existingCustomer = _dbContext.Customers.FirstOrDefault(c => c.Email == currentUser.Email);
+
+            if (existingCustomer == null)
+            {
+                // Create a new customer object and populate its properties with the form data
+                var newCustomer = new Customer
+                {
+                    FirstName = formData.FirstName,
+                    LastName = formData.LastName,
+                    PhoneNumber = formData.PhoneNumber,
+                    Username = formData.Username,
+                    ProfileImage = formData.ProfileImage,
+                    Email = currentUser.Email, // Use the email of the current user
+                    PasswordHash = formData.PasswordHASH, // Use the email of the current user
+                    ProductId = formData.ProductId,
+                        CustomerId = formData.CustomerId // Use the email of the current user
+
+                    };
+
+                try
+                {
+                    // Add the new customer to the database
+                    _dbContext.Customers.Add(newCustomer);
+                    await _dbContext.SaveChangesAsync(); // Save changes asynchronously
+
+                    return Content("New customer created successfully!");
+                }
+                catch (Exception ex)
+                {
+                    // Handle exceptions, e.g., database errors
+                    return StatusCode(500, $"An error occurred while creating the new customer: {ex.Message}. Inner exception: {ex.InnerException?.Message}");
+                }
+
+            }
+            else
+            {
+                // Customer with the same email already exists
+                return Content("Customer with this email already exists.");
+            }
+        }
+
 
 
         [HttpPost]
@@ -176,49 +270,6 @@ namespace GigTechMvc.Controllers
                 return BadRequest("Invalid vMoney value");
             }
         }
-
-        [HttpPost]
-        public async Task<IActionResult> SaveDetails(CustomerFormData formData)
-        {
-            if (!ModelState.IsValid)
-            {
-                // Handle validation errors
-                return BadRequest(ModelState);
-            }
-
-            // Get the current user
-            var currentUser = await _userManager.GetUserAsync(User);
-
-            if (currentUser == null)
-            {
-                // Handle if current user is not found
-                return NotFound("Current user not found.");
-            }
-
-            // Retrieve the customer associated with the current user's email
-            var customer = _dbContext.Customers.FirstOrDefault(c => c.Email == currentUser.Email);
-
-            if (customer == null)
-            {
-                // Create a new customer if not found
-                customer = new Customer { Email = currentUser.Email };
-                _dbContext.Customers.Add(customer);
-            }
-
-            // Update customer details with the form data
-            customer.FirstName = formData.FirstName;
-            customer.LastName = formData.LastName;
-            customer.PhoneNumber = formData.PhoneNumber;
-            customer.Username = formData.Username;
-                                                           // Save changes to the database
-            _dbContext.SaveChanges();
-
-            // Redirect to the UserPage after registration
-            return RedirectToAction("UserPage");
-        }
-
-
-
 
     }
 }
