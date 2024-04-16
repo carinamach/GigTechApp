@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices;
 
-public class CustomerFormData
+public class RegisterFormData
 {
     [Required]
     public string FirstName { get; set; }
@@ -19,6 +19,15 @@ public class CustomerFormData
 
     [Required]
     public string Username { get; set; }
-
+    [Required]
     public string ProfileImage { get; set; }
+
+    [Required]
+    public string PasswordHASH { get; set; }
+
+    [Required]
+    public int ProductId { get; set; }
+
+    [Required]
+    public int CustomerId { get; set; }
 }

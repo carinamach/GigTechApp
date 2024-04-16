@@ -1,27 +1,100 @@
-﻿@model CustomerFormData
+﻿@model GigTech.Shared.Customer
+@using GigTech.Shared
+@using Microsoft.AspNetCore.Identity
+@inject GigTechContext _dbContext
+@inject UserManager<IdentityUser> UserManager
+@{
+    var customer = ViewBag.Customer as Customer;
+    var products = ViewBag.Products as List<Product>;
 
-<h2>Complete Your Registration</h2>
+    var userId = await UserManager.GetUserAsync(User);
+    var userEmail = userId.Email;
 
-<form asp-action="SaveDetails" method="post">
-    <div class="form-group">
-        <label for="FirstName">First Name:</label>
-        <input type="text" class="form-control" id="FirstName" name="FirstName">
-    </div>
-    <div class="form-group">
-        <label for="LastName">Last Name:</label>
-        <input type="text" class="form-control" id="LastName" name="LastName">
-    </div>
-    <div class="form-group">
-        <label for="PhoneNumber">Phone Number:</label>
-        <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber">
-    </div>
-    <div class="form-group">
-        <label for="Username">Username:</label>
-        <input type="text" class="form-control" id="Username" name="Username">
-    </div>
-    <div class="form-group">
-        <label for="ProfileImage">Profile Image URL:</label>
-        <input type="text" class="form-control" id="ProfileImage" name="ProfileImage">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+    // Retrieve customer based on user's email
+    var dbCustomer = _dbContext.Customers.FirstOrDefault(c => c.Email == userEmail);
+
+    var lastCustomerId = _dbContext.Customers.OrderByDescending(c => c.CustomerId).Select(c => c.CustomerId).FirstOrDefault();
+    ViewBag.LastCustomerId = lastCustomerId;
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" />
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/css/userpagestyle.css">
+</head>
+<body>
+
+
+    <h1>HELLO</h1>
+        <form id="profileForm" asp-controller="UserPage" asp-action="OnRegistrationSaveChanges" method="post">
+                        <div class="form-group">
+                            <label asp-for="FirstName">First Name:</label>
+                            <input asp-for="FirstName" class="form-control" value="FIRSTNAME" /> 
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="LastName">Last Name:</label>
+                            <input asp-for="LastName" class="form-control" value="LASTNAME" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
+        <div class="form-group" style="display: none;">
+                            <label asp-for="Email">Email:</label>
+                            <input asp-for="Email" class="form-control" value="@userId.Email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber">Phone Number:</label>
+                            <input asp-for="PhoneNumber" class="form-control" value="PHONENUMBER" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+        <div class="form-group" style="display: none;">
+                            <label asp-for="PasswordHash">PasswordHash:</label>
+                            <input asp-for="PasswordHash" class="form-control" value="***********" />
+                            <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                        </div>
+
+        <div class="form-group" style="display: none;">
+            <label asp-for="CustomerId">CustomerId:</label>
+            <input asp-for="CustomerId" class="form-control" value="@(ViewBag.LastCustomerId + 1)" />
+            <span asp-validation-for="CustomerId" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="Username">Username:</label>
+            <input asp-for="Username" class="form-control" value="USERNAME" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ProfileImage">ProfileImage:</label>
+            <input asp-for="ProfileImage" class="form-control" value="ProfileImage" />
+            <span asp-validation-for="ProfileImage" class="text-danger"></span>
+        </div>
+
+        <div class="form-group" style="display: none;">
+            <label asp-for="ProductId">ProductId:</label>
+            <input asp-for="ProductId" class="form-control" value="1" />
+            <span asp-validation-for="ProductId" class="text-danger"></span>
+        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+
+                    @section Scripts {
+                        @{
+                            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                        }
+                    }
+
+
+    <script src="~/js/userpage.js"></script>
+</body>
+</html>
