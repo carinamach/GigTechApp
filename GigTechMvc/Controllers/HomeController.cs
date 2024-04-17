@@ -1,3 +1,4 @@
+using GigTech.Shared;
 using GigTechMvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -7,15 +8,21 @@ namespace GigTechMvc.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly GigTechContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger, GigTechContext context)
         {
+            _context = context;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = new IndexModel();
+            ViewBag.Games = _context.Products.Skip(2).Take(5).ToList();
+
+            return View(model);
         }
 
         public IActionResult Privacy()
