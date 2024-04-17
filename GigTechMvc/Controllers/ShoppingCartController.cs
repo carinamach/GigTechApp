@@ -24,7 +24,7 @@ namespace GigTechMvc.Controllers
         public async Task<String> RetrieveUserId()
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var currentUserId = currentUser.Id;
+            var currentUserId = currentUser?.Id;
             return currentUserId;
         }
         
@@ -76,47 +76,36 @@ namespace GigTechMvc.Controllers
         public async Task<IActionResult> Pay()
         {
             // Retrieve the current user's ID
-            //var currentUser = await _userManager.GetUserAsync(User);
-            var currentUserId = await _userManager.GetUserAsync(User);
+            var userId = await _userManager.GetUserAsync(User);
 
-            // Retrieve the customer from the database
-            var customer = await _dbContext.Customers.FirstOrDefaultAsync(c => c.CustomerId.ToString() == currentUserId.ToString());
-            decimal vmoney = Convert.ToDecimal(customer.VMoney);
-
-
-            // Check if the customer exists
-            if (currentUserId == null)
+            // Retrieve the customer from the database using the user's email
+            var customer = await _dbContext.Customers.FirstOrDefaultAsync(c => c.Email == userId.Email);
+            if (customer == null)
             {
                 return NotFound("User not found.");
             }
 
             // Retrieve shopping cart items for the current user
-            var shoppingCartItems = _dbContext.ShoppingCart.Where(item => item.CustomerId.ToString() == currentUserId.ToString()).ToList();
+            var shoppingCartItems = _dbContext.ShoppingCart.Where(item => item.CustomerId.ToString() == customer.CustomerId.ToString()).ToList();
 
-            // Calculate total price of items in shopping cart
-            decimal totalPrice = shoppingCartItems.Sum(item => item.ProductPrice);
-            //decimal vmoneyDecimal = Convert.ToDecimal(vmoney);
 
-            // Check if the customer has enough vMoney
-            if (vmoney < totalPrice)
-            {
-                return BadRequest("Insufficient funds.");
-            }
+            // Add games from the shopping cart to the customer's library
+            //foreach (var item in shoppingCartItems)
+            //{
+              //  customer.Games.Add(item.ProductName); 
+            //}
 
-            // Deduct the total price from the customer's vMoney
-            vmoney -= totalPrice;
-
-            // Clear the shopping cart after payment
+            // Clear the shopping cart after adding games to the library
             _dbContext.ShoppingCart.RemoveRange(shoppingCartItems);
 
             // Save changes to the database
             await _dbContext.SaveChangesAsync();
 
-            // Return a success response with the total price
-            //return Ok("Your game(s) has been added to your library.");
+            // Return a success response
             return RedirectToAction("ShoppingCart");
-
         }
+
+
 
 
 
