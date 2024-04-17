@@ -1,0 +1,24 @@
+﻿@model IEnumerable<GigTech.Shared.OrderDetail>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Receipt</title>
+</head>
+<body>
+    @foreach (var orderDetail in Model)
+    {
+        <h2>Order Details</h2>
+        <p>Order ID: @orderDetail.Id</p>
+        <p>Customer ID: @orderDetail.CustomerId</p>
+        <p>Order Date: @orderDetail.OrderDate</p>
+        <p>Total Amount: @orderDetail.TotalAmount</p>
+
+        <h2>Order Item</h2>
+        <ul>
+            <li>Product ID: @orderDetail.ProductId, Product Price: @orderDetail.TotalAmount</li>
+        </ul>
+    }
+
+</body>
+</html>
