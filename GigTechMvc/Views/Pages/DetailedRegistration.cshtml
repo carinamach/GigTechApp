@@ -85,6 +85,12 @@
             <span asp-validation-for="ProfileImage" class="text-danger"></span>
         </div>
 
+        <div class="form-group" style="display: none;">
+            <label asp-for="VMoney">vMoney:</label>
+            <input id="profile-image-input" asp-for="VMoney" class="form-control" value="1000" />
+            <span asp-validation-for="VMoney" class="text-danger"></span>
+        </div>
+
         <h3>Choose your profile image</h3>
         <div class="image-grid">
             <button value="https://i.ibb.co/89F6Bxg/profilbild2.jpg"><img src="https://i.ibb.co/89F6Bxg/profilbild2.jpg" alt=""></button>
