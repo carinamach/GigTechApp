@@ -3,23 +3,8 @@
 @{
     var dbcontext = new GigTechContext();
 }
-@* @model ProductViewModel
- *@@* @{
-    var dbcontext = new GigTechContext();
-} *@
-
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
 <link href="~/css/product.css" rel="stylesheet" type="text/css" />
-
-<!-- Your page content here -->
-
-
 <h1>Games</h1>
-
-@* The nav does not filter the games. The method is built in product controller but not finnished *@
 
 <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
     <div class="container-fluid">
@@ -27,35 +12,35 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDark" aria-controls="navbarDark" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <form>
-        <div class="collapse navbar-collapse show" id="navbarDark">
-            <ul class="navbar-nav me-auto mb-2 mb-xl-0">
-                <li class="nav-item">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="genre" value="Action">Action</button>
-                </li>
-                <li class="nav-item">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="genre" value="Shooter">Shooter</button>
-                </li>
-                <li class="nav-item">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="genre" value="Adventure">Adventure</button>
-                </li>
-                <li class="nav-item">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="genre" value="Horror">Horror</button>
-                </li>
-                <li class="nav-item">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="genre" value="Casual Games">Casual Games</button>
-                </li>
-                <li class="nav-item">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="genre" value="Racing">Racing</button>
-                </li>
+        <form asp-controller="Product" asp-action="FilterByGenre" method="get">
+            <div class="collapse navbar-collapse show" id="navbarDark">
+                <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+                    <li class="nav-item" style="margin-right:5px">
+                        <button type="submit" class="btn btn-lg btn-block" style="background-color:#111;color:white" name="genre" value="Action">Action</button>
+                    </li>
+                    <li class="nav-item" style="margin-right:5px">
+                        <button type="submit" class="btn btn-lg btn-block" style="background-color:#111;color:white" name="genre" value="Shooter">Shooter</button>
+                    </li>
+                    <li class="nav-item" style="margin-right:5px">
+                        <button type="submit" class="btn btn-lg btn-block" style="background-color:#111;color:white" name="genre" value="Adventure">Adventure</button>
+                    </li>
+                    <li class="nav-item" style="margin-right:5px">
+                        <button type="submit" class="btn btn-lg btn-block" style="background-color:#111;color:white" name="genre" value="Horror">Horror</button>
+                    </li>
+                    <li class="nav-item" style="margin-right:5px">
+                        <button type="submit" class="btn btn-lg btn-block" style="background-color:#111;color:white" name="genre" value="Casual Games">Casual Games</button>
+                    </li>
+                    <li class="nav-item" style="margin-right:5px">
+                        <button type="submit" class="btn btn-lg btn-block" style="background-color:#111;color:white" name="genre" value="Racing">Racing</button>
+                    </li>
 
-            </ul>
-            </form>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-light" type="submit">Search</button>
-            </form>
-        </div>
+                </ul>
+        </form>
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-light" type="submit">Search</button>
+        </form>
+    </div>
     </div>
 </nav>
 
@@ -125,7 +110,6 @@
         </div>
     </div>
 
-
     <a class="carousel-control-prev" href="#carouselWithCaptions" role="button" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
@@ -138,7 +122,7 @@
 <div><br /></div>
 @if (Model is not null)
 {
-    foreach(var games in Model)
+    foreach (var games in Model)
     {
         <div class="card">
             <div class="card-body">
@@ -158,7 +142,7 @@
                 }
             </div>
         </div>
-    }    
+    }
 }
 else
 {
@@ -172,7 +156,8 @@ else
                 <p class="genregames">@games.Category</p>
                 <p class="realeasedate">Released: @games.ReleaseDate </p>
                 <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@games.ProductId" type="button" class="btn btn-primary btn-sm buttongame">Add to cart</a>
-                @if(games.Price == 0){
+                @if (games.Price == 0)
+                {
                     <p class="priceproduct">Free game</p>
                 }
                 else
