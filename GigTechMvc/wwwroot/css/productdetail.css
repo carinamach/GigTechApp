@@ -1,0 +1,119 @@
+﻿body {
+    background-color: #5D5E63;
+}
+
+.GameTitle{
+    width: 80%;
+    margin-left:auto;
+    margin-right:auto;
+}
+.productview {
+    border-radius: 4px 4px 0px 0px;
+    display: flex;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: lightgrey;
+}
+.karusell {
+    border: solid black 2px;
+    margin-left:20px;
+    margin-top: 20px;
+    margin-right: 15px;
+    width: 800px;
+}
+.ProductDiv{
+    width: 40%;
+}
+#pProduct{
+    margin-top: 20px;
+    font-size: 15px;
+}
+#genregame {
+    padding-left: 6px;
+    width: 200px;
+    border: solid black 1px;
+}
+#Releasedate{
+    padding-left:6px;
+    width: 200px;
+    border: solid black 1px;
+}
+.buttondiv {
+    border-radius: 0px 0px 4px 4px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 60px;
+    background-color: lightgrey;
+}
+.pPrice{
+    height:35px;
+    padding-top:4px;
+    padding-left: 2px;
+    margin-top:7px;
+    margin-right:7px;
+    float: right;
+    border-top: black solid 2px;
+    border-left: black solid 2px;
+    border-bottom: black solid 2px;
+}
+.priceproduct {
+    height: 35px;
+    padding-top: 3px;
+    padding-left: 2px;
+    margin-top: 7px;
+    margin-right: 7px;
+    float: right;
+    border-top: black solid 2px;
+    border-left: black solid 2px;
+    border-bottom: black solid 2px;
+}
+.buttongamepage {
+    margin-top:3px;
+    margin-right: 10px;
+    float: right;
+    height: 45px;
+}
+.formdiv{
+    display:flex;
+    flex-direction:column;
+}
+.addreview {
+    margin-top: 20px;
+    background-color: lightgrey;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom:10px;
+    border-radius: 2px;
+}
+#reviewh2{
+    margin-left:78px
+}
+.insideform {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:ghostwhite;
+}
+.labelform{
+   margin-left:79px;
+}
+.reviewheader{
+    margin-left:78px;
+}
+.reviewform{
+    display:flex;
+    flex-direction:column;
+}
+.textarea{
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+}
+.buttonform{
+    margin-left:625px;
+    margin-top:5px;
+}
+

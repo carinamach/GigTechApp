@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #111111;
+}
+
+h2, h3{
+    color: white;
+}
+
+main {
+    color: black;
+    
+}
+h2.text-center {
+    color: #007bff;
+    margin-top: 2%;
+}
+
+.carousel {
+    width: 70%;
+    margin: auto;
+    margin-bottom: 2%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.carousel-caption {
+    top: auto;
+    bottom: 0;
+    color: #ffffff;
+}
+
+.card {
+    margin-bottom: 2%;
+}
+
+.bg-secondary {
+    background-color: red !important;
+    color: white;
+}
+.p-forum{
+    color: black;
+}
+
+.btn btn-primary{
+    display: flex;
+    text-align: right;
+}
+
+
+.cool-header {
+    background: linear-gradient(120deg, #ff0000, #ff8e8e);
+    color: #fff;
+    padding: 20px;
+    margin-bottom: 2%;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slideIn 1s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.cool-header h2 {
+    font-size: 2em;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Header */
+.masthead {
+    height: 50vh;
+    min-height: 500px;
+    background-image: url('https://images.pexels.com/photos/194511/pexels-photo-194511.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 2%;
+    background-color: #111111;
+    color: #ffffff;
+    width: 100%;
+}
+
+.fw-light{
+    background: linear-gradient(120deg, #ff0000, #ff8e8e);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+.lead{
+    background: linear-gradient(120deg, #ff0000, #ff8e8e);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}

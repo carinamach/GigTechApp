@@ -1,0 +1,499 @@
+﻿body {
+    background-color: #f0f0f0;
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+}
+
+#topBorder {
+    width: 100%;
+    height: 110px;
+    margin-top: 80px;
+    background-color: antiquewhite;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+#topBorder_img {
+    width: 250px;
+    justify-content: center;
+    align-items: center;
+    display: flex; /* Add this line */
+}
+
+    #topBorder_img img {
+        width: 95px;
+        height: auto;
+        border-radius: 10px;
+        margin-left: 10px;
+        border: 2px solid black;
+    }
+
+#topBorder-left {
+    width: 100%;
+}
+
+    #topBorder-left h2 {
+        padding-top: 8px;
+        text-transform: uppercase;
+    }
+
+    #topBorder-left p {
+        padding: none;
+        margin-top: -13px;
+        font-size: 13px;
+        padding-bottom: 20px;
+    }
+
+#topBorder-right {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.icon {
+    padding: 0 20px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .icon img {
+        width: 30px;
+        height: 30px;
+    }
+
+.icon-button {
+    text-decoration: none;
+    color: black;
+}
+
+.icon p {
+    text-align: center;
+    font-size: 12px;
+    padding-top: 3px;
+}
+
+#profile-information {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 25px;
+    display: flex;
+    padding-bottom: 25px;
+}
+
+#profile-information-left {
+    width: 65%;
+    height: auto;
+}
+
+.profileGames {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: start;
+}
+
+.game {
+    margin: 10px;
+
+}
+
+.game-image {
+    margin-top: 20px;
+    width: 175px;
+    height: auto;
+    margin-left: 17px;
+    border-radius: 10px;
+    border: 1px solid black;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#yourGames-text {
+    width: 100%;
+    height: auto;
+    background-color: darkgrey;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+    #yourGames-text h3 {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+.gameName-container {
+    border-radius: 10px;
+    padding-top: 4px;
+    margin-left: 15px;
+    padding-bottom: 5px;
+    margin-top: 8px;
+    text-align: center;
+    letter-spacing: 1px;
+    font-size: 13px;
+    width: auto;
+    height: auto;
+    background-color: orange;
+}
+
+.gameDes-container {
+    margin-top: 8px;
+    margin-left: 15px;
+    text-align: center;
+    letter-spacing: 1px;
+    font-size: 11px;
+    width: 175px;
+    height: auto;
+    text-align: center;
+}
+
+
+.gameDownload-container {
+    border-radius: 10px;
+    padding-top: 4px;
+    padding-bottom: 20px;
+    margin-top: 8px;
+    text-align: center;
+    letter-spacing: 1px;
+    font-size: 13px;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+    .gameDownload-container button {
+        width: 100%;
+        margin: 5px;
+    }
+
+#noGames-container {
+    width: 100%;
+    height: auto;
+    text-align: left;
+    padding-left: 10px;
+    padding-bottom: 100px;
+}
+
+
+.profile-shopcontainer {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: orange;
+    overflow: hidden; /* Hide horizontal scrollbar */
+}
+
+#profile-shopcontainerGames {
+    width: 100%;
+    padding: 15px;
+    margin: 15px;
+    border-radius: 15px;
+    background-color: white;
+    overflow: auto; /* Enable scrolling */
+}
+
+.profile-shopcontainer h3 {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    background-color: lightgray;
+    border-radius: 10px;
+}
+
+.side-scroll {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    margin: 0 auto;
+    padding: 10px 0;
+    width: 100%;
+    scrollbar-width: thin; /* Add a scrollbar for browsers that support it */
+    scrollbar-color: darkgrey lightgrey; /* Define scrollbar color */
+}
+
+.gamelib {
+    width: auto;
+    max-height: 150px;
+    padding: 10px;
+    flex: 0 0 auto;
+}
+
+.game-image {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+/*EFFECTS*/
+.icon:hover img {
+    animation: spin 1s infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+
+/*USER PAGE EDIT*/
+
+#editProfileForm {
+    padding-top: 20px;
+}
+
+#profile-information-right {
+    text-align: center;
+    margin-right: 10px;
+    width: 35%;
+    display: wrap;
+    justify-content: center;
+    border-radius: 10px;
+    height: auto;
+    max-height: 370px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.download-button {
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #d5e2df;
+    box-shadow: none;
+    border: 1px solid black;
+    font-size: 12px;
+    margin-right: 10px; /* Add right margin for spacing */
+}
+
+.download-button:hover{
+    background-color: aliceblue;
+}
+
+#profile-information-right h3 {
+    font-size: 1.5em;
+    color: #333;
+    text-align: center;
+    padding-top: 10px;
+}
+
+#deposit-options {
+    margin: auto;
+    width: 90%;
+}
+
+.amount-buttons{
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.depositAmount {
+    padding: 10px 15px; /* Adjust padding as needed */
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition */
+    width: auto; /* Set a fixed width for all buttons */
+    text-align: center; /* Center align text */
+}
+
+    .depositAmount:hover {
+        background-color: #45a049; /* Hover effect */
+    }
+
+.form-group{
+color: black;
+}
+.form-group input {
+    background-color: white;
+    width: 90%;
+    margin: auto;
+    color: black;
+}
+
+.form-group2 select {
+    background-color: white;
+    width: 90%;
+    margin: auto;
+    color: black;
+}
+
+.form-group2 option {
+    background-color: white;
+}
+
+.form-group2 input {
+    background-color: white;
+}
+
+#depositbutton{
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+#deposit-now-button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    background-color: #337ab7;
+    color: white;
+    border: none;
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+    #deposit-now-button:hover {
+        background-color: #2e6da4; /* Hover effect */
+    }
+
+#custom-deposit-section {
+    padding-top: 10px;
+}
+
+#deposit-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.deposit-amount {
+    padding: 5px 10px;
+    margin: 5px;
+    background-color: lightgray;
+    border: none;
+    cursor: pointer;
+}
+
+    .deposit-amount.active {
+        background-color: blue;
+        color: white;
+    }
+
+#custom-deposit-section {
+    padding-top: 10px;
+    grid-column: 1 / span 3;
+}
+
+.profile-img.green {
+    border-color: green;
+    width: 90px;
+    height: 90px;
+    border-radius: 50px;
+    border: 1px solid;
+}
+
+
+/* user-page-form.css */
+
+#profileForm .form-group {
+    margin-bottom: 20px;
+}
+
+    #profileForm .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+#profileForm .form-control {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: black; /* Set text color to white */
+}
+
+#profileForm .text-danger {
+    color: red;
+    font-size: 14px;
+}
+
+#profileForm .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+}
+
+    #profileForm .btn:hover {
+        background-color: #0056b3;
+    }
+    #editProfileForm {
+    display: none;
+}
+
+#order-history {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Create 4 equal-width columns */
+    gap: 15px; /* Add some gap between grid items */
+}
+
+.order-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+
+
+.image-grid {
+    display: flex; /* Use flexbox to arrange items horizontally */
+    align-items: center; /* Align items vertically in the center */
+    width: 500px;
+    margin-bottom: 25px;
+    justify-content: space-between; /* Distribute items evenly along the main axis */
+}
+
+    .image-grid button {
+        width: 80px; /* Set width of buttons */
+        height: 80px; /* Set height of buttons */
+        margin-right: 10px; /* Add some spacing between buttons */
+        border: none; /* Remove default button border */
+        padding: 0; /* Remove default button padding */
+        cursor: pointer; /* Change cursor to pointer on hover */
+        border: 2px solid black;
+        border-radius: 10px;
+    }
+
+        .image-grid button:last-child {
+            margin-right: 0; /* Remove right margin from the last button */
+        }
+
+        .image-grid button img {
+            width: 100%; /* Make sure image fills the button */
+            height: 100%; /* Make sure image fills the button */
+        
+            object-fit: cover; /* Scale the image while preserving aspect ratio */
+        }

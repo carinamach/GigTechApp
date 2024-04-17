@@ -1,0 +1,176 @@
+﻿@model GigTech.Shared.Customer
+@using GigTech.Shared
+@using Microsoft.AspNetCore.Identity
+@inject GigTechContext _dbContext
+@inject UserManager<IdentityUser> UserManager
+@{
+    var customer = ViewBag.Customer as Customer;
+    var products = ViewBag.Products as List<Product>;
+
+    var userId = await UserManager.GetUserAsync(User);
+    var userEmail = userId.Email;
+
+    // Retrieve customer based on user's email
+    var dbCustomer = _dbContext.Customers.FirstOrDefault(c => c.Email == userEmail);
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" />
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/css/userpagestyle.css">
+</head>
+<body>
+
+    <div id="topBorder">
+        <div id="topBorder_img">
+            <img id="" src="@dbCustomer.ProfileImage" />
+        </div>
+        <div id="topBorder-left">
+            <h2>@dbCustomer.Username</h2>
+            <p><strong style="color: orangered">@dbCustomer.VMoney</strong> vMoney</p>
+        </div>
+        <div id="topBorder-right">
+            <a asp-controller="UserPage" asp-action="UserPage" class="icon-button">
+                <div class="icon">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="yourprofile">
+                    <p>PROFILE</p>
+                </div>
+            </a>
+            <a asp-controller="UserPage" asp-action="UserPageEdit" class="icon-button">
+                <div class="icon">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="editprofile">
+                    <p>EDIT</p>
+                </div>
+            </a>
+            <a asp-controller="UserPage" asp-action="UserPageHistory" class="icon-button">
+                <div class="icon">
+                    <img src="https://i.ibb.co/cXZKtxh/editprofile-icon.png" alt="History">
+                    <p>ORDERS</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="profileGames">
+        <div id="profile-information">
+            <div id="profile-information-left">
+                <h3>YOUR PROFILE</h3>
+                <p><strong>First Name:</strong> @dbCustomer.FirstName</p>
+                <p><strong>Last Name:</strong> @dbCustomer.LastName</p>
+                <p><strong>Email:</strong> @dbCustomer.Email</p>
+                <p><strong>Phone Number:</strong> @dbCustomer.PhoneNumber</p>
+                <p><strong>Password:</strong> ********</p>
+                <p><strong>Username:</strong> @dbCustomer.Username</p>
+                <p><strong>Profile Image:</strong> @dbCustomer.ProfileImage</p>
+                <br />
+                <button id="editProfileBtn" class="edit-profile-button">EDIT PROFILE</button>
+
+                <div id="editProfileForm">
+                    <form id="profileForm" asp-controller="UserPage" asp-action="OnPostSaveChanges" method="post">
+                        <div class="form-group">
+                            <label asp-for="FirstName">First Name:</label>
+                            <input asp-for="FirstName" class="form-control" value="@dbCustomer.FirstName" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="LastName">Last Name:</label>
+                            <input asp-for="LastName" class="form-control" value="@dbCustomer.LastName" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Email">Email:</label>
+                            <input asp-for="Email" class="form-control" value="@dbCustomer.Email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber">Phone Number:</label>
+                            <input asp-for="PhoneNumber" class="form-control" value="@dbCustomer.PhoneNumber" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Username">Username:</label>
+                            <input asp-for="Username" class="form-control" value="@dbCustomer.Username" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ProfileImage">Profile Image</label>
+                            <input asp-for="ProfileImage" class="form-control" value="@dbCustomer.ProfileImage" />
+                            <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+
+                    @section Scripts {
+                        @{
+                            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                        }
+                    }
+                </div>
+            </div>
+
+            <div id="profile-information-right">
+
+                <div class="amount-buttons">
+                    <button type="button" class="depositAmount" data-amount="100">100</button>
+                    <button type="button" class="depositAmount" data-amount="200">200</button>
+                    <button type="button" class="depositAmount" data-amount="300">300</button>
+                    <button type="button" class="depositAmount" data-amount="500">500</button>
+                    <button type="button" class="depositAmount" data-amount="1000">1000</button>
+                    <button type="button" class="depositAmount" data-amount="2000">2000</button>
+                </div>
+
+                <form id="depositForm" asp-controller="UserPage" asp-action="Deposit" method="post">
+                    <div class="form-group">
+                        <label for="VMoney">Your vMoney<br /><strong>@dbCustomer.VMoney</strong></label>
+                        <input type="text" id="VMoney" name="VMoney" class="form-control" value="Enter Your Amount" />
+                        <span class="text-danger" id="VMoneyValidation"></span>
+                    </div>
+
+                    <!-- Payment Method Selection -->
+                    <div class="form-group2">
+                        <label for="paymentMethod">Payment Method</label>
+                        <select id="paymentMethod" name="paymentMethod" class="form-control">
+                            <option value="card">Card</option>
+                            <option value="swish">Swish</option>
+                            <option value="direct">Direct Bank Deposit</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" id="depositbutton" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="profile-shopcontainer">
+        <div id="profile-shopcontainerGames">
+            <h2>GAME LIBRARY</h2>
+
+            <div class="side-scroll">
+                @foreach (var game in products) // Iterate through all games
+                {
+
+                    <div class="gamelib">
+                        <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@game.ProductId"><img src="@game.ImageOne" alt="@game.Title" class="game-image"> </a>
+                        <p>@game.Title</p>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/js/userpage.js"></script>
+</body>
+</html>

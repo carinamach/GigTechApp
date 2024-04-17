@@ -1,0 +1,63 @@
+﻿@using GigTech.Shared
+@model GigTech.Shared.Product
+
+@{
+    var dbcontext = new GigTechContext();
+}
+
+<link href="~/css/productdetail.css" rel="stylesheet" type="text/css" />
+
+<h1 class="GameTitle">@Model.Title</h1>
+
+<div class="productview">
+    <div id="carouselSlidesOnly" class="carousel slide karusell" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="@Model.ImageOne" class="d-block w-100" alt="Slide 1">
+            </div>
+            <div class="carousel-item">
+                <img src="@Model.ImageTwo" class="d-block w-100" alt="Slide 2">
+            </div>
+            <div class="carousel-item">
+                <img src="@Model.ImageThree" class="d-block w-100" alt="Slide 3">
+            </div>
+        </div>
+    </div>
+    <div class="ProductDiv">
+    <p id="pProduct">@Model.Description</p>
+    <p id="genregame">Genre: @Model.Category</p>
+    <p id="Releasedate">Release Date: @Model.ReleaseDate</p>
+    </div>
+</div>
+<div class="buttondiv">
+        <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@Model.ProductId" type="button" class="btn btn-primary btn-sm buttongamepage">Add to cart</a>
+    @if (Model.Price == 0)
+    {
+        <p class="priceproduct">Free game</p>
+    }
+    else
+    {
+        <p class="pPrice">@Model.Price kr</p>
+    }
+</div>
+<div class="reviews">
+
+
+</div>
+<div class="addreview">
+    <h2 id="reviewh2">Write Review</h2>
+    <form>
+        <div class="formdiv">
+            <label for="formControlInput" class="form-label labelform">Username</label>
+            <input type="text" class="insideform" id="formControlInput" placeholder="username">
+            <label for="formControlInput" class="form-label labelform">Title</label>
+            <input type="text" class="insideform" id="formControlInput" placeholder="Title">
+        </div>
+        <div class="reviewform">
+            <label class="reviewheader" for="review">Review</label>
+
+            <textarea class="textarea" id="review" name="review" rows="6" cols="20"></textarea>
+        </div>
+        <input class="btn btn-primary buttonform" type="submit" value="Submit">
+    </form>
+</div>

@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GigTech.Shared;
 
-[Index("ThreadId", Name = "IX_ForumPosts_ThreadId")]
 public partial class ForumPost
 {
     [Key]
@@ -16,16 +15,11 @@ public partial class ForumPost
 
     public DateTime CreationDate { get; set; }
 
-    public int CustomerId { get; set; }
+    public string UserEmail { get; set; } = null!;
 
     public int ThreadId { get; set; }
-
-    public int? RepliesCount { get; set; }
 
     [StringLength(255)]
     public string? Title { get; set; }
 
-    [ForeignKey("ThreadId")]
-    [InverseProperty("ForumPosts")]
-    public virtual ForumThread Thread { get; set; } = null!;
 }
