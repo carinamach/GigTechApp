@@ -30,4 +30,9 @@ public class RegisterFormData
 
     [Required]
     public int CustomerId { get; set; }
+
+    [Required]
+    public int vMoney { get; set; }
+
+    
 }

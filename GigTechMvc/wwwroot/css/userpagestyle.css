@@ -1,6 +1,5 @@
 ﻿body {
     background-color: #f0f0f0;
-    background-image: url('https://i.ibb.co/Dbt0s2s/858827-1.jpg');
     background-size: cover;
     background-position: top;
     background-repeat: no-repeat;
@@ -25,10 +24,10 @@
 }
 
     #topBorder_img img {
-        width: 95px;
-        heign: auto;
+        width: 85px;
+        height: auto;
         border-radius: 10px;
-        padding-left: 10px;
+        margin-left: 10px;
         border: 2px solid black;
     }
 
@@ -184,7 +183,8 @@
     height: auto;
     text-align: left;
     padding-left: 10px;
-    padding-bottom: 100px;
+    margin-top: 30px;
+    padding-bottom: 40px;
 }
 
 
@@ -323,7 +323,10 @@
         background-color: #45a049; /* Hover effect */
     }
 
-.form-group input{
+.form-group{
+color: black;
+}
+.form-group input {
     background-color: white;
     width: 90%;
     margin: auto;
@@ -424,7 +427,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    color: white; /* Set text color to white */
+    color: black; /* Set text color to white */
 }
 
 #profileForm .text-danger {
@@ -463,3 +466,35 @@
     padding: 15px;
     margin-bottom: 20px;
 }
+
+
+
+.image-grid {
+    display: flex; /* Use flexbox to arrange items horizontally */
+    align-items: center; /* Align items vertically in the center */
+    width: 500px;
+    margin-bottom: 25px;
+    justify-content: space-between; /* Distribute items evenly along the main axis */
+}
+
+    .image-grid button {
+        width: 80px; /* Set width of buttons */
+        height: 80px; /* Set height of buttons */
+        margin-right: 10px; /* Add some spacing between buttons */
+        border: none; /* Remove default button border */
+        padding: 0; /* Remove default button padding */
+        cursor: pointer; /* Change cursor to pointer on hover */
+        border: 2px solid black;
+        border-radius: 10px;
+    }
+
+        .image-grid button:last-child {
+            margin-right: 0; /* Remove right margin from the last button */
+        }
+
+        .image-grid button img {
+            width: 100%; /* Make sure image fills the button */
+            height: 100%; /* Make sure image fills the button */
+        
+            object-fit: cover; /* Scale the image while preserving aspect ratio */
+        }
