@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GigTechMvc.Controllers
 {
@@ -11,57 +14,44 @@ namespace GigTechMvc.Controllers
     {
         private readonly GigTechContext _dbContext;
         private readonly UserManager<IdentityUser> _userManager;
-       
-        public IActionResult Index()
-        {
-            return View();
-        }
+
         public ShoppingCartController(GigTechContext dbContext, UserManager<IdentityUser> userManager)
         {
             _dbContext = dbContext;
             _userManager = userManager;
         }
-        public async Task<String> RetrieveUserId()
+
+        public async Task<string> RetrieveUserId()
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var currentUserId = currentUser?.Id;
-            return currentUserId;
+            return currentUser?.Id;
         }
-        
+
         [Authorize]
         public IActionResult ShoppingCart()
         {
-            var CustomerId = _dbContext.ShoppingCart.FirstOrDefault()?.CustomerId;
-            var ProductId = _dbContext.ShoppingCart.FirstOrDefault()?.ProductId;
-            var ProductName = _dbContext.ShoppingCart.FirstOrDefault()?.ProductName;
-            var ProductPrice = _dbContext.ShoppingCart.FirstOrDefault()?.ProductPrice;
-
-            ViewBag.CustomerId = CustomerId;
-            ViewBag.ProductId = ProductId;
-            ViewBag.ProductName = ProductName;
-            ViewBag.ProductPrice = ProductPrice;
-
-            ViewBag.ShoppingCart = _dbContext.ShoppingCart.ToList();
-
+            var shoppingCartItems = _dbContext.ShoppingCart.ToList();
+            ViewBag.ShoppingCart = shoppingCartItems;
             return View("/Views/Pages/ShoppingCart.cshtml");
         }
 
-        [Authorize]
         [HttpPost]
-        public IActionResult RemoveFromCart(int productId)
+        public IActionResult RemoveCustomerCart(int customerId)
         {
-            // Retrieve the shopping cart item by product id
-            var cartItem = _dbContext.ShoppingCart.FirstOrDefault(item => item.ProductId.ToString() == productId.ToString());
-
-            if (cartItem != null)
+            try
             {
-                // Remove the item from the shopping cart
-                _dbContext.ShoppingCart.Remove(cartItem);
-                _dbContext.SaveChanges();
+                var cartItems = _dbContext.ShoppingCart.Where(item => item.CustomerId == customerId.ToString()).ToList();
+                if (cartItems.Any())
+                {
+                    _dbContext.ShoppingCart.RemoveRange(cartItems);
+                    _dbContext.SaveChanges();
+                }
+                return RedirectToAction("Index", "Home"); // Redirect to a relevant page after removal
             }
-
-            // Redirect back to the shopping cart page
-            return RedirectToAction("ShoppingCart");
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while removing the cart items: " + ex.Message);
+            }
         }
 
 
@@ -71,43 +61,67 @@ namespace GigTechMvc.Controllers
 
 
 
-        [Authorize]
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
         [HttpPost]
         public async Task<IActionResult> Pay()
         {
-            // Retrieve the current user's ID
-            var userId = await _userManager.GetUserAsync(User);
-
-            // Retrieve the customer from the database using the user's email
-            var customer = await _dbContext.Customers.FirstOrDefaultAsync(c => c.Email == userId.Email);
-            if (customer == null)
+            try
             {
-                return NotFound("User not found.");
+                // Retrieve the current user's ID
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser == null)
+                {
+                    return RedirectToAction("Index", "Home"); // Or any other action you prefer
+                }
+                // Retrieve the customer from the database
+                var customer = await _dbContext.Customers.FirstOrDefaultAsync(c => c.Email == currentUser.Email);
+                if (customer == null)
+                {
+                    return NotFound("User not found.");
+                }
+
+                // Retrieve shopping cart items for the current user
+                var shoppingCartItems = _dbContext.ShoppingCart
+                .Where(item => item.CustomerId == customer.CustomerId.ToString())
+                .ToList();
+
+                decimal totalPrice = shoppingCartItems.Sum(item => item.ProductPrice);
+                int totalPriceInt = (int)totalPrice;
+
+                if (customer.VMoney < totalPriceInt)
+                {
+                    return BadRequest("Insufficient funds.");
+                }
+
+                // Deduct the total price from the customer's vMoney
+                customer.VMoney -= totalPriceInt;
+                var currentGames = customer.Games.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList();
+                var productIds = shoppingCartItems.Select(item => item.ProductId).ToList();
+                currentGames.AddRange(productIds);
+                customer.Games = string.Join(',', currentGames);
+                _dbContext.ShoppingCart.RemoveRange(shoppingCartItems);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
             }
-
-            // Retrieve shopping cart items for the current user
-            var shoppingCartItems = _dbContext.ShoppingCart.Where(item => item.CustomerId.ToString() == customer.CustomerId.ToString()).ToList();
-
-
-            // Add games from the shopping cart to the customer's library
-            //foreach (var item in shoppingCartItems)
-            //{
-              //  customer.Games.Add(item.ProductName); 
-            //}
-
-            // Clear the shopping cart after adding games to the library
-            _dbContext.ShoppingCart.RemoveRange(shoppingCartItems);
-
-            // Save changes to the database
-            await _dbContext.SaveChangesAsync();
-
-            // Return a success response
-            return RedirectToAction("ShoppingCart");
+            catch (Exception ex)
+            {
+                // Handle exception if necessary
+                return StatusCode(500, "An error occurred during payment: " + ex.Message);
+            }
         }
-
-
-
-
-
     }
 }
