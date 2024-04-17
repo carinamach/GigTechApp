@@ -9,8 +9,9 @@
     var userId = await UserManager.GetUserAsync(User);
     var userEmail = userId.Email;
     var dbCustomer = _dbContext.Customers.FirstOrDefault(c => c.Email == userEmail);
-    //var user = ShoppingCart.CustomerId;
-    //var userOrder = _dbContext.ShoppingCart.FirstOrDefault(o => o.CustomerId.ToString() == user);
+
+    //var customerid = _dbContext.Customers.Select(co => co.CustomerId).First();
+    //var ShoppingCartUser = _dbContext.ShoppingCart.FirstOrDefault(s => s.CustomerId == customerid.ToString());
 }
 
 
@@ -23,12 +24,25 @@
         </tr>
     </thead>
 
+    @{
+        var shoppingCartItems = (List<ShoppingCart>)ViewBag.ShoppingCart;
+        var customerID = dbCustomer.CustomerId.ToString();
+    }
+
     <tbody>
-        @foreach (var item in ViewBag.ShoppingCart)// foreach statement cannot operate on variables of type ShoppingCart because ShoppingCart does not contain a public instance or extension deifinition for 'Getenumerator'
+        @foreach (var item in shoppingCartItems)
         {
+            var ShoppingCartUser = _dbContext.ShoppingCart.FirstOrDefault(s => s.ProductId == item.ProductId && s.CustomerId == customerID);
             <tr>
-                <td>@item.ProductName</td>
-                <td>@item.ProductPrice</td>
+                @if (ShoppingCartUser != null)
+                {
+                    <td>@ShoppingCartUser.ProductName</td>
+                    <td>@ShoppingCartUser.ProductPrice</td>
+                }
+                else
+                {
+                    <h3>No product found in shopping cart</h3>
+                }
                 <td>
                     <form method="post" action="@Url.Action("RemoveFromCart", "ShoppingCart")">
                         <input type="hidden" name="productId" value="@item.ProductId" />
@@ -39,3 +53,27 @@
         }
     </tbody>
 </table>
+
+
+@{
+    var shoppingCart = ViewBag.ShoppingCart as List<ShoppingCart>;
+}
+
+@if (shoppingCart != null && shoppingCart.Count > 0)
+{
+    decimal totalPrice = 0;
+    foreach (var item in ViewBag.ShoppingCart)
+    {
+        var ShoppingCartUser = _dbContext.ShoppingCart.FirstOrDefault(s => s.CustomerId == dbCustomer.CustomerId.ToString());
+        if (ShoppingCartUser != null)
+        {
+            totalPrice += ShoppingCartUser.ProductPrice;
+        }
+    }
+    <p>Total: @totalPrice</p>
+}
+
+
+<form method="post" action="@Url.Action("Pay", "ShoppingCart")">
+    <button type="submit" class="btn btn-primary">Pay</button>
+</form>

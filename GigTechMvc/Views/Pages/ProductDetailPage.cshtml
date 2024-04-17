@@ -1,6 +1,8 @@
-﻿@model GigTech.Shared.Product
+﻿@using GigTech.Shared
+@model GigTech.Shared.Product
 
 @{
+    var dbcontext = new GigTechContext();
 }
 
 <link href="~/css/productdetail.css" rel="stylesheet" type="text/css" />
@@ -28,7 +30,7 @@
     </div>
 </div>
 <div class="buttondiv">
-    <button class="btn btn-primary btn-sm buttongamepage">Add to cart</button>
+        <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@Model.ProductId" type="button" class="btn btn-primary btn-sm buttongamepage">Add to cart</a>
     @if (Model.Price == 0)
     {
         <p class="priceproduct">Free game</p>
@@ -37,4 +39,25 @@
     {
         <p class="pPrice">@Model.Price kr</p>
     }
+</div>
+<div class="reviews">
+
+
+</div>
+<div class="addreview">
+    <h2 id="reviewh2">Write Review</h2>
+    <form>
+        <div class="formdiv">
+            <label for="formControlInput" class="form-label labelform">Username</label>
+            <input type="text" class="insideform" id="formControlInput" placeholder="username">
+            <label for="formControlInput" class="form-label labelform">Title</label>
+            <input type="text" class="insideform" id="formControlInput" placeholder="Title">
+        </div>
+        <div class="reviewform">
+            <label class="reviewheader" for="review">Review</label>
+
+            <textarea class="textarea" id="review" name="review" rows="6" cols="20"></textarea>
+        </div>
+        <input class="btn btn-primary buttonform" type="submit" value="Submit">
+    </form>
 </div>

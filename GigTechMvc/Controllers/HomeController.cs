@@ -20,7 +20,11 @@ namespace GigTechMvc.Controllers
         public IActionResult Index()
         {
             var model = new IndexModel();
+// manually resolved merge from sia-init:
+//            ViewBag.Games = _context.Products.Skip(2).Take(5).ToList();
 
+//          return View(model);
+        
             // Set data for carousel
             model.Games = _context.Products.Skip(2).Take(5).ToList();
             ViewBag.Games = model.Games;

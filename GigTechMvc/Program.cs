@@ -1,26 +1,28 @@
 using GigTechMvc.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using GigTech.Common.DataContext.SqlServer;
 using GigTech.Shared;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-var connectionString1 = builder.Configuration.GetConnectionString("IdentityConnection") ?? throw new InvalidOperationException("Connection string 'IdentityConnection' not found.");
-builder.Services.AddDbContext<GigTechContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(connectionString1));
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<IdentityContext>();
-builder.Services.AddAuthorization();
+// Pass configuration explicitly to ConfigureServices method
+ConfigureServices(builder.Services, builder.Configuration);
 
-builder.Services.AddControllersWithViews();
+// Modify ConfigureServices method to accept IConfiguration
+void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+{
+    services.AddDbContext<GigTechContext>(options =>
+        options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+    services.AddDbContext<IdentityContext>(options =>
+        options.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
+    services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+        .AddEntityFrameworkStores<IdentityContext>();
+    services.AddAuthorization();
+    services.AddControllersWithViews();
+}
+
 var app = builder.Build();
-
-ConfigureServices(builder.Services);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -48,7 +50,3 @@ app.MapRazorPages();
 
 app.Run();
 
-void ConfigureServices(IServiceCollection services)
-{
-
-}
