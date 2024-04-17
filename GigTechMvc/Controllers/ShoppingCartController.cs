@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -54,74 +53,70 @@ namespace GigTechMvc.Controllers
             }
         }
 
-
-
-
-
-
-
-
-        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
         [HttpPost]
         public async Task<IActionResult> Pay()
         {
             try
             {
-                // Retrieve the current user's ID
+                // Hämta den aktuella användarens ID
                 var currentUser = await _userManager.GetUserAsync(User);
                 if (currentUser == null)
                 {
-                    return RedirectToAction("Index", "Home"); // Or any other action you prefer
+                    return RedirectToAction("Index", "Home"); // Eller någon annan åtgärd du föredrar
                 }
-                // Retrieve the customer from the database
+
+                // Hämta kunden från databasen
                 var customer = await _dbContext.Customers.FirstOrDefaultAsync(c => c.Email == currentUser.Email);
                 if (customer == null)
                 {
                     return NotFound("User not found.");
                 }
 
-                // Retrieve shopping cart items for the current user
+                // Hämta varukorgsobjekt för den aktuella användaren
                 var shoppingCartItems = _dbContext.ShoppingCart
-                .Where(item => item.CustomerId == customer.CustomerId.ToString())
-                .ToList();
+                    .Where(item => item.CustomerId == customer.CustomerId.ToString())
+                    .ToList();
 
+                // Beräkna totalpriset
                 decimal totalPrice = shoppingCartItems.Sum(item => item.ProductPrice);
-                int totalPriceInt = (int)totalPrice;
 
-                if (customer.VMoney < totalPriceInt)
+                // Kontrollera om kunden har tillräckligt med pengar
+                if (customer.VMoney < totalPrice)
                 {
                     return BadRequest("Insufficient funds.");
                 }
 
-                // Deduct the total price from the customer's vMoney
-                customer.VMoney -= totalPriceInt;
-                var currentGames = customer.Games.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList();
-                var productIds = shoppingCartItems.Select(item => item.ProductId).ToList();
-                currentGames.AddRange(productIds);
-                customer.Games = string.Join(',', currentGames);
+                // Dra av det totala priset från kundens vMoney
+                customer.VMoney -= (int)totalPrice;
+
+                // Ta bort varukorgsobjekt
                 _dbContext.ShoppingCart.RemoveRange(shoppingCartItems);
+
+                // Spara ändringar i databasen
                 await _dbContext.SaveChangesAsync();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home"); // Redirect to a relevant page after removal
             }
             catch (Exception ex)
             {
-                // Handle exception if necessary
+                // Hantera undantag om det behövs
                 return StatusCode(500, "An error occurred during payment: " + ex.Message);
             }
         }
+
+
+
+
+
+
+
+        public IActionResult Receipt()
+        {
+            var orderDetails = _dbContext.OrderDetails.ToList();
+            return View("/Views/Model/Receipt.cshtml", orderDetails);
+        }
+
+
+
+
     }
 }
