@@ -24,7 +24,7 @@
 }
 
     #topBorder_img img {
-        width: 95px;
+        width: 85px;
         height: auto;
         border-radius: 10px;
         margin-left: 10px;
@@ -183,7 +183,8 @@
     height: auto;
     text-align: left;
     padding-left: 10px;
-    padding-bottom: 100px;
+    margin-top: 30px;
+    padding-bottom: 40px;
 }
 
 
