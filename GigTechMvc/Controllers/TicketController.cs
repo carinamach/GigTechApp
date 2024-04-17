@@ -52,6 +52,7 @@ namespace GigTechMvc.Controllers
         }
 
         // GET: Ticket/Create
+        [Authorize]
         public IActionResult Create()
         {
             string userId = RetrieveUserId().Result;
@@ -68,16 +69,13 @@ namespace GigTechMvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("CustomerId,Status,TicketContent,TicketTitle,TicketDate")] Ticket ticket)
+        public async Task<IActionResult> Create([Bind("Id,CustomerId,Status,TicketContent,TicketTitle,TicketDate")] Ticket ticket)
         {
             // Retrieve the current user's ID
             string userId = RetrieveUserId().Result;
-            ViewBag.UserId = userId;
             // Set the CustomerId property of the ticket
-
-
-
             ticket.CustomerId = userId;
+            ViewBag.UserId = ticket.CustomerId;
             var ticketId = ticket.CustomerId;
             if (ticket.CustomerId == userId)
             {
