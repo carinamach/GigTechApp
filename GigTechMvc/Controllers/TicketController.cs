@@ -33,20 +33,15 @@ namespace GigTechMvc.Controllers
         public async Task<IActionResult> Index()
         {
             string UID = await RetrieveUserId();
-            return View(_spPg + "Index.cshtml", await _context.Tickets.Where(u => u.CustomerId.Contains(UID)).ToListAsync());
+            return View(_spPg + "Index.cshtml", await _context.Tickets.Where(u => u.CustomerId.Equals(UID)).ToListAsync());
             
         }
 
         // GET: Ticket/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var ticket = await _context.Tickets
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
+            var ticket = await _context.Tickets.FindAsync(id);
             if (ticket == null)
             {
                 return NotFound();
@@ -56,6 +51,7 @@ namespace GigTechMvc.Controllers
         }
 
         // GET: Ticket/Create
+        [Authorize]
         public IActionResult Create()
         {
             string userId = RetrieveUserId().Result;
@@ -72,16 +68,13 @@ namespace GigTechMvc.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("CustomerId,Status,TicketContent,TicketTitle,TicketDate")] Ticket ticket)
+        public async Task<IActionResult> Create([Bind("Id,CustomerId,Status,TicketContent,TicketTitle,TicketDate")] Ticket ticket)
         {
             // Retrieve the current user's ID
             string userId = RetrieveUserId().Result;
-            ViewBag.UserId = userId;
             // Set the CustomerId property of the ticket
-
-
-
             ticket.CustomerId = userId;
+            ViewBag.UserId = ticket.CustomerId;
             var ticketId = ticket.CustomerId;
             if (ticket.CustomerId == userId)
             {
@@ -111,13 +104,8 @@ namespace GigTechMvc.Controllers
 
         // GET: Ticket/Edit/5
         [Authorize]
-      
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             var ticket = await _context.Tickets.FindAsync(id);
             if (ticket == null)

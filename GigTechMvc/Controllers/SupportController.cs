@@ -9,25 +9,13 @@ namespace GigTechMvc.Controllers
 {
 	public class SupportController : Controller
 	{
-        string _spPg = "~/Views/Pages/SupportPages/";
-        public GigTechContext _context = new GigTechContext();
-		public SupportController(){}
+		string _spPg = "~/Views/Pages/SupportPages/";
+		public GigTechContext _context = new GigTechContext();
 		
         public IActionResult Index()
         {
             return View("~/Views/Pages/SupportPage.cshtml", new SupportPageModel());
         }
-
-		[Authorize]
-		public IActionResult CreateTicket()
-		{
-			return View("~/Views/Pages/Ticket/Create.cshtml");
-		}
-
-		public IActionResult ViewTickets()
-		{
-			return View("~/Views/Pages/Ticket/Index.cshtml");
-		}
 
 		[Authorize]
 		public IActionResult AccountInfo() 
