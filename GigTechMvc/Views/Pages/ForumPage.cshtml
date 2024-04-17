@@ -1,219 +1,289 @@
 ﻿@using GigTech.Shared
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
 
 @{
     var dbcontext = new GigTechContext();
-
+    var userId = await UserManager.GetUserAsync(User);
+    string userEmail;
+    if (userId != null)
+    {
+        userEmail = userId.Email;
+    }
+    else
+    {
+        userEmail = "Anonymous";
+    }
+    var dbCustomer = dbcontext.Customers.FirstOrDefault(c => c.Email == userEmail);
 }
-<h1 style="padding-top:100px;">Forum</h1>
-<form asp-controller="Forum" asp-action="FilterByCategory" method="get" class="text-center">
-    <div class="form-group bg-white">
-        <div class="row">
-            <div class=>
-                <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="1">Test</button>
-                <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="2">Games</button>
-                <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="3">News</button>
-                <button selected type="submit" class="btn btn-secondary btn-lg btn-block col-md-2" name="categoryNumber" value="">Show All</button>
-                <br />
-                <br />
+<body style="background-color: #555; color: white;">
+    <h1 style="padding-top:100px;">Forum</h1>
+    <form asp-controller="Forum" asp-action="FilterByCategory" method="get" class="text-center">
+        <div class="form-group">
+            <div class="row">
+                <div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="1">Test</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="2">Games</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="categoryNumber" value="3">News</button>
+                    <button selected type="submit" class="btn btn-secondary btn-lg btn-block col-md-2" name="categoryNumber" value="">Show All</button>
+                    <br />
+                    <br />
+                </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 
-<br />
-<div class="container">
-    <div class="row">
-        <div class="col-md-10">
-            <div class="container">
+    <br />
+    <div class="container" style="color: white;">
+        <!-- Set text color to white for dark mode -->
+        <div class="row">
+            <div class="col-md-10">
+                <div class="container">
 
-                @if (Model != null && Model.Count > 0)
-                {
-                    @foreach (var post in Model)
+                    @if (Model != null && Model.Count > 0)
                     {
-                        <div class="container">
-                            <div class="card mb-4">
-                                <div class="container card-header">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <h3 class="card-title">@post.Title</h3>
-                                            <h6>Category: @(post.ThreadId == 1 ? "Test Posts" : post.ThreadId == 2 ? "Game" : "News")</h6>
-                                        </div>
-                                        <div class="col-md-4 text-right flex-row-reverse">
-                                            <p class="card-text text-right">Date & Time: @post.CreationDate</p>
-                                            <h6 class="card-subtitle mb-2 text-muted text-right">Posted by customer id: @post.CustomerId</h6>
-                                            <div class="align-item d-flex flex-row-reverse">
-                                                <form asp-controller="Forum" asp-action="DeletePost" method="post">
-                                                    <input type="hidden" name="postId" value="@post.Id" />
-                                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                                </form>                                            
-                                                <button style ="margin-right:5px;" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPostModal_@post.Id">Edit</button>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">@Html.Raw(post.Content)</p>
-                                </div>
-                                <div class="card-footer text-muted d-flex justify-content-end" style="padding-right:0;">
-                                    <button style="margin-right:5px;" type="button" class="btn btn-md btn-primary" data-toggle="modal" data-target="#replyModal_@post.Id">Reply</button>
-                                </div>
-
-                            </div>
-                            @{
-                                int parentPostId = post.Id;
-                                List<ForumThread> replyList;
-                                replyList = dbcontext.ForumThreads.Where(item => item.ForumPostId == parentPostId).ToList();
-                            }
-                            @foreach (var reply in replyList)
-                            {
-                                <div class="container" style="margin-left:3rem;  padding-right:0; width:auto;">
-                                    <div class="card mb-4">                                           
-                                        <div class="card-body">
-                                            <p class="card-text"><strong>User @reply.UserId replied: </strong>@reply.Content</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                            
-                        </div>                         
-                        <!-- POP-up: Reply Modal -->
-                        <div class="modal fade" id="replyModal_@post.Id" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel_@post.Id" aria-hidden="true">
-                            <!-- Modal Content -->
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <!-- Modal Header -->
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="replyModalLabel_@post.Id">Reply to @post.Title</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <!-- Modal Body -->
-                                    <div class="modal-body">
-                                        <h6>Title: @post.Title</h6>
-                                        <p>@Html.Raw(post.Content)</p>
-                                        @foreach (var reply in replyList)
-                                        {
-                                            <div class="container" style="margin-left:3rem;  padding-right:0; width:auto;">
-                                                <div class="card mb-4">
-                                                    <div class="card-body">
-                                                        <p class="card-text"><strong>User @reply.UserId replied: </strong>@reply.Content</p>
+                        @foreach (var post in Model)
+                        {
+                            <div class="container">
+                                @*Post: Display + buttons*@
+                                <div class="card mb-4" style="background-color: #333;">
+                                    <!-- Set card background color to dark gray -->
+                                    <div class="container card-header">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <h3 class="card-title">@post.Title</h3>
+                                                <h6 style="color: lightgray;">Category: @(post.ThreadId == 1 ? "Test Posts" : post.ThreadId == 2 ? "Game" : "News")</h6> <!-- Set text color to light gray -->
+                                            </div>
+                                            <div class="col-md-4 text-right flex-row-reverse">
+                                                <p class="card-text text-right" style="color: lightgray;">Date & Time: @post.CreationDate</p> <!-- Set text color to light gray -->
+                                                <h6 class="card-subtitle mb-2 text-muted text-right" style="color: lightgray;">Posted by: @post.UserEmail</h6> <!-- Set text color to light gray -->
+                                                @if (post.UserEmail == userEmail)
+                                                {
+                                                    <div class="align-item d-flex flex-row-reverse">
+                                                        <!-- Edit and Delete buttons -->
+                                                        <form asp-controller="Forum" asp-action="DeletePost" method="post">
+                                                            <input type="hidden" name="postId" value="@post.Id" />
+                                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                        </form>
+                                                        <button style="margin-right:5px;" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editPostModal_@post.Id">Edit</button>
                                                     </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">@Html.Raw(post.Content)</p>
+                                    </div>
+                                    <div class="card-footer text-muted d-flex justify-content-end" style="padding-right:0;">
+                                        <button style="margin-right:5px;" type="button" class="btn btn-md btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal_@post.Id">Reply</button>
+                                    </div>
+
+                                </div>
+                                @{
+                                    int parentPostId = post.Id;
+                                    List<ForumThread> replyList;
+                                    replyList = dbcontext.ForumThreads.Where(item => item.ForumPostId == parentPostId).ToList();
+                                }
+                                @*Reply: display replies + buttons delete and edit reply *@
+
+
+                                @foreach (var reply in replyList)
+                                {
+                                    <div class="container" style="margin-left:3rem;  padding-right:0; width:auto;">
+                                        <div class="card mb-4" style="background-color: #333;">
+                                            <div class="card-body" style="background-color: #333;">
+                                                <p class="card-text"><strong>@reply.UserEmail replied: </strong>@Html.Raw(reply.Content)</p>
+                                            </div>
+                                            <div class=" d-flex justify-content">
+                                                @if (reply.UserEmail == userEmail)
+                                                {
+                                                    <form asp-controller="Forum" asp-action="DeleteReply" method="post">
+                                                        <input type="hidden" name="replyId" value="@reply.Id" />
+                                                        <button type="submit" class="btn btn-sm btn-danger" style="margin-right: 5px">Delete</button>
+                                                    </form>
+                                                    if (userEmail != "Anonymous")
+                                                    {
+                                                        <button style="margin-right:5px;" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editReplyModal_@reply.Id">Edit</button>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- POP-up: Reply: Edit Modal -->
+                                    <div class="modal fade" id="editReplyModal_@reply.Id" tabindex="-1" role="dialog" aria-labelledby="editPostModalLabel_@reply.Id" aria-hidden="true">
+                                        <!-- Modal Content -->
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content" style="background-color: #333;">
+                                                <!-- Set modal background color to dark gray -->
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editPostModalLabel_@reply.Id" style="color: lightgray;">Edit Reply</h5> <!-- Set text color to light gray -->
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <!-- Modal Body -->
+                                                <div class="modal-body">
+                                                    <!-- Edit Post Form -->
+                                                    <form asp-controller="Forum" asp-action="EditReply" method="post">
+                                                        <input type="hidden" name="replyId" value="@reply.Id" />
+
+                                                        <!-- Content -->
+                                                        <div class="form-group">
+                                                            <label for="editContent_@reply.Id" style="color: lightgray;">Content:</label> <!-- Set text color to light gray -->
+                                                            <textarea id="editContent_@reply.Id" name="newContent" class="form-control bg-dark text-light" rows="5">@Html.Raw(post.Content)</textarea> <!-- Set textarea background color to dark and text color to light -->
+                                                        </div>
+                                                        <!-- Submit Button -->
+                                                        <button class="btn btn-primary" type="submit" style="margin-top:5px">Save Edits</button>
+                                                    </form>
                                                 </div>
                                             </div>
-                                        }
-                                        <form asp-controller="Forum" asp-action="AddReply" method="post">
-                                            <input type="hidden" name="postId" value="@post.Id" />
-                                            <div class="form-group">
-                                                <label for="replyContent_@post.Id"><strong>Your Reply:</strong></label>
-                                                <textarea id="replyContent_@post.Id" name="replyContent" class="form-control bg-white" rows="3" required></textarea>
-                                                <br />
-                                                <button type="submit" class="btn btn-primary">Submit Reply</button>
-                                            </div>
-                                        </form>
+                                        </div>
                                     </div>
-                                    
-                                </div>
+                                }
                             </div>
-                        </div>
+                            <!-- POP-up: Reply: Create Modal -->
+                            <div class="modal fade" id="replyModal_@post.Id" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel_@post.Id" aria-hidden="true">
+                                <!--  Content -->
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content" style="background-color: #333;">
+                                        <!-- Set modal background color to dark gray -->
+                                        <!-- Header -->
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="replyModalLabel_@post.Id" style="color: lightgray;">Reply to @post.Title</h5> <!-- Set text color to light gray -->
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
-                        <!-- POP-up: Edit Post Modal -->
-                        <div class="modal fade" id="editPostModal_@post.Id" tabindex="-1" role="dialog" aria-labelledby="editPostModalLabel_@post.Id" aria-hidden="true">
-                            <!-- Modal Content -->
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <!-- Modal Header -->
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="editPostModalLabel_@post.Id">Edit Forum Post</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <!-- Modal Body -->
-                                    <div class="modal-body">
-                                        <!-- Edit Post Form -->
-                                        <form asp-controller="Forum" asp-action="EditPost" method="post">
-                                            <input type="hidden" name="postId" value="@post.Id" />
-                                            <!-- Title -->
-                                            <div class="form-group">
-                                                <label for="editTitle_@post.Id">Title:</label>
-                                                <textarea id="editTitle_@post.Id" name="newTitle" class="form-control bg-white">@post.Title</textarea>
-                                            </div>
-                                            <!-- Content -->
-                                            <div class="form-group">
-                                                <label for="editContent_@post.Id">Content:</label>
-                                                <textarea id="editContent_@post.Id" name="newContent" class="form-control bg-white" rows="5">@post.Content</textarea>
-                                            </div>
-                                            <!-- Submit Button -->
-                                            <button class="btn btn-primary" type="submit" style="margin-top:5px">Save Edits</button>
-                                        </form>
+                                        </div>
+                                        <!-- Body -->
+                                        <div class="modal-body">
+                                            <h6>Title: @post.Title</h6>
+                                            <p>@Html.Raw(post.Content)</p>
+                                            @foreach (var reply in replyList)
+                                            {
+                                                <div class="container" style="margin-left:3rem;  padding-right:0; width:auto;">
+                                                    <div class="card mb-4">
+                                                        <div class="card-body">
+                                                            <p class="card-text"><strong>@reply.UserEmail replied: </strong>@reply.Content</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <form asp-controller="Forum" asp-action="AddReply" method="post">
+                                                <input type="hidden" name="postId" value="@post.Id" />
+                                                <input type="hidden" name="userEmail" value="@userEmail" />
+
+                                                <div class="form-group">
+                                                    <label for="replyContent_@post.Id" style="color: lightgray;"><strong>Your Reply:</strong></label> <!-- Set text color to light gray -->
+                                                    <textarea id="replyContent_@post.Id" name="replyContent" class="form-control bg-dark text-light" rows="3" required></textarea> <!-- Set textarea background color to dark and text color to light -->
+                                                    <br />
+                                                    <button type="submit" class="btn btn-primary">Submit Reply</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
+                            <!-- POP-up: Post: Edit Modal -->
+                            <div class="modal fade" id="editPostModal_@post.Id" tabindex="-1" role="dialog" aria-labelledby="editPostModalLabel_@post.Id" aria-hidden="true">
+                                <!-- Modal Content -->
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content" style="background-color: #333;">
+                                        <!-- Set modal background color to dark gray -->
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editPostModalLabel_@post.Id" style="color: lightgray;">Edit Forum Post</h5> <!-- Set text color to light gray -->
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <!-- Modal Body -->
+                                        <div class="modal-body">
+                                            <!-- Edit Post Form -->
+                                            <form asp-controller="Forum" asp-action="EditPost" method="post">
+
+                                                <input type="hidden" name="postId" value="@post.Id" />
+                                                <!-- Title -->
+                                                <div class="form-group">
+                                                    <label for="editTitle_@post.Id" style="color: lightgray;">Title:</label> <!-- Set text color to light gray -->
+                                                    <textarea id="editTitle_@post.Id" name="newTitle" class="form-control bg-dark text-light">@post.Title</textarea> <!-- Set textarea background color to dark and text color to light -->
+                                                </div>
+                                                <!-- Content -->
+                                                <div class="form-group">
+                                                    <label for="editContent_@post.Id" style="color: lightgray;">Content:</label> <!-- Set text color to light gray -->
+                                                    <textarea id="editContent_@post.Id" name="newContent" class="form-control bg-dark text-light" rows="5">@Html.Raw(post.Content)</textarea> <!-- Set textarea background color to dark and text color to light -->
+                                                </div>
+                                                <!-- Submit Button -->
+                                                <button class="btn btn-primary" type="submit" style="margin-top:5px">Save Edits</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     }
+                    else
+                    {
+                        <h3>No Post Created Yet</h3>
+                    }
+                </div>
 
-                }
-                else
-                {
-                    <h3>No Post Created Yet</h3>
-                }
             </div>
-
-        </div>
-        <div class="col-md-2">
-            <!-- New Post Button -->
-            <div class="mb-4 text-right">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPostModal">
-                    Create New Post
-                </button>
+            <div class="col-md-2">
+                <!-- Post: Button Create -->
+                <div class="mb-4 text-right">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPostModal">
+                        Create New Post
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-@* Pop-up Create Post modal*@
-<div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="newPostModalLabel">New Forum Post</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form asp-controller="Forum" asp-action="CreatPost" method="post">
-                    <div class="form-group bg-white col-md-6">
-                        <label for="threadId">Select Thread:</label>
-                        <select class="form-select form-select-m" style="margin-top: 5px;"  aria-label="Medium select" id="threadId" name="threadId" required>
-                            <option selected disabled value="">Choose a category...</option>
-                            <option value=1>Test</option>
-                            <option value=2>Games</option>
-                            <option value=3>News</option>
-                        </select>
-                        <br/>
-                    </div>
-                    <div class="form-group bg-white" >
-                        <label for="title" class="bg-white">Title:</label>
+    @* Pop-up:Post: Create modal*@
+    <div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="background-color: #333;">
+                <!-- Set modal background color to dark gray -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newPostModalLabel" style="color: lightgray;">New Forum Post</h5> <!-- Set text color to light gray -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+                <div class="modal-body" style="background-color: #333;color: lightgray">
+                    <form asp-controller="Forum" asp-action="CreatePost" method="post">
+                        <input type="hidden" name="userEmail" value="@userEmail" />
+
+                        <div class="form-group  col-md-6" style="background-color: #333;color: lightgray;">
+                            <label for="threadId" style="background-color: #333;color: lightgray;">Select Thread:</label> <!-- Set text color to light gray -->
+                            <select class="form-select form-select-m" style=>ackground-color: #333;color: lightgray" aria-label="Medium select" id="threadId" name="threadId" required>
+                                <option selected disabled value="">Choose a category...</option>
+                                <option value=1>Test</option>
+                                <option value=2>Games</option>
+                                <option value=3>News</option>
+                            </select>
+                            <br />
+                        </div>
+                        <div class="form-group ">
+                            <label for="title" class="" style="color:white;">Title:</label> <!-- Set text color to light gray -->
+                            <br />
+                            <input id="title" name="title" class="form-control" style="margin-top: 5px;color:white;background-color: #222;" required />
+                            <br />
+                        </div>
+                        <div class="form-group" style="color:white;background-color: #333;">
+                            <label for="content" style="margin-bottom: 10px;color:white;background-color: #333;">Content:</label> <!-- Set text color to light gray -->
+                            
+                            <textarea id="content" name="content" class="form-control" style="background-color: #222; color:white" style="margin-top: 10px;" rows="5" required></textarea>
+                        </div>
                         <br />
-                        <input id="title" name="title" class="form-control bg-light" style="margin-top: 5px;"  required />
-                        <br/>
-                    </div>
-                    <div class="form-group bg-white">
-                        <label for="content" class="bg-white">Content:</label>
-                        <br/>
-                        <textarea id="content" name="content" class="form-control bg-light" style="margin-top: 5px;" rows="5" required></textarea>
-                    </div>
-                    <br />
-                    <button class="btn btn-primary" type="submit">Submit</button>
-                </form>
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</body>
 
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 }

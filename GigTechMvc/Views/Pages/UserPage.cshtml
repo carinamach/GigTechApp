@@ -24,9 +24,20 @@
 </head>
 <body>
     <div id="topBorder">
-        <div id="topBorder_img">
-            <img id="" src="@dbCustomer.ProfileImage" />
-        </div>
+
+        @if (dbCustomer == null)
+        {
+            <p>Error: Customer details not found.</p>
+        }
+        else if (string.IsNullOrEmpty(dbCustomer.FirstName) || string.IsNullOrEmpty(dbCustomer.LastName) || string.IsNullOrEmpty(dbCustomer.PhoneNumber) || string.IsNullOrEmpty(dbCustomer.Username) || string.IsNullOrEmpty(dbCustomer.ProfileImage))
+        {
+            <p>Your profile is incomplete. Please <a asp-controller="UserPage" asp-action="DetailedRegistration">complete your registration</a>.</p>
+        }
+
+
+            <div id="topBorder_img">
+                <img id="" src="@dbCustomer.ProfileImage" />
+            </div>
         <div id="topBorder-left">
             <h2>@dbCustomer.Username</h2>
             <p><strong style="color: orangered">@dbCustomer.VMoney</strong> vMoney</p>
@@ -88,7 +99,7 @@
         {
             <div id="noGames-container">
                 <p>You don't have any games.</p>
-                <button>GAME LIBRARY</button>
+                <a asp-controller="Product" asp-action="Product"><p>Go to products</p> </a>
             </div>
         }
 
