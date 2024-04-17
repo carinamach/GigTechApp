@@ -94,7 +94,10 @@ namespace GigTechMvc.Controllers
 
                 // Spara ändringar i databasen
                 await _dbContext.SaveChangesAsync();
-                return RedirectToAction("Index", "Home"); // Redirect to a relevant page after removal
+                //return RedirectToAction("Index", "Home"); // Redirect to a relevant page after removal
+                return RedirectToAction("Receipt", "ShoppingCart");
+
+
             }
             catch (Exception ex)
             {
@@ -112,7 +115,7 @@ namespace GigTechMvc.Controllers
         public IActionResult Receipt()
         {
             var orderDetails = _dbContext.OrderDetails.ToList();
-            return View("/Views/Model/Receipt.cshtml", orderDetails);
+            return View("/Views/Shared/Receipt.cshtml", orderDetails);
         }
 
 

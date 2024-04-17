@@ -6,6 +6,7 @@
     <title>Receipt</title>
 </head>
 <body>
+    <div style="margin-top: 100px;">
     @foreach (var orderDetail in Model)
     {
         <h2>Order Details</h2>
@@ -14,11 +15,10 @@
         <p>Order Date: @orderDetail.OrderDate</p>
         <p>Total Amount: @orderDetail.TotalAmount</p>
 
-        <h2>Order Item</h2>
         <ul>
             <li>Product ID: @orderDetail.ProductId, Product Price: @orderDetail.TotalAmount</li>
         </ul>
     }
-
+    </div>
 </body>
 </html>
