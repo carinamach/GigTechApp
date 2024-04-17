@@ -15,7 +15,7 @@ public partial class ForumPost
 
     public DateTime CreationDate { get; set; }
 
-    public int CustomerId { get; set; }
+    public string UserEmail { get; set; } = null!;
 
     public int ThreadId { get; set; }
 

@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="~/GigTechMvc.styles.css" asp-append-version="true" />
 </head>
 <body>
-<!-- Navigation -->
-<header class="main-header">
+
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
         <div class="container">
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">GigTech</a>
@@ -27,6 +27,12 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link text-dark" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-dark" href="#">Contact</a>
                     </li>
                     <li class="nav-item">
@@ -39,20 +45,18 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCart" asp-action="ShoppingCart">ShoppingCart</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Forum" asp-action="ForumIndex">Forum</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Product">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Forum" asp-action="ForumIndex">Forum</a>
                     </li>
                     <li class="nav-item">
                         <partial name="_LoginPartial" />
                     </li>
-
                 </ul>
             </div>
-        </div>
     </nav>
-</header>
+    <!-- Image Header-->
 
     <div class="container">
         <main role="main" class="pb-3">

@@ -9,48 +9,71 @@
     var userId = await UserManager.GetUserAsync(User);
     var userEmail = userId.Email;
     var dbCustomer = _dbContext.Customers.FirstOrDefault(c => c.Email == userEmail);
-}
-
-<table class="table table-striped" id="cartTable">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Remove</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in ViewBag.ShoppingCart)
-        {
-            <tr>
-                <td>@item.ProductName</td>
-                <td>@item.ProductPrice</td>
-                <td>
-                    <form method="post" action="@Url.Action("RemoveFromCart", "ShoppingCart")">
-                        <input type="hidden" name="productId" value="@item.ProductId" />
-                        <button type="submit" class="btn btn-danger">Remove</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-@{
+    var shoppingCartItems = (List<ShoppingCart>)ViewBag.ShoppingCart;
+    var customerID = dbCustomer.CustomerId.ToString();
     var shoppingCart = ViewBag.ShoppingCart as List<ShoppingCart>;
-}
-
-@if (shoppingCart != null && shoppingCart.Count > 0)
-{
+    var matchOrder = _dbContext.ShoppingCart.Where(o => o.CustomerId == dbCustomer.CustomerId.ToString());
+    var productsList = _dbContext.Products.ToList(); // Materialize the query
     decimal totalPrice = 0;
-    foreach (var item in shoppingCart)
-    {
-        totalPrice += item.ProductPrice;
-    }
-    <p>Total: @totalPrice</p>
 }
 
-<form method="post" action="@Url.Action("Pay", "ShoppingCart")">
-    <button type="submit" class="btn btn-primary">Pay</button>
-</form>
+<html>
+<head>
+</head>
+
+<body>
+    <div style="margin-top: 100px;">
+        <table class="table table-striped" id="cartTable">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in matchOrder)
+                {
+                    var productIds = order.ProductId.Split(',');
+                    foreach (var productIdString in productIds)
+                    {
+                        if (int.TryParse(productIdString, out int productIdInt))
+                        {
+                            var product = productsList.FirstOrDefault(p => p.ProductId == productIdInt);
+                            if (product != null)
+                            {
+                                <tr>
+                                    <td>@product.Title</td>
+                                    <td>@product.Price</td>
+                                </tr>
+                                totalPrice += product.Price;
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="2">Product with ID @productIdString not found.</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="2">Invalid product ID: @productIdString</td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <p>Total Price: @totalPrice</p>
+    <form method="post" action="@Url.Action("RemoveCustomerCart", "ShoppingCart")">
+        <input type="hidden" name="customerId" value="@dbCustomer.CustomerId" />
+        <button type="submit">Remove Cart</button>
+    </form>
+
+    <form method="post" action="@Url.Action("Pay", "ShoppingCart")">
+        <button type="submit">PAY</button>
+    </form>
+</body>
+</html>

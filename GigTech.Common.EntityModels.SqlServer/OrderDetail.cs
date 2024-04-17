@@ -37,4 +37,6 @@ public partial class OrderDetail
     [ForeignKey("ProductId")]
     [InverseProperty("OrderDetails")]
     public virtual Product Product { get; set; } = null!;
+
+    
 }
