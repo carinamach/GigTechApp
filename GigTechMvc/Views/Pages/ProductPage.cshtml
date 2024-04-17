@@ -19,34 +19,38 @@
 
 <h1>Games</h1>
 
+@* The nav does not filter the games. The method is built in product controller but not finnished *@
+
 <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Genres</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDark" aria-controls="navbarDark" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <form>
         <div class="collapse navbar-collapse show" id="navbarDark">
             <ul class="navbar-nav me-auto mb-2 mb-xl-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Action</a>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="genre" value="Action">Action</button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Shooter</a>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="genre" value="Shooter">Shooter</button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Adventure</a>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="genre" value="Adventure">Adventure</button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Horror</a>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="genre" value="Horror">Horror</button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Casual Games</a>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="genre" value="Casual Games">Casual Games</button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Racing</a>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block col-md-2" name="genre" value="Racing">Racing</button>
                 </li>
 
             </ul>
+            </form>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-light" type="submit">Search</button>
@@ -132,7 +136,31 @@
     </a>
 </div>
 <div><br /></div>
-@if (dbcontext.Products is not null)
+@if (Model is not null)
+{
+    foreach(var games in Model)
+    {
+        <div class="card">
+            <div class="card-body">
+                <a asp-controller="Product" asp-action="ProductDetailPage" asp-route-id="@games.ProductId" type="button" class="btn btn-primary buttonpage">Product Page</a>
+                <img src="@games.SmallImage" class="productimg" alt="Fh5">
+                <h5 class="card-title">@games.Title</h5>
+                <p class="genregames">@games.Category</p>
+                <p class="realeasedate">Released: @games.ReleaseDate </p>
+                <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@games.ProductId" type="button" class="btn btn-primary btn-sm buttongame">Add to cart</a>
+                @if (games.Price == 0)
+                {
+                    <p class="priceproduct">Free game</p>
+                }
+                else
+                {
+                    <p class="priceproduct">@games.Price sek</p>
+                }
+            </div>
+        </div>
+    }    
+}
+else
 {
     @foreach (var games in dbcontext.Products)
     {
@@ -155,3 +183,4 @@
         </div>
     }
 }
+
