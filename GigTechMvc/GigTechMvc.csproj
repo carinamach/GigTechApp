@@ -24,12 +24,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\css\userpagestyle.css" />
     <None Include="wwwroot\css\CreateTicket.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\About\About.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\About\Index.cshtml" />
   </ItemGroup>
 
 </Project>

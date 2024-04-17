@@ -42,7 +42,7 @@ namespace GigTechMvc.Controllers
             return View(model);
         }
         
-        public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }
