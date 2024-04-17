@@ -90,7 +90,7 @@ namespace GigTechMvc.Controllers
             return RedirectToAction("ForumIndex");
         }
         [HttpPost]
-        public IActionResult EditPost(int postId,string newTitle, string newContent)
+        public IActionResult EditPost(int postId, string newTitle, string newContent)
         {
             var post = _context.ForumPosts.FirstOrDefault(p => p.Id == postId);
 
@@ -100,9 +100,8 @@ namespace GigTechMvc.Controllers
             }
             else
             {
-                newContent = newContent.Replace("\n", "<br />");
 
-                if (post.Title != newTitle || post.Content!= newContent)
+                if (post.Title != newTitle || post.Content != newContent)
                 {
                     post.Title = newTitle;
                     post.Content = newContent;
