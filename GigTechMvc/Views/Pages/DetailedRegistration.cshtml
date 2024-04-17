@@ -16,6 +16,12 @@
     var lastCustomerId = _dbContext.Customers.OrderByDescending(c => c.CustomerId).Select(c => c.CustomerId).FirstOrDefault();
     ViewBag.LastCustomerId = lastCustomerId;
 
+    // Retrieve all usernames from the Customers table
+    var userNames = _dbContext.Customers.Select(c => c.Username).ToList();
+
+    // Pass the list of usernames to the view
+    ViewBag.UserNames = userNames;
+
 }
 
 <!DOCTYPE html>
@@ -28,7 +34,7 @@
 <body>
 
 
-    <h1>HELLO</h1>
+    <h1>Detailed Registration</h1>
         <form id="profileForm" asp-controller="UserPage" asp-action="OnRegistrationSaveChanges" method="post">
                         <div class="form-group">
                             <label asp-for="FirstName">First Name:</label>
@@ -50,7 +56,7 @@
 
                         <div class="form-group">
                             <label asp-for="PhoneNumber">Phone Number:</label>
-                            <input asp-for="PhoneNumber" class="form-control" value="PHONENUMBER" />
+                            <input asp-for="PhoneNumber" class="form-control" value="0701234567" />
                             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                         </div>
 
@@ -73,10 +79,19 @@
             <span asp-validation-for="Username" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" style="display: none;">
             <label asp-for="ProfileImage">ProfileImage:</label>
-            <input asp-for="ProfileImage" class="form-control" value="ProfileImage" />
+            <input id="profile-image-input" asp-for="ProfileImage" class="form-control" value="" />
             <span asp-validation-for="ProfileImage" class="text-danger"></span>
+        </div>
+
+        <h3>Choose your profile image</h3>
+        <div class="image-grid">
+            <button value="https://i.ibb.co/89F6Bxg/profilbild2.jpg"><img src="https://i.ibb.co/89F6Bxg/profilbild2.jpg" alt=""></button>
+            <button value="https://i.ibb.co/Bqsn6tr/profilbild1.jpg"><img src="https://i.ibb.co/Bqsn6tr/profilbild1.jpg" alt=""></button>
+            <button value="https://i.ibb.co/4ZhD0BP/profilbild3.jpg"><img src="https://i.ibb.co/4ZhD0BP/profilbild3.jpg" alt=""></button>
+            <button value="https://i.ibb.co/WnL8WRm/profilbild4.jpg"><img src="https://i.ibb.co/WnL8WRm/profilbild4.jpg" alt=""></button>
+            <button value="https://i.ibb.co/MNRHBzk/profilbild5.jpg"><img src="https://i.ibb.co/MNRHBzk/profilbild5.jpg" alt=""></button>
         </div>
 
         <div class="form-group" style="display: none;">
@@ -86,6 +101,7 @@
         </div>
 
                         <button type="submit" class="btn btn-primary">Save Changes</button>
+                       
                     </form>
 
                     @section Scripts {
@@ -94,7 +110,35 @@
                         }
                     }
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const profileImageInput = document.getElementById('profile-image-input');
+            const profileImageButtons = document.querySelectorAll('.image-grid button');
 
-    <script src="~/js/userpage.js"></script>
+            // Add event listener to each button in the image grid
+            profileImageButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    // Prevent the default form submission behavior
+                    event.preventDefault();
+
+                    // Remove border from previously active button
+                    profileImageButtons.forEach(btn => {
+                        btn.style.border = '';
+                    });
+
+                    // Get the value of the clicked button
+                    const buttonValue = this.value;
+                    // Set the value of the profile image input field
+                    profileImageInput.value = buttonValue;
+
+                    // Add border to the clicked button
+                    this.style.border = '3px solid green';
+                });
+            });
+        });
+    </script>
+
+<script src="~/js/userpage.js"></script>
+
 </body>
 </html>

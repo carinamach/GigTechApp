@@ -18,3 +18,11 @@ document.querySelectorAll('.depositAmount').forEach(button => {
     });
 });
 
+
+let buttons = document.querySelectorAll('.profileImageButton');
+
+buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+        button.style.backgroundColor = "red";
+    });
+});

@@ -35,12 +35,13 @@ a:hover, a:focus {
 }
 
 .form-control {
-  background: #212529;
-  border-color: #545454;
+    background: #212529;
+    border-color: #545454;
 }
 
 .form-control:focus {
-  background: grey;
+  background: lightgrey;
+
 }
 
 footer {
