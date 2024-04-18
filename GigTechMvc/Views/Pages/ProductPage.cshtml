@@ -140,6 +140,7 @@
 
                 <div class="buttondiv">
                     <form asp-controller="Product" asp-action="AddToCart" method="post">
+                        
                         <input type="hidden" name="customerId" value="@customerID" />
                         <input type="hidden" name="gameId" value="@games.ProductId" />
                         <button class="btn btn-primary btn-sm buttongame" type="submit">Add to cart</button>
@@ -176,6 +177,7 @@ else
                 <p class="genregames">@games.Category</p>
                 <p class="realeasedate">Released: @games.ReleaseDate </p>
                 <form asp-controller="Product" asp-action="AddToCart" method="post">
+                    
                     <input type="hidden" name="customerId" value="@customerID" />
                     <input type="hidden" name="gameId" value="@games.ProductId" />
                     <button class="btn btn-primary btn-sm buttongame" type="submit">Add to cart</button>

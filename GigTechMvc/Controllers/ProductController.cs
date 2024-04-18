@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using GigTechMvc.Models;//ErrorViewModel
 using System.Diagnostics;
-using System.Linq; //Activity
+using System.Linq;
+using Microsoft.AspNetCore.Authorization; //Activity
 
 
 namespace GigTechMvc.Controllers
@@ -17,6 +18,7 @@ namespace GigTechMvc.Controllers
         {
             db = injectedContext;
         }
+        [Authorize]
 
         public IActionResult Product()
         {
