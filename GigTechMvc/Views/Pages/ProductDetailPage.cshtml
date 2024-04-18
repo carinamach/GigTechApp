@@ -40,18 +40,40 @@
         <p class="pPrice">@Model.Price kr</p>
     }
 </div>
-<div class="reviews">
 
+<h3>Reviews</h3>
+<div class="reviews">
+    @{
+        int gameid = Model.ProductId;
+        List<Gamereview> reviewList;
+        reviewList = dbcontext.Gamereviews.Where(item => item.GameId == gameid).ToList();
+     }
+        
+          @foreach (var comment in reviewList){
+                <div class="card">
+                    <div class="card-header">
+                        @comment.Username
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">@comment.Title</h5>
+                        <p class="card-text">@comment.Review</p>
+                    </div>
+                </div>
+            }
+        
+        
+    
 
 </div>
 <div class="addreview">
     <h2 id="reviewh2">Write Review</h2>
-    <form>
+    <form asp-controller="Product" asp-action="reviewcomment" method="post">
+        <input type="hidden" name="gameid" value="@Model.ProductId"/>
         <div class="formdiv">
             <label for="formControlInput" class="form-label labelform">Username</label>
-            <input type="text" class="insideform" id="formControlInput" placeholder="username">
+            <input type="text" class="insideform" id="formControlInput" name="username" placeholder="username">
             <label for="formControlInput" class="form-label labelform">Title</label>
-            <input type="text" class="insideform" id="formControlInput" placeholder="Title">
+            <input type="text" class="insideform" id="formControlInput" name="title" placeholder="Title">
         </div>
         <div class="reviewform">
             <label class="reviewheader" for="review">Review</label>
