@@ -95,7 +95,7 @@ namespace GigTechMvc.Controllers
             if (currentUser == null)
             {
                 // If the current user is null, redirect to the registration page
-                return RedirectToAction("Registration", "Account"); // Adjust the redirection URL as needed
+                return RedirectToAction("Registration", "Account"); 
             }
 
             // Retrieve the customer associated with the current user's email
@@ -104,7 +104,7 @@ namespace GigTechMvc.Controllers
             if (customer == null)
             {
                 // If the customer is not found, it means detailed registration has not been completed
-                return View("/Views/Pages/DetailedRegistration.cshtml"); // Redirect to registration page
+                return View("/Views/Pages/DetailedRegistration.cshtml"); 
             }
             else
             {
@@ -112,7 +112,7 @@ namespace GigTechMvc.Controllers
                 if (string.IsNullOrEmpty(customer.FirstName))
                 {
                     // If the customer does not have a first name, redirect to the detailed registration page
-                    return View("/Views/Pages/DetailedRegistration.cshtml"); // Redirect to detailed registration page
+                    return View("/Views/Pages/DetailedRegistration.cshtml");
                 }
                 else
                 {
@@ -195,12 +195,12 @@ namespace GigTechMvc.Controllers
                     PhoneNumber = formData.PhoneNumber,
                     Username = formData.Username,
                     ProfileImage = formData.ProfileImage,
-                    Email = currentUser.Email, // Use the email of the current user
-                    PasswordHash = formData.PasswordHASH, // Use the email of the current user
+                    Email = currentUser.Email, 
+                    PasswordHash = formData.PasswordHASH, 
                     ProductId = formData.ProductId,
-                    CustomerId = formData.CustomerId, // Use the email of the current user
-                    VMoney = formData.vMoney, // Use the email of the current user
-                    Games = formData.Games // Use the email of the current user
+                    CustomerId = formData.CustomerId, 
+                    VMoney = formData.vMoney, 
+                    Games = formData.Games 
 
                 };
 
