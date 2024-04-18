@@ -99,7 +99,7 @@ namespace GigTechMvc.Controllers
                 // Spara ändringar i databasen
                 await _dbContext.SaveChangesAsync();
 
-                return RedirectToAction("Receipt", "ShoppingCart");
+                return RedirectToAction("UserPage", "UserPage");
             }
             catch (Exception ex)
             {
