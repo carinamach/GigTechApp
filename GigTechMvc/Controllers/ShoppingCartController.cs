@@ -78,7 +78,7 @@ namespace GigTechMvc.Controllers
                     .ToList();
 
                 // Beräkna totalpriset
-                decimal totalPrice = shoppingCartItems.Sum(item => item.ProductPrice);
+                decimal totalPrice = (decimal)shoppingCartItems.Sum(item => item.ProductPrice);
 
                 // Kontrollera om kunden har tillräckligt med pengar
                 if (customer.VMoney < totalPrice)
