@@ -498,3 +498,23 @@ color: black;
         
             object-fit: cover; /* Scale the image while preserving aspect ratio */
         }
+
+#order-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#order-history th, #order-history td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#order-history th {
+    background-color: #f2f2f2;
+}
+
+#order-history tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
