@@ -86,6 +86,10 @@ namespace GigTechMvc.Controllers
                     return BadRequest("Insufficient funds.");
                 }
 
+                // Uppdatera Games för kunden
+                var games = string.Join(",", shoppingCartItems.Select(item => item.ProductId));
+                customer.Games = string.IsNullOrEmpty(customer.Games) ? games : customer.Games + "," + games;
+
                 // Dra av det totala priset från kundens vMoney
                 customer.VMoney -= (int)totalPrice;
 
@@ -94,10 +98,8 @@ namespace GigTechMvc.Controllers
 
                 // Spara ändringar i databasen
                 await _dbContext.SaveChangesAsync();
-                //return RedirectToAction("Index", "Home"); // Redirect to a relevant page after removal
+
                 return RedirectToAction("Receipt", "ShoppingCart");
-
-
             }
             catch (Exception ex)
             {

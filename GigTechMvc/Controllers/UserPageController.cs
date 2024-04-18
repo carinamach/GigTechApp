@@ -199,7 +199,8 @@ namespace GigTechMvc.Controllers
                     PasswordHash = formData.PasswordHASH, // Use the email of the current user
                     ProductId = formData.ProductId,
                     CustomerId = formData.CustomerId, // Use the email of the current user
-                    VMoney = formData.vMoney // Use the email of the current user
+                    VMoney = formData.vMoney, // Use the email of the current user
+                    Games = formData.Games // Use the email of the current user
 
                 };
 

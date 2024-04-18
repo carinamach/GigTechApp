@@ -34,5 +34,8 @@ public class RegisterFormData
     [Required]
     public int vMoney { get; set; }
 
-    
+    [Required]
+    public string Games { get; set; }
+
+
 }
