@@ -1,8 +1,15 @@
 ﻿@using GigTech.Shared
 @model GigTech.Shared.Product
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
 
 @{
     var dbcontext = new GigTechContext();
+    var userId = await UserManager.GetUserAsync(User);
+    var userEmail = userId.Email;
+    var dbCustomer = dbcontext.Customers.FirstOrDefault(c => c.Email == userEmail);
+    var customerID = dbCustomer.CustomerId.ToString();
+}
 }
 
 <link href="~/css/productdetail.css" rel="stylesheet" type="text/css" />
@@ -24,13 +31,18 @@
         </div>
     </div>
     <div class="ProductDiv">
-    <p id="pProduct">@Model.Description</p>
-    <p id="genregame">Genre: @Model.Category</p>
-    <p id="Releasedate">Release Date: @Model.ReleaseDate</p>
+        <p id="pProduct">@Model.Description</p>
+        <p id="genregame">Genre: @Model.Category</p>
+        <p id="Releasedate">Release Date: @Model.ReleaseDate</p>
     </div>
 </div>
 <div class="buttondiv">
-        <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@Model.ProductId" type="button" class="btn btn-primary btn-sm buttongamepage">Add to cart</a>
+    <form asp-controller="Product" asp-action="AddToCart" method="post">
+        <input type="hidden" name="customerId" value="@customerID" />
+        <input type="hidden" name="gameId" value="@Model.ProductId" />
+        <button class="btn btn-primary btn-sm buttongamepage" type="submit">Add to cart</button>
+
+    </form>
     @if (Model.Price == 0)
     {
         <p class="priceproduct">Free game</p>
@@ -41,34 +53,31 @@
     }
 </div>
 
-<h3>Reviews</h3>
+<h3 class="GameTitle">Reviews</h3>
 <div class="reviews">
     @{
         int gameid = Model.ProductId;
         List<Gamereview> reviewList;
         reviewList = dbcontext.Gamereviews.Where(item => item.GameId == gameid).ToList();
-     }
-        
-          @foreach (var comment in reviewList){
-                <div class="card">
-                    <div class="card-header">
-                        @comment.Username
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">@comment.Title</h5>
-                        <p class="card-text">@comment.Review</p>
-                    </div>
-                </div>
-            }
-        
-        
-    
+    }
 
+    @foreach (var comment in reviewList)
+    {
+        <div class="card">
+            <div class="card-header">
+                @comment.Username
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@comment.Title</h5>
+                <p class="card-text">@comment.Review</p>
+            </div>
+        </div>
+    }
 </div>
 <div class="addreview">
     <h2 id="reviewh2">Write Review</h2>
     <form asp-controller="Product" asp-action="reviewcomment" method="post">
-        <input type="hidden" name="gameid" value="@Model.ProductId"/>
+        <input type="hidden" name="gameid" value="@Model.ProductId" />
         <div class="formdiv">
             <label for="formControlInput" class="form-label labelform">Username</label>
             <input type="text" class="insideform" id="formControlInput" name="username" placeholder="username">

@@ -34,13 +34,13 @@ namespace GigTechMvc.Controllers
             }
             return View("/Views/Pages/ProductDetailPage.cshtml", model);
         }
-        public IActionResult AddToCart(int? id)
+        public IActionResult AddToCart(int? gameId, string customerId )
         {
             ShoppingCart shoppingcart = new ShoppingCart();
 
 
-            Product? product = db.Products.FirstOrDefault(p => p.ProductId == id);
-
+            Product? product = db.Products.FirstOrDefault(p => p.ProductId == gameId);
+            shoppingcart.CustomerId = customerId;
             shoppingcart.ProductId = product.ProductId.ToString();
             shoppingcart.ProductName = product.Title;
             shoppingcart.ProductPrice = product.Price;

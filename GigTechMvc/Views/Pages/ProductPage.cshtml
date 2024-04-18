@@ -1,7 +1,12 @@
 ﻿@using GigTech.Shared
-
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
 @{
     var dbcontext = new GigTechContext();
+    var userId = await UserManager.GetUserAsync(User);
+    var userEmail = userId.Email;
+    var dbCustomer = dbcontext.Customers.FirstOrDefault(c => c.Email == userEmail);
+    var customerID = dbCustomer.CustomerId.ToString();
 }
 <link href="~/css/product.css" rel="stylesheet" type="text/css" />
 <h1>Games</h1>
@@ -132,7 +137,28 @@
                 <h5 class="card-title">@games.Title</h5>
                 <p class="genregames">@games.Category</p>
                 <p class="realeasedate">Released: @games.ReleaseDate </p>
-                <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@games.ProductId" type="button" class="btn btn-primary btn-sm buttongame">Add to cart</a>
+
+                <div class="buttondiv">
+                    <form asp-controller="Product" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="customerId" value="@customerID" />
+                        <input type="hidden" name="gameId" value="@games.ProductId" />
+                        <button class="btn btn-primary btn-sm buttongame" type="submit">Add to cart</button>
+
+                    </form>                    
+                    @if (Model.Price == 0)
+                    {
+                        <p class="priceproduct">Free game</p>
+                    }
+                    else
+                    {
+                        <p class="pPrice">@Model.Price kr</p>
+                    }
+                </div>
+
+
+
+
+                
                 @if (games.Price == 0)
                 {
                     <p class="priceproduct">Free game</p>
@@ -156,7 +182,14 @@ else
                 <h5 class="card-title">@games.Title</h5>
                 <p class="genregames">@games.Category</p>
                 <p class="realeasedate">Released: @games.ReleaseDate </p>
-                <a asp-controller="Product" asp-action="AddToCart" asp-route-id="@games.ProductId" type="button" class="btn btn-primary btn-sm buttongame">Add to cart</a>
+                <form asp-controller="Product" asp-action="AddToCart" method="post">
+                    <input type="hidden" name="customerId" value="@customerID" />
+                    <input type="hidden" name="gameId" value="@games.ProductId" />
+                    <button class="btn btn-primary btn-sm buttongame" type="submit">Add to cart</button>
+
+@*                     < asp-route-id="@games.ProductId" type="button" class="btn btn-primary btn-sm buttongame">Add to cart</>
+ *@
+                </form>                
                 @if (games.Price == 0)
                 {
                     <p class="priceproduct">Free game</p>
